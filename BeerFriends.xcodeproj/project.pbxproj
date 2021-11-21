@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1B4B891D2749CA7A0046ED75 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B891C2749CA7A0046ED75 /* OnboardingViewController.swift */; };
 		1B4B891F2749E7DF0046ED75 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B891E2749E7DF0046ED75 /* Constants.swift */; };
+		1B4B8922274A1C7F0046ED75 /* OnboardingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8921274A1C7F0046ED75 /* OnboardingControl.swift */; };
 		1BC287F42745EB3900DAE988 /* BeerFriendsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC287F32745EB3900DAE988 /* BeerFriendsApp.swift */; };
 		1BC287F82745EB3900DAE988 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BC287F72745EB3900DAE988 /* Assets.xcassets */; };
 		1BC287FB2745EB3900DAE988 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BC287FA2745EB3900DAE988 /* Preview Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		1B4B891C2749CA7A0046ED75 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		1B4B891E2749E7DF0046ED75 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1B4B8921274A1C7F0046ED75 /* OnboardingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingControl.swift; sourceTree = "<group>"; };
 		1BC287F02745EB3900DAE988 /* BeerFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeerFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BC287F32745EB3900DAE988 /* BeerFriendsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerFriendsApp.swift; sourceTree = "<group>"; };
 		1BC287F72745EB3900DAE988 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -46,6 +48,7 @@
 				1B4B891C2749CA7A0046ED75 /* OnboardingViewController.swift */,
 				1BC288042745FBB500DAE988 /* OnboardingSubview.swift */,
 				1BC28806274603BB00DAE988 /* OnboardingView.swift */,
+				1B4B8921274A1C7F0046ED75 /* OnboardingControl.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 				1B4B891D2749CA7A0046ED75 /* OnboardingViewController.swift in Sources */,
 				1BC287F42745EB3900DAE988 /* BeerFriendsApp.swift in Sources */,
 				1BC288052745FBB500DAE988 /* OnboardingSubview.swift in Sources */,
+				1B4B8922274A1C7F0046ED75 /* OnboardingControl.swift in Sources */,
 				1B4B891F2749E7DF0046ED75 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

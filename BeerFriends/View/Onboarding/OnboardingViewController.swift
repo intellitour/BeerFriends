@@ -11,6 +11,9 @@ import SwiftUI
 
 struct OnboardingViewController: UIViewControllerRepresentable {
      
+    @Binding
+    var currentPageIndex: Int
+    
     var viewControllers: [UIViewController]
     
     func makeUIViewController(context: Context) -> UIPageViewController {
@@ -19,20 +22,21 @@ struct OnboardingViewController: UIViewControllerRepresentable {
                 navigationOrientation: .horizontal)
         
         onboardingViewController.dataSource = context.coordinator
+        onboardingViewController.delegate = context.coordinator
 
         return onboardingViewController
     }
     
     func updateUIViewController(_ onboardingViewController: UIPageViewController, context: Context) {
         onboardingViewController.setViewControllers(
-                [viewControllers[0]], direction: .forward, animated: true)
+                [viewControllers[currentPageIndex]], direction: .forward, animated: true)
     }
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
     
-    class Coordinator: NSObject, UIPageViewControllerDataSource {
+    class Coordinator: NSObject, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
         var parent: OnboardingViewController
 
         init(_ onboardingViewController: OnboardingViewController) {
@@ -62,5 +66,14 @@ struct OnboardingViewController: UIViewControllerRepresentable {
             }
             return parent.viewControllers[index + 1]
         }
+        
+        func pageViewController(_ onboardingViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+                if completed,
+                    let visibleViewController = onboardingViewController.viewControllers?.first,
+                    let index = parent.viewControllers.firstIndex(of: visibleViewController)
+                {
+                    parent.currentPageIndex = index
+                }
+            }
     }
 }
