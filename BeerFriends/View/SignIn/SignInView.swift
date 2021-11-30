@@ -83,10 +83,10 @@ struct SignInView : View {
                         VStack {
                             Button(action: signIn) {
                                 Text("Entrar")
-                                .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
-                                .foregroundColor(.secondaryColor)
-                                .background(Color.primaryColor)
-                                .cornerRadius(20)
+                                    .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
+                                    .foregroundColor(.secondaryColor)
+                                    .background(Color.primaryColor)
+                                    .cornerRadius(20)
                             }
                         
                             HStack {
@@ -124,7 +124,9 @@ struct SignInView : View {
             }
         }
         .toast(isPresenting: $error, alert: {
-            AlertToast(type: .error(.red), title: "Login não realizado. Verifique o e-mail ou a senha")
+            AlertToast(type: .error(.red),
+                       title: "Login não realizado.",
+                       subTitle: "Por favor, verifique o e-mail ou a senha e tente novamente")
         })
     }
 }

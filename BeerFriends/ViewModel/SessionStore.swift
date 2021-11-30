@@ -13,6 +13,7 @@ class SessionStore : ObservableObject {
     var didChange = PassthroughSubject<SessionStore, Never>()
     var handle: AuthStateDidChangeListenerHandle?
     
+    @Published
     var session: User? {
         didSet {
             self.didChange.send(self)

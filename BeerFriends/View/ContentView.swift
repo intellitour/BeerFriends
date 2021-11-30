@@ -29,9 +29,3 @@ struct ContentView: View {
         }.onAppear(perform: getUser)
     }
 }
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView().environmentObject(SessionStore())
-    }
-}
