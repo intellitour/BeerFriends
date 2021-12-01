@@ -1,16 +1,15 @@
 //
-//  SignInView.swift
+//  SignUPView.swift
 //  BeerFriends
 //
-//  Created by Wesley Marra on 29/11/21.
+//  Created by Wesley Marra on 01/12/21.
 //
 
 import SwiftUI
 import Lottie
 import AlertToast
 
-struct SignInView : View {
-
+struct SignUPView: View {
     @State var email: String = ""
     @State var password: String = ""
     @State var loading = false
@@ -19,11 +18,12 @@ struct SignInView : View {
     @State var showPackBeerImage = false
 
     @EnvironmentObject var sessionStore: SessionStore
+    @Environment(\.presentationMode) var presentationMode
 
-    func signIn () {
+    func signUp () {
         loading = true
         error = false
-        sessionStore.signIn(email: email, password: password) { (result, error) in
+        sessionStore.signUp(email: email, password: password) { (result, error) in
             self.loading = false
             if error != nil {
                 self.error = true
@@ -43,17 +43,17 @@ struct SignInView : View {
                         AnimatedView(show: $show, showPackBeerImage: $showPackBeerImage)
                             .frame(height: UIScreen.main.bounds.height / 2.5)
                     } else {
-                        Image("SignInImage")
+                        Image(K.Login.SignUpImage)
                             .frame(width: UIScreen.main.bounds.width, alignment: .top)
                     }
                                             
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("Login")
+                        Text("Cadastro")
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.secondaryColor)
                         
-                        Text("Entre com seus dados de acesso")
+                        Text("Informe o e-mail e senha para continuar")
                             .foregroundColor(.secondaryColor).opacity(0.5)
                         
                         Spacer(minLength: 5)
@@ -70,47 +70,28 @@ struct SignInView : View {
                                 .background(Color(UIColor(.gray)))
                         }
                         
-                        Text("Esqueci a senha")
-                            .font(.subheadline)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .foregroundColor(.secondaryColor)
-                            .onTapGesture {
-                                print("Chamar popup de esqueci a senha")
-                            }
-                        
                         Spacer(minLength: 5)
                         
                         VStack {
-                            Button(action: signIn) {
-                                Text("Entrar")
+                            Button(action: signUp) {
+                                Text("Cadastrar")
                                     .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
                                     .foregroundColor(.secondaryColor)
                                     .background(Color.primaryColor)
                                     .cornerRadius(20)
                             }
-                        
-                            HStack {
-                                Rectangle()
-                                    .fill(Color.secondaryColor.opacity(0.3))
-                                    .frame(height: 1)
-                                
-                                Text("Ou")
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.secondaryColor.opacity(0.3))
-                                
-                                Rectangle()
-                                    .fill(Color.secondaryColor.opacity(0.3))
-                                    .frame(height: 1)
-                            }.padding(.vertical, 2)
                             
                             Button(action: {
-                                print("Chamar tela de cadastrar usuário")
+                                presentationMode.wrappedValue.dismiss()
                             }) {
-                                Text("Cadastrar")
-                                .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
-                                .foregroundColor(.primaryColor)
-                                .background(Color.secondaryColor)
-                                .cornerRadius(20)
+                                Text("Cancelar")
+                                    .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
+                                    .foregroundColor(.secondaryColor)
+                                    .background(.white)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .stroke(Color.secondaryColor, lineWidth: 2)
+                                    )
                             }
                         }
                     }
@@ -125,29 +106,14 @@ struct SignInView : View {
         }
         .toast(isPresenting: $error, alert: {
             AlertToast(type: .error(.red),
-                       title: "Login não realizado.",
+                       title: "Erro no cadastro.",
                        subTitle: "Por favor, verifique o e-mail ou a senha e tente novamente")
         })
     }
 }
 
-struct AnimatedView: UIViewRepresentable {
-    @Binding var show: Bool
-    @Binding var showPackBeerImage: Bool
-    
-    func makeUIView(context: Context) -> AnimationView {
-        let view = AnimationView(name: K.SignIn.signInPackBeer, bundle: Bundle.main)
-        view.play { (status) in
-           if status {
-                withAnimation(.interactiveSpring(response: 0.7, dampingFraction: 0.8, blendDuration: 0.8)) {
-                    show.toggle()
-                    showPackBeerImage.toggle()
-                }
-            }
-        }
-       
-        return view
+struct SignUPView_Previews: PreviewProvider {
+    static var previews: some View {
+        SignUPView()
     }
-    
-    func updateUIView(_ uiView: AnimationView, context: Context) { }
 }

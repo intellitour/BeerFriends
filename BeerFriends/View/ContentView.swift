@@ -17,15 +17,19 @@ struct ContentView: View {
 
     var body: some View {
         Group {
-            if UserDefaults.standard.string(forKey: "Onboarding") == nil {
-                OnboardingView()
+            if sessionStore.session != nil {
+                Text("Hello user!")
+                    .onTapGesture {
+                        sessionStore.signOut()
+                    }
             } else {
-                if sessionStore.session != nil {
-                    Text("Hello user!")
+                if UserDefaults.standard.string(forKey: "Onboarding") == nil {
+                    OnboardingView()
                 } else {
                     SignInView()
                 }
             }
+            
         }.onAppear(perform: getUser)
     }
 }

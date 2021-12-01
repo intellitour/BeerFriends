@@ -22,11 +22,13 @@ struct K {
         
     }
     
-    struct SignIn {
-        static let signInPackBeer   = "PackBeer"
+    struct Login {
+        static let SignInImage    = "SignInImage"
+        static let SignUpImage    = "SignUpImage"
+        static let PackBeer       = "PackBeer"
     }
     
     struct System {
-        static let ArrowRight    = "arrow.right"
+        static let ArrowRight     = "arrow.right"
     }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B3D28872757886900CC039C /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D28862757886900CC039C /* SignUpView.swift */; };
+		1B3D28892757896400CC039C /* AnimatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D28882757896400CC039C /* AnimatedView.swift */; };
 		1B4B891D2749CA7A0046ED75 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B891C2749CA7A0046ED75 /* OnboardingViewController.swift */; };
 		1B4B891F2749E7DF0046ED75 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B891E2749E7DF0046ED75 /* Constants.swift */; };
 		1B4B8922274A1C7F0046ED75 /* OnboardingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8921274A1C7F0046ED75 /* OnboardingControl.swift */; };
@@ -31,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B3D28862757886900CC039C /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		1B3D28882757896400CC039C /* AnimatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedView.swift; sourceTree = "<group>"; };
 		1B4B891C2749CA7A0046ED75 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		1B4B891E2749E7DF0046ED75 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1B4B8921274A1C7F0046ED75 /* OnboardingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingControl.swift; sourceTree = "<group>"; };
@@ -77,13 +81,15 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
-		1B5E7572275655C000658889 /* SignIn */ = {
+		1B5E7572275655C000658889 /* Login */ = {
 			isa = PBXGroup;
 			children = (
 				1B5E7570275655A800658889 /* PackBeer.json */,
 				1BEFCAC62755BB24003647D9 /* SignInView.swift */,
+				1B3D28862757886900CC039C /* SignUpView.swift */,
+				1B3D28882757896400CC039C /* AnimatedView.swift */,
 			);
-			path = SignIn;
+			path = Login;
 			sourceTree = "<group>";
 		};
 		1BC287E72745EB3900DAE988 = {
@@ -144,7 +150,7 @@
 		1BC288032745EB6D00DAE988 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1B5E7572275655C000658889 /* SignIn */,
+				1B5E7572275655C000658889 /* Login */,
 				1B4B89202749F8710046ED75 /* Onboarding */,
 				1BEFCAC42755A2B4003647D9 /* ContentView.swift */,
 			);
@@ -248,7 +254,9 @@
 				1BC2880A2746182000DAE988 /* Color+Change.swift in Sources */,
 				1BC28807274603BB00DAE988 /* OnboardingView.swift in Sources */,
 				1B4B891D2749CA7A0046ED75 /* OnboardingViewController.swift in Sources */,
+				1B3D28892757896400CC039C /* AnimatedView.swift in Sources */,
 				1BC287F42745EB3900DAE988 /* BeerFriendsApp.swift in Sources */,
+				1B3D28872757886900CC039C /* SignUpView.swift in Sources */,
 				1BC288052745FBB500DAE988 /* OnboardingSubview.swift in Sources */,
 				1BEFCAC327558D1A003647D9 /* User.swift in Sources */,
 				1BEFCAC52755A2B4003647D9 /* ContentView.swift in Sources */,

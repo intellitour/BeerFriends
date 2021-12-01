@@ -29,8 +29,6 @@ class SessionStore : ObservableObject {
                     email: user.email,
                     displayName: user.displayName
                 )
-            } else {
-                self.session = nil
             }
         }
     }
