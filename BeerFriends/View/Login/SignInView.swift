@@ -24,12 +24,12 @@ struct SignInView : View {
     @Binding var animateForgotPassaword: Bool
     @Binding var animateSignUp: Bool
 
-    @EnvironmentObject var sessionStore: SessionStore
+    @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
 
     func signIn () {
         loading = true
         error = false
-        sessionStore.signIn(email: email, password: password) { (result, error) in
+        userSessionStoreViewModel.signIn(email: email, password: password) { (result, error) in
             self.loading = false
             if error != nil {
                 self.error = true

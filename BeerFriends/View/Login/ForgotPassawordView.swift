@@ -16,12 +16,12 @@ struct ForgotPassawordView: View {
     @State var success = false
     @Binding var animate3d: Bool
     
-    @EnvironmentObject var sessionStore: SessionStore
+    @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
     
     func forgotPassaword () {
         loading = true
         error = false
-        sessionStore.forgotPassaword(email: email) { error in
+        userSessionStoreViewModel.forgotPassaword(email: email) { error in
             self.loading = false
             if error != nil {
                 self.error = true

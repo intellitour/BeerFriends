@@ -19,12 +19,12 @@ struct SignUPView: View {
     @State var loading = false
     @State var error = false
 
-    @EnvironmentObject var sessionStore: SessionStore
+    @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
 
     func signUp () {
         loading = true
         error = false
-        sessionStore.signUp(email: email, password: password) { (result, error) in
+        userSessionStoreViewModel.signUp(email: email, password: password) { (result, error) in
             self.loading = false
             if error != nil {
                 self.error = true

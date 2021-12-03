@@ -9,18 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @EnvironmentObject var sessionStore: SessionStore
+    @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
     
     func getUser () {
-         sessionStore.listen()
+         userSessionStoreViewModel.listen()
      }
 
     var body: some View {
         Group {
-            if sessionStore.session != nil {
+            if userSessionStoreViewModel.userSession != nil {
                 Text("Hello user!")
                     .onTapGesture {
-                        sessionStore.signOut()
+                        let result = userSessionStoreViewModel.signOut()
+                        if (result) {
+                            print("Usuário saiu da sessão")
+                        }
                     }
             } else {
                 if UserDefaults.standard.string(forKey: "Onboarding") == nil {

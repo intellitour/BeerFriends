@@ -18,7 +18,7 @@ struct LoginWrapperView: View {
     @State var showPackBeerImage = false
     @State var isPresenting = false
 
-    @EnvironmentObject var sessionStore: SessionStore
+    @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
 
     var body: some View {
         VStack {
@@ -55,6 +55,7 @@ struct LoginWrapperView: View {
                 }
             }
         }
+        .environmentObject(userSessionStoreViewModel)
     }
 }
 

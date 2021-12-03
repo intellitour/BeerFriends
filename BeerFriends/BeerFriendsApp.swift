@@ -15,7 +15,7 @@ struct BeerFriendsApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(SessionStore())
+            ContentView().environmentObject(UserSessionStoreViewModel())
         }
     }
 }
