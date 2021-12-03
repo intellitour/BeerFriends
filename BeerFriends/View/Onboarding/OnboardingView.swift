@@ -43,7 +43,7 @@ struct OnboardingView: View {
                                 self.currentPageIndex += 1
                             }
                         }){
-                            Image(systemName: K.System.ArrowRight)
+                            Image(systemName: K.Icon.ArrowRight)
                                 .resizable()
                                 .foregroundColor(.white)
                                 .frame(width: 15, height: 15)
@@ -70,7 +70,7 @@ struct OnboardingView: View {
                         }
                         .padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 50))
                         .fullScreenCover(isPresented: $isPresenting) {
-                            SignInView()
+                            LoginWrapperView()
                         }
                     }
                 }

@@ -26,7 +26,7 @@ struct ContentView: View {
                 if UserDefaults.standard.string(forKey: "Onboarding") == nil {
                     OnboardingView()
                 } else {
-                    SignInView()
+                    LoginWrapperView()
                 }
             }
             

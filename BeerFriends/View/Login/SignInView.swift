@@ -13,11 +13,16 @@ struct SignInView : View {
 
     @State var email: String = ""
     @State var password: String = ""
+    @Namespace var animation
+    
     @State var loading = false
     @State var error = false
-    @State var show = false
-    @State var showPackBeerImage = false
     @State var isPresenting = false
+    
+    @Binding var show: Bool
+    @Binding var showPackBeerImage: Bool
+    @Binding var animateForgotPassaword: Bool
+    @Binding var animateSignUp: Bool
 
     @EnvironmentObject var sessionStore: SessionStore
 
@@ -36,97 +41,79 @@ struct SignInView : View {
     }
 
     var body: some View {
-        VStack {
-            ZStack {
-                Color(uiColor: UIColor(.primaryColor)).ignoresSafeArea()
-                VStack {
-                    if !showPackBeerImage {
-                        AnimatedView(show: $show, showPackBeerImage: $showPackBeerImage)
-                            .frame(height: UIScreen.main.bounds.height / 2.5)
-                    } else {
-                        Image(K.Login.SignInImage)
-                            .frame(width: UIScreen.main.bounds.width, alignment: .top)
+        VStack(alignment: .leading, spacing: 6) {
+            Text("Login")
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(.secondaryColor)
+            
+            Text("Entre com seus dados de acesso")
+                .foregroundColor(.secondaryColor).opacity(0.5)
+            
+            Spacer(minLength: 5)
+            
+            
+            CustomTextField(image: K.Icon.Envelope, title: "E-mail", value: $email, animation: animation)
+                    .autocapitalization(.none)
+            
+            CustomTextField(image: K.Icon.Lock, title: "Senha", value: $password, animation: animation)
+                    .autocapitalization(.none)
+                                   
+            
+            Text("Esqueci a senha")
+                .font(.subheadline)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .foregroundColor(.secondaryColor)
+                .onTapGesture {
+                    withAnimation(Animation.linear(duration: 0.4)) {
+                        self.animateForgotPassaword.toggle()
                     }
+                }
+            
+            Spacer(minLength: 5)
+            
+            VStack {
+                Button(action: signIn) {
+                    Text("Entrar")
+                        .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
+                        .foregroundColor(.secondaryColor)
+                        .background(Color.primaryColor)
+                        .cornerRadius(20)
+                }
+                
+                HStack {
+                    Rectangle()
+                        .fill(.gray.opacity(0.5))
+                        .frame(height: 1)
                     
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("Login")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(.secondaryColor)
-                        
-                        Text("Entre com seus dados de acesso")
-                            .foregroundColor(.secondaryColor).opacity(0.5)
-                        
-                        Spacer(minLength: 5)
-                        
-                        VStack {
-                            TextField("E-mail", text: $email, prompt: Text("E-mail"))
-                                .autocapitalization(.none)
-                            
-                            Divider()
-                                .background(Color(UIColor(.gray)))
-                            
-                            SecureField("Senha", text: $password, prompt: Text("Senha"))
-                            Divider()
-                                .background(Color(UIColor(.gray)))
-                        }
-                        
-                        Text("Esqueci a senha")
-                            .font(.subheadline)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .foregroundColor(.secondaryColor)
-                            .onTapGesture {
-                                print("Chamar popup de esqueci a senha")
-                            }
-                        
-                        Spacer(minLength: 5)
-                        
-                        VStack {
-                            Button(action: signIn) {
-                                Text("Entrar")
-                                    .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
-                                    .foregroundColor(.secondaryColor)
-                                    .background(Color.primaryColor)
-                                    .cornerRadius(20)
-                            }
-                            
-                            HStack {
-                                Rectangle()
-                                    .fill(Color.secondaryColor.opacity(0.3))
-                                    .frame(height: 1)
-                                
-                                Text("Ou")
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.secondaryColor.opacity(0.3))
-                                
-                                Rectangle()
-                                    .fill(Color.secondaryColor.opacity(0.3))
-                                    .frame(height: 1)
-                            }.padding(.vertical, 2)
-                            
-                            Button(action: {
-                                isPresenting.toggle()
-                            }) {
-                                Text("Cadastrar")
-                                    .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
-                                    .foregroundColor(.primaryColor)
-                                    .background(Color.secondaryColor)
-                                    .cornerRadius(20)
-                            }
-                            .fullScreenCover(isPresented: $isPresenting) {
-                                SignUPView()
-                            }
-                        }
+                    Text("Ou")
+                        .fontWeight(.bold)
+                        .foregroundColor(.gray.opacity(0.5))
+                    
+                    Rectangle()
+                        .fill(.gray.opacity(0.5))
+                        .frame(height: 1)
+                }.padding(.vertical, 2)
+                
+                Button(action: {
+                    withAnimation(Animation.linear(duration: 0.4)) {
+                        self.animateSignUp.toggle()
                     }
-                    .padding()
-                    .background(.white)
-                    .cornerRadius(20)
-                    .padding()
-                    .frame(height: show ? nil : 0)
-                    .opacity(show ? 1 : 0)
+                }) {
+                    Text("Cadastrar")
+                        .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
+                        .foregroundColor(.primaryColor)
+                        .background(Color.secondaryColor)
+                        .cornerRadius(20)
                 }
             }
         }
+        .padding()
+        .background(.white)
+        .cornerRadius(20)
+        .padding()
+        .frame(height: show ? nil : 0)
+        .opacity(show ? 1 : 0)
         .toast(isPresenting: $error, alert: {
             AlertToast(type: .error(.red),
                        title: "Login não realizado.",

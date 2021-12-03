@@ -28,7 +28,9 @@ struct K {
         static let PackBeer       = "PackBeer"
     }
     
-    struct System {
+    struct Icon {
         static let ArrowRight     = "arrow.right"
+        static let Envelope       = "envelope"
+        static let Lock           = "lock"
     }
 }
