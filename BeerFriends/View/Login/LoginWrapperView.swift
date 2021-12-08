@@ -24,7 +24,7 @@ struct LoginWrapperView: View {
         VStack {
             ZStack {
                 Color(uiColor: UIColor(.primaryColor)).ignoresSafeArea()
-                VStack(alignment: .leading, spacing: 6) {
+                VStack(alignment: .leading) {
                     Spacer()
                     if !showPackBeerImage {
                         AnimatedView(show: $show, showPackBeerImage: $showPackBeerImage)
@@ -32,6 +32,8 @@ struct LoginWrapperView: View {
                             .padding(.top, 170)
                     } else {
                         Image(K.Login.SignInImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
                             .frame(width: UIScreen.main.bounds.width, alignment: .top)
                     }
 

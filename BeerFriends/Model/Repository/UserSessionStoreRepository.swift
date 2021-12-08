@@ -8,12 +8,28 @@
 import Foundation
 import Firebase
 
-class UserSessionStoreService: ObservableObject {
+class UserSessionStoreRepository: ObservableObject {
 
-    func signUp(email: String,
+    func signUp(name: String,
+                email: String,
                 password: String,
                 handler: @escaping AuthDataResultCallback) {
-        Auth.auth().createUser(withEmail: email, password: password, completion: handler)
+        
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            if error != nil  {
+                handler(nil, error)
+            }
+            
+            guard let user = result?.user else { return }
+            
+            let profile = Profile(uid: user.uid,
+                                  email: user.email,
+                                  name: name,
+                                  phone: user.phoneNumber,
+                                  photoURL: user.photoURL)
+            
+            ProfileRepository().createProfile(profile: profile)
+        }
     }
 
     func signIn(email: String,

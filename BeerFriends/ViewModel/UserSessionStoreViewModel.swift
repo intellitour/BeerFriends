@@ -14,7 +14,7 @@ class UserSessionStoreViewModel : ObservableObject {
     var handle: AuthStateDidChangeListenerHandle?
     
     @ObservedObject
-    private var userSessionStoreService = UserSessionStoreService()
+    private var userSessionStoreService = UserSessionStoreRepository()
     
     @Published
     var userSession: User? {
@@ -36,10 +36,11 @@ class UserSessionStoreViewModel : ObservableObject {
         }
     }
 
-    func signUp(email: String,
+    func signUp(name: String,
+                email: String,
                 password: String,
                 handler: @escaping AuthDataResultCallback) {
-        userSessionStoreService.signUp(email: email, password: password, handler: handler)
+        userSessionStoreService.signUp(name: name, email: email, password: password, handler: handler)
     }
 
     func signIn(email: String,

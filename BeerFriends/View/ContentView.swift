@@ -18,13 +18,14 @@ struct ContentView: View {
     var body: some View {
         Group {
             if userSessionStoreViewModel.userSession != nil {
-                Text("Hello user!")
+                /*Text("Hello user!")
                     .onTapGesture {
                         let result = userSessionStoreViewModel.signOut()
                         if (result) {
                             print("Usuário saiu da sessão")
                         }
-                    }
+                    }*/
+                FriendListView()
             } else {
                 if UserDefaults.standard.string(forKey: "Onboarding") == nil {
                     OnboardingView()

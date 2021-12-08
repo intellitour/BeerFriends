@@ -10,6 +10,7 @@ import Lottie
 import AlertToast
 
 struct SignUPView: View {
+    @State var name: String = ""
     @State var email: String = ""
     @State var password: String = ""
     @Namespace var animation
@@ -24,7 +25,7 @@ struct SignUPView: View {
     func signUp () {
         loading = true
         error = false
-        userSessionStoreViewModel.signUp(email: email, password: password) { (result, error) in
+        userSessionStoreViewModel.signUp(name: name, email: email, password: password) { (result, error) in
             self.loading = false
             if error != nil {
                 self.error = true
@@ -46,6 +47,9 @@ struct SignUPView: View {
                 .foregroundColor(.secondaryColor).opacity(0.5)
             
             Spacer(minLength: 5)
+            
+            CustomTextField(image: K.Icon.PersonCircle, title: "Nome", value: $name, animation: animation)
+                    .autocapitalization(.none)
             
             CustomTextField(image: K.Icon.Envelope, title: "E-mail", value: $email, animation: animation)
                     .autocapitalization(.none)

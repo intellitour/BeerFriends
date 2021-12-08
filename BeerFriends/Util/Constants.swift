@@ -32,5 +32,6 @@ struct K {
         static let ArrowRight     = "arrow.right"
         static let Envelope       = "envelope"
         static let Lock           = "lock"
+        static let PersonCircle   = "person.circle"
     }
 }
