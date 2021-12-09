@@ -14,9 +14,8 @@ struct LoginWrapperView: View {
     @State private var animateForgotPassaword = false
     @State private var animateSignUp = false
     
-    @State var show = false
+    @State var showCard = false
     @State var showPackBeerImage = false
-    @State var isPresenting = false
 
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
 
@@ -27,7 +26,7 @@ struct LoginWrapperView: View {
                 VStack(alignment: .leading) {
                     Spacer()
                     if !showPackBeerImage {
-                        AnimatedView(show: $show, showPackBeerImage: $showPackBeerImage)
+                        AnimatedView(showCard: $showCard, showPackBeerImage: $showPackBeerImage)
                             .frame(height: UIScreen.main.bounds.height)
                             .padding(.top, 170)
                     } else {
@@ -38,7 +37,7 @@ struct LoginWrapperView: View {
                     }
 
                     ZStack {
-                        SignInView(show: $show,
+                        SignInView(showCard: $showCard,
                                    showPackBeerImage: $showPackBeerImage,
                                    animateForgotPassaword: $animateForgotPassaword,
                                    animateSignUp: $animateSignUp)
@@ -63,7 +62,7 @@ struct LoginWrapperView: View {
 
 
 struct AnimatedView: UIViewRepresentable {
-    @Binding var show: Bool
+    @Binding var showCard: Bool
     @Binding var showPackBeerImage: Bool
     
     func makeUIView(context: Context) -> AnimationView {
@@ -71,7 +70,7 @@ struct AnimatedView: UIViewRepresentable {
         view.play { (status) in
            if status {
                 withAnimation(.interactiveSpring(response: 0.7, dampingFraction: 0.8, blendDuration: 0.8)) {
-                    show.toggle()
+                    showCard.toggle()
                     showPackBeerImage.toggle()
                 }
             }

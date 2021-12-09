@@ -19,7 +19,7 @@ struct SignInView : View {
     @State var error = false
     @State var isPresenting = false
     
-    @Binding var show: Bool
+    @Binding var showCard: Bool
     @Binding var showPackBeerImage: Bool
     @Binding var animateForgotPassaword: Bool
     @Binding var animateSignUp: Bool
@@ -112,8 +112,8 @@ struct SignInView : View {
         .background(.white)
         .cornerRadius(20)
         .padding()
-        .frame(height: show ? nil : 0)
-        .opacity(show ? 1 : 0)
+        .frame(height: showCard ? nil : 0)
+        .opacity(showCard ? 1 : 0)
         .toast(isPresenting: $error, alert: {
             AlertToast(type: .error(.red),
                        title: "Login não realizado.",

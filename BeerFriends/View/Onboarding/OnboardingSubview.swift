@@ -64,15 +64,6 @@ struct OnboardingSubview: View {
                         .padding(EdgeInsets(top: 80, leading: 40, bottom: 0, trailing: 0))
                         Spacer()
                     }
-                    /*VStack(alignment: .center, spacing: 6) {
-                        Spacer()
-                        Text(K.Omboarding.FinalTitle)
-                            .font(.largeTitle)
-                            .foregroundColor(.primaryColor)
-                            .frame(maxWidth: .infinity, alignment: .bottom)
-                            .multilineTextAlignment(.center)
-                            .padding(4)
-                    }*/
                 }
             }
         }

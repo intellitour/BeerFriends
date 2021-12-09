@@ -45,9 +45,7 @@ struct CustomTextField: View {
                 }
             }
             
-            //if value == "" {
-                Divider()
-            //}
+            Divider()           
         }
         .padding(.vertical, 10)
         .background(.white.opacity(value != "" ? 1 : 0))
