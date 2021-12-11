@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct SideMenuOptionsView: View {
-    var viewModel: SideMenuViewModel
+    var menuOption: SideMenuOptions
     
     var body: some View {
         HStack(spacing: 16) {
-            Image(systemName: viewModel.icon)
+            Image(systemName: menuOption.icon)
                 .frame(width: 24, height: 24)
             
-            Text(viewModel.description)
+            Text(menuOption.description)
                 .font(.system(size: 15, weight: .semibold))
             
             Spacer()
@@ -27,6 +27,6 @@ struct SideMenuOptionsView: View {
 
 struct SideMenuOptionsView_Previews: PreviewProvider {
     static var previews: some View {
-        SideMenuOptionsView(viewModel: .configurations)
+        SideMenuOptionsView(menuOption: .configurations)
     }
 }

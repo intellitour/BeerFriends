@@ -21,7 +21,7 @@ struct OnboardingSubview: View {
                 
                 if imageName == K.Omboarding.ImageOne {
                     VStack {
-                            Image(K.Omboarding.Icon)
+                            Image(K.System.Icon)
                                 .padding(.bottom, 10)
                             
                             Text(K.Omboarding.Title)

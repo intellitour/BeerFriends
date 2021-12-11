@@ -13,8 +13,7 @@ class UserSessionStoreViewModel : ObservableObject {
     var didChange = PassthroughSubject<UserSessionStoreViewModel, Never>()
     var handle: AuthStateDidChangeListenerHandle?
     
-    @ObservedObject
-    private var userSessionStoreService = UserSessionStoreRepository()
+    private var userSessionStoreRepository = UserSessionStoreRepository()
     
     @Published
     var userSession: User? {
@@ -40,22 +39,22 @@ class UserSessionStoreViewModel : ObservableObject {
                 email: String,
                 password: String,
                 handler: @escaping AuthDataResultCallback) {
-        userSessionStoreService.signUp(name: name, email: email, password: password, handler: handler)
+        userSessionStoreRepository.signUp(name: name, email: email, password: password, handler: handler)
     }
 
     func signIn(email: String,
                 password: String,
                 handler: @escaping AuthDataResultCallback) {
-        userSessionStoreService.signIn(email: email, password: password, handler: handler)
+        userSessionStoreRepository.signIn(email: email, password: password, handler: handler)
     }
     
     func forgotPassaword(email: String,
                          handler: @escaping SendPasswordResetCallback) {
-        userSessionStoreService.forgotPassaword(email: email, handler: handler)
+        userSessionStoreRepository.forgotPassaword(email: email, handler: handler)
     }
 
     func signOut () -> Bool {
-        let result = userSessionStoreService.signOut()
+        let result = userSessionStoreRepository.signOut()
         if result {
             self.userSession = nil
         }

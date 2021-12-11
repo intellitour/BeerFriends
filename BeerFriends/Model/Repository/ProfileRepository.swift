@@ -14,7 +14,7 @@ class ProfileRepository: ObservableObject {
     @Published var friendsProfile = [Profile]()
     
     func createProfile(profile: Profile) {
-        db.collection("profiles").document(profile.uid!).setData(profile.profileEncoded)
+        db.collection("profiles").document(profile.uid!).setData(profile.encoded)
     }
     
     func fetchFriendsProfile() {
@@ -24,10 +24,9 @@ class ProfileRepository: ObservableObject {
                 return
             }
             
-            self.friendsProfile = try! friendsDocuments.map { (queryDocumentSnapshot) -> Profile in
+            self.friendsProfile = friendsDocuments.map { (queryDocumentSnapshot) -> Profile in
                 let data = queryDocumentSnapshot.data()
-                let jsonData = try JSONSerialization.data(withJSONObject: data, options: [])
-                return try JSONDecoder().decode(Profile.self, from: jsonData)
+                return try! Profile.with(data)!
             }
         }
     }

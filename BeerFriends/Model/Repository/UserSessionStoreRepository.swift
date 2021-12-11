@@ -8,7 +8,7 @@
 import Foundation
 import Firebase
 
-class UserSessionStoreRepository: ObservableObject {
+class UserSessionStoreRepository {
 
     func signUp(name: String,
                 email: String,

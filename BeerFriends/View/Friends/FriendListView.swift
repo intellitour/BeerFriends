@@ -65,5 +65,6 @@ struct FriendListView: View {
 struct FriendListView_Previews: PreviewProvider {
     static var previews: some View {
         FriendListView()
+            //.preferredColorScheme(.dark)
     }
 }

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SideMenuHeaderView: View {
     @Binding var isShowing: Bool
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         ZStack(alignment: .topTrailing) {
             Button(action: {
@@ -18,7 +20,7 @@ struct SideMenuHeaderView: View {
             }, label: {
                 Image(systemName: K.Icon.close)
                     .frame(width: 32, height: 32)
-                    .foregroundColor(.white)
+                    .foregroundColor(colorScheme == .dark ? Color.black : Color.white)
                     .padding()
             })
 

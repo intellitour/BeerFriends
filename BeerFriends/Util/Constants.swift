@@ -9,8 +9,11 @@ import Foundation
 
 struct K {
     
-    struct Omboarding {
+    struct System {
         static let Icon             = "HomeBrewWhiteIcon"
+    }
+    
+    struct Omboarding {
         static let Title            = "Cerveja Artesanal & Bons Amigos"
         static let FinalTitle       = "Bora, tomar uma?"
         static let Subtitle         = "Encontre seus amigos e descubra em qual barzinho eles estão se reunindo e comemorando"
@@ -29,10 +32,12 @@ struct K {
     }
     
     struct Icon {
+        static let ArrowLeft        = "arrow.left"
         static let ArrowRight       = "arrow.right"
         static let Envelope         = "envelope"
         static let Lock             = "lock"
         static let PersonCircle     = "person.circle"
+        static let PersonFill       = "person.fill"
         static let Person2Fill      = "person.2.fill"
         static let gearshapeFill    = "gearshape.fill"
         static let Line3Horizontal  = "line.3.horizontal"

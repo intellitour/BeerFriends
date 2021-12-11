@@ -10,7 +10,19 @@ import simd
 
 struct SideMenuView: View {
     @Binding var isShowing: Bool
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
+    
+    @ViewBuilder
+    func navigate(with menuOption: SideMenuOptions) -> some View {
+        switch menuOption {
+            case .configurations: Text(menuOption.description)
+        case .profile: ProfileView().navigationBarHidden(true)
+            case .friends: Text(menuOption.description)
+            case .terms: Text(menuOption.description)
+            case .loggout: Text(menuOption.description)
+        }
+    }
 
     var body: some View {
         ZStack {
@@ -23,26 +35,26 @@ struct SideMenuView: View {
                 SideMenuHeaderView(isShowing: $isShowing)
                     .frame(height: 240)
                 
-                ForEach(SideMenuViewModel.allCases, id: \.self) { option in
-                    if option == SideMenuViewModel.loggout {
-                        SideMenuOptionsView(viewModel: option)
+                ForEach(SideMenuOptions.allCases, id: \.self) { option in
+                    if option == SideMenuOptions.loggout {
+                        SideMenuOptionsView(menuOption: option)
                             .onTapGesture {
                                 let result = userSessionStoreViewModel.signOut()
                                 if (result) { print("Usuário saiu da sessão") }
                             }
                     } else {
                         NavigationLink(
-                            destination: Text(option.description),
+                            destination: navigate(with: option),
                             label: {
-                                SideMenuOptionsView(viewModel: option)
+                              SideMenuOptionsView(menuOption: option)
                             }
-                        )
+                        ).navigationTitle(option.description)
                     }
                 }
                 
                 Spacer()
             }
-            .foregroundColor(.white)
+            .foregroundColor(colorScheme == .dark ? Color.black : Color.white)
         }
         .navigationBarHidden(true)
         .navigationBarTitleDisplayMode(.inline)
@@ -52,5 +64,6 @@ struct SideMenuView: View {
 struct SideMenuView_Previews: PreviewProvider {
     static var previews: some View {
         SideMenuView(isShowing: .constant(true))
+            //.preferredColorScheme(.dark)
     }
 }

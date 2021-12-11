@@ -60,7 +60,7 @@ struct OnboardingView: View {
                             preferences.set("Onboarding", forKey: "Onboarding")
                             isPresenting.toggle()
                         }){
-                            Image(K.Omboarding.Icon)
+                            Image(K.System.Icon)
                                 .resizable()
                                 .foregroundColor(.white)
                                 .frame(width: 30, height: 30)

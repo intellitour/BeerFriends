@@ -19,9 +19,14 @@ struct Profile: Identifiable, Codable {
     var localization: Localization?
     var favoritePlaces: [Localization]?
     
-    var profileEncoded: [String: Any] {
+    var encoded: [String: Any] {
        let data = (try? JSONEncoder().encode(self)) ?? Data()
        return (try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]) ?? [:]
+    }
+    
+    static func with(_ data: [String: Any]) throws -> Profile? {
+        let jsonData = try JSONSerialization.data(withJSONObject: data, options: [])
+        return try JSONDecoder().decode(Profile.self, from: jsonData)
     }
     
     enum CodingKeys: String, CodingKey {
