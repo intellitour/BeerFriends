@@ -11,8 +11,32 @@ struct ProfileView: View {
     
     @State var offset: CGFloat = 0
     @State var titleOffset: CGFloat = 0
+    @State var galeryIndex = 0
+    
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    func getTitleTextOffset() -> CGFloat {
+        let progress = 20 / titleOffset
+        let offset = 60 * (progress > 0 && progress <= 1 ? progress : 1)
+        return offset
+    }
+    
+    func getOffset() -> CGFloat {
+        let progress = (-offset / 80) * 20
+        return progress <= 20 ? progress : 20
+    }
+    
+    func getScale() -> CGFloat {
+        let progress = -offset / 80
+        let scale = 1.8 - (progress < 1.0 ? progress : 1)
+        return scale < 1 ? scale : 1
+    }
+    
+    func blurViewOpacity() -> Double {
+        let progress = -(offset + 80) / 150
+        return Double(-offset > 80 ? progress : 0)
+    }
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false,
@@ -125,8 +149,10 @@ struct ProfileView: View {
                             .fontWeight(.bold)
                             .foregroundColor(.secondaryColor)
                         
-                        Text("wamarra@gmail")
+                        Text("wamarra@gmail.com")
                             .foregroundColor(.gray)
+                            .padding(.top, -8)
+                            .padding(.bottom, 8)
                         
                         Text("Um grande adorador de cervejas artesanais com preferância nas do tipo IPA e Session IPA. E claro, ceveja sem amigos não é cerveja é solidão ;)")
                         
@@ -149,20 +175,76 @@ struct ProfileView: View {
                                 .font(.subheadline)
                         }
                         .padding(.top, 8)
-                    })
-                        .overlay(
-                            GeometryReader { proxy -> Color in
-                                let minY = proxy.frame(in: .global).minY
+                        .padding(.bottom, 8)
+                        
+                        VStack {
+                            HStack {
+                                Text("Galeria")
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.secondaryColor)
+                                    .padding(.top)
+                                    .padding(.bottom, -1)
                                 
-                                DispatchQueue.main.async {
-                                    self.titleOffset = minY
-                                }
-                                
-                                return Color.clear
+                                Spacer()
                             }
-                            .frame(width: 0, height: 0)
-                            ,alignment: .top
-                        )
+                            
+                            Divider()
+                            
+                            HStack {
+                                Text("Favoritas")
+                                    .font(.caption)
+                                    .foregroundColor(galeryIndex == 0 ? .white : .secondaryColor.opacity(0.85))
+                                    .fontWeight(.bold)
+                                    .padding(.vertical, 6)
+                                    .padding(.horizontal, 20)
+                                    .background(Color.primaryColor.opacity(galeryIndex == 0 ? 1 : 0))
+                                    .clipShape(Capsule())
+                                    .onTapGesture {
+                                        galeryIndex = 0
+                                    }
+                                
+                                Text("Fotos e eventos")
+                                    .font(.caption)
+                                    .foregroundColor(galeryIndex == 1 ? .white : .secondaryColor.opacity(0.85))
+                                    .fontWeight(.bold)
+                                    .padding(.vertical, 6)
+                                    .padding(.horizontal, 20)
+                                    .background(Color.primaryColor.opacity(galeryIndex == 01 ? 1 : 0))
+                                    .clipShape(Capsule())
+                                    .onTapGesture {
+                                        galeryIndex = 1
+                                    }
+                                
+                                Spacer()
+                            }
+                            .padding(.top, 10)
+                            
+                            ZStack {
+                                if (galeryIndex == 0) {
+                                    FavoriteGalleryImagesView()
+                                        .padding(.horizontal, 25)
+                                } else {
+                                    EventsGalleryImagesView()
+                                }
+                            }
+                            .frame(height: UIScreen.main.bounds.height / 1.8)
+                            .padding(.top, 20)
+                        }
+                    })
+                    .overlay(
+                        GeometryReader { proxy -> Color in
+                            let minY = proxy.frame(in: .global).minY
+                            
+                            DispatchQueue.main.async {
+                                self.titleOffset = minY
+                            }
+                            
+                            return Color.clear
+                        }
+                        .frame(width: 0, height: 0)
+                        ,alignment: .top
+                    )
                 }
                 .padding(.horizontal)
                 .zIndex(-offset > 80 ? 0 : 1)
@@ -170,33 +252,11 @@ struct ProfileView: View {
         })
         .ignoresSafeArea(.all, edges: .top)
     }
-    
-    func getTitleTextOffset() -> CGFloat {
-        let progress = 20 / titleOffset
-        let offset = 60 * (progress > 0 && progress <= 1 ? progress : 1)
-        return offset
-    }
-    
-    func getOffset() -> CGFloat {
-        let progress = (-offset / 80) * 20
-        return progress <= 20 ? progress : 20
-    }
-    
-    func getScale() -> CGFloat {
-        let progress = -offset / 80
-        let scale = 1.8 - (progress < 1.0 ? progress : 1)
-        return scale < 1 ? scale : 1
-    }
-    
-    func blurViewOpacity() -> Double {
-        let progress = -(offset + 80) / 150
-        return Double(-offset > 80 ? progress : 0)
-    }
 }
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileView()
-        //.preferredColorScheme(.dark)
+        .preferredColorScheme(.dark)
     }
 }

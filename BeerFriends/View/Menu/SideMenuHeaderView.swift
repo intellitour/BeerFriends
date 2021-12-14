@@ -36,7 +36,7 @@ struct SideMenuHeaderView: View {
                 Text("Wesley Marra")
                     .font(.system(size: 24, weight: .semibold))
                 
-                Text("wamarra@gmail")
+                Text("wamarra@gmail.com")
                     .font(.system(size: 14))
                     .padding(.bottom, 24)
                 

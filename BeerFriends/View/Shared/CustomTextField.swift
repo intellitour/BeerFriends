@@ -15,8 +15,6 @@ struct CustomTextField: View {
     var title: String
     @Binding var value: String
     var animation: Namespace.ID
-    
-    
 
     var body: some View {
         VStack(spacing: 6) {

@@ -32,9 +32,3 @@ struct FriendCircleView: View {
         }
     }
 }
-
-struct ProfileCircleView_Previews: PreviewProvider {
-    static var previews: some View {
-        FriendCircleView(friendProfileItem: Profile())
-    }
-}

@@ -44,5 +44,7 @@ struct K {
         static let DocText          = "doc.text"
         static let signOut          = "rectangle.portrait.and.arrow.right"
         static let close            = "xmark"
+        static let statusMessage    = "text.bubble"
+        static let phone            = "iphone"
     }
 }

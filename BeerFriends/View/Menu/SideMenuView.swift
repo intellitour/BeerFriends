@@ -17,8 +17,11 @@ struct SideMenuView: View {
     func navigate(with menuOption: SideMenuOptions) -> some View {
         switch menuOption {
             case .configurations: Text(menuOption.description)
-        case .profile: ProfileView().navigationBarHidden(true)
-            case .friends: Text(menuOption.description)
+            case .profile: ProfileView()
+                    .navigationBarHidden(true)
+            case .friends: FriendListView()
+                    .environmentObject(userSessionStoreViewModel)
+                    .navigationBarHidden(true)
             case .terms: Text(menuOption.description)
             case .loggout: Text(menuOption.description)
         }
