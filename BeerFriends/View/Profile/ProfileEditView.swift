@@ -9,11 +9,24 @@ import SwiftUI
 
 struct ProfileEditView: View {
     @Namespace var animation
+    @State var id: String
+    @State var uid: String
     @State var name: String
     @State var email: String
     @State var phone: String
     @State var statusMessage: String
     
+    @ObservedObject var viewModel = ProfileViewModel()
+    
+    init(profile: Profile) {
+        self.id = profile.id
+        self.uid = profile.uid ?? ""
+        self.name = profile.name ?? ""
+        self.email = profile.email ?? ""
+        self.phone = profile.phone ?? ""
+        self.statusMessage = profile.statusMessage ?? ""
+    }
+        
     var body: some View {
         VStack {
             VStack {
@@ -36,16 +49,16 @@ struct ProfileEditView: View {
                 Text(email)
                     .foregroundColor(.gray)
             }
-            .padding(.top, 70)
-            .padding(.bottom, 50)
+            .padding(.top, 20)
+            .padding(.bottom, 30)
             .frame(width: UIScreen.main.bounds.width)
             .background(Color.primaryColor)
-            .ignoresSafeArea()
             
             ScrollView {
                 VStack {
                     CustomTextField(image: K.Icon.PersonFill, title: "Nome", value: $name, animation: animation)
-                    CustomTextField(image: K.Icon.Envelope, title: "E-mail", value: $email, animation: animation)  .keyboardType(.emailAddress)
+                    CustomTextField(image: K.Icon.Envelope, title: "E-mail", value: $email, animation: animation)
+                        .keyboardType(.emailAddress)
                     CustomTextField(image: K.Icon.phone, title: "Telefone", value: $phone, animation: animation)
                         .keyboardType(.phonePad)
                     
@@ -85,10 +98,9 @@ struct ProfileEditView: View {
                                 )
                         })
                     }
-                    .padding(.vertical)
                 }
-                .padding(.top, -30)
-            .padding()
+                .padding(.top, 10)
+                .padding()
             }
             
             Spacer()
@@ -99,9 +111,6 @@ struct ProfileEditView: View {
 
 struct ProfileEditView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileEditView(name: "Wesley Alberto Marra",
-                        email: "wamarra@gmail.com",
-                        phone: "61 98283-3810",
-                        statusMessage: "Um grande adorador de cervejas artesanais com preferância nas do tipo IPA e Session IPA. E claro, ceveja sem amigos não é cerveja é solidão ;)")
+        ProfileEditView(profile: Profile())
     }
 }

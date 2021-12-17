@@ -12,8 +12,8 @@ struct ContentView: View {
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
     
     func getUser () {
-         userSessionStoreViewModel.listen()
-     }
+        userSessionStoreViewModel.listen()
+    }
 
     var body: some View {
         Group {

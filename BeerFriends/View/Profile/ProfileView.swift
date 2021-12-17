@@ -12,9 +12,22 @@ struct ProfileView: View {
     @State var offset: CGFloat = 0
     @State var titleOffset: CGFloat = 0
     @State var galeryIndex = 0
+    @State var profile = Profile() {
+        didSet {
+            print(profile)
+        }
+    }
+    
+    @ObservedObject var viewModel = ProfileViewModel()
+    @EnvironmentObject private var userSessionStoreViewModel: UserSessionStoreViewModel
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    func getProfile() {
+        userSessionStoreViewModel.listen()
+        viewModel.findProfile(by: userSessionStoreViewModel.userSession?.uid ?? "")
+    }
     
     func getTitleTextOffset() -> CGFloat {
         let progress = 20 / titleOffset
@@ -128,15 +141,17 @@ struct ProfileView: View {
                         Spacer()
                         
                         Button(action: {}, label: {
-                            Text("Editar Perfil")
-                                .foregroundColor(.secondaryColor)
-                                .fontWeight(.bold)
-                                .padding(.vertical, 10)
-                                .padding(.horizontal)
-                                .background(
-                                    Capsule()
-                                        .stroke(Color.secondaryColor, lineWidth: 2)
-                                )
+                            NavigationLink(destination: ProfileEditView(profile: viewModel.profile)) {
+                                Text("Editar Perfil")
+                                    .foregroundColor(.secondaryColor)
+                                    .fontWeight(.bold)
+                                    .padding(.vertical, 10)
+                                    .padding(.horizontal)
+                                    .background(
+                                        Capsule()
+                                            .stroke(Color.secondaryColor, lineWidth: 2)
+                                    )
+                            }
                         })
                         
                     }
@@ -144,7 +159,7 @@ struct ProfileView: View {
                     .padding(.bottom, -15)
                     
                     VStack(alignment: .leading, spacing: 8, content: {
-                        Text("Wesley Marra")
+                        Text(self.viewModel.profile.name ?? "Teste")
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.secondaryColor)
@@ -251,6 +266,7 @@ struct ProfileView: View {
             }
         })
         .ignoresSafeArea(.all, edges: .top)
+        .onAppear(perform: getProfile)
     }
 }
 
