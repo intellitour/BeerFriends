@@ -7,9 +7,11 @@
 
 import Foundation
 import Firebase
+import UIKit
 
 class ProfileRepository: ObservableObject {
-    private var db = Firestore.firestore()
+    var db = Firestore.firestore()
+    private let storage = Storage.storage()
     
     @Published var friendsProfile = [Profile]()
     @Published var profile = Profile()
@@ -47,6 +49,39 @@ class ProfileRepository: ObservableObject {
                     self.profile = try! Profile.with(data) ?? Profile()
                 }
             }
+        }
+    }
+    
+    func save(with profile: Profile, and photo: UIImage?) {
+        let storageRef = storage.reference().child("profiles/\(profile.uid!).jpg")
+        if photo != nil {
+            let data = photo?.jpegData(compressionQuality: 0.5)
+            
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpg"
+            
+            if let data = data {
+                storageRef.putData(data, metadata: metadata) { (metadata, error) in
+                    if let error = error {
+                            print("Erro ao fazer o upload da imagem: ", error)
+                    }
+
+                    if let metadata = metadata {
+                            print("Metadata: ", metadata)
+                    }
+                    
+                    storageRef.downloadURL { [self] (url, error) in
+                        guard let downloadURL = url else { return }
+                        
+                        self.profile = profile
+                        self.profile.photoURL = downloadURL
+                        print(self.profile)
+                        self.db.collection("profiles").document(self.profile.uid!).updateData(self.profile.encoded)
+                    }
+                }
+            }
+        } else {
+            db.collection("profiles").document(profile.uid!).updateData(profile.encoded)
         }
     }
 }

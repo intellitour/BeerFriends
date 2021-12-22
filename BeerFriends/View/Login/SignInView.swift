@@ -41,83 +41,87 @@ struct SignInView : View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("Login")
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundColor(.secondaryColor)
-            
-            Text("Entre com seus dados de acesso")
-                .foregroundColor(.secondaryColor).opacity(0.5)
-            
-            Spacer(minLength: 5)
-            
-            
-            CustomTextField(image: K.Icon.Envelope, title: "E-mail", value: $email, animation: animation)
-                    .autocapitalization(.none)
-            
-            CustomTextField(image: K.Icon.Lock, title: "Senha", value: $password, animation: animation)
-                    .autocapitalization(.none)
-                                   
-            
-            Text("Esqueci a senha")
-                .font(.subheadline)
-                .frame(maxWidth: .infinity, alignment: .trailing)
-                .foregroundColor(.secondaryColor)
-                .onTapGesture {
-                    withAnimation(Animation.linear(duration: 0.4)) {
-                        self.animateForgotPassaword.toggle()
-                    }
-                }
-            
-            Spacer(minLength: 5)
-            
-            VStack {
-                Button(action: signIn) {
-                    Text("Entrar")
-                        .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
-                        .foregroundColor(.secondaryColor)
-                        .background(Color.primaryColor)
-                        .cornerRadius(20)
-                }
+        if loading {
+            AlertToast(type: .loading)
+        } else {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Login")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(.secondaryColor)
                 
-                HStack {
-                    Rectangle()
-                        .fill(.gray.opacity(0.5))
-                        .frame(height: 1)
-                    
-                    Text("Ou")
-                        .fontWeight(.bold)
-                        .foregroundColor(.gray.opacity(0.5))
-                    
-                    Rectangle()
-                        .fill(.gray.opacity(0.5))
-                        .frame(height: 1)
-                }.padding(.vertical, 2)
+                Text("Entre com seus dados de acesso")
+                    .foregroundColor(.secondaryColor).opacity(0.5)
                 
-                Button(action: {
-                    withAnimation(Animation.linear(duration: 0.4)) {
-                        self.animateSignUp.toggle()
+                Spacer(minLength: 5)
+                
+                
+                CustomTextField(image: K.Icon.Envelope, title: "E-mail", value: $email, animation: animation)
+                    .autocapitalization(.none)
+                
+                CustomTextField(image: K.Icon.Lock, title: "Senha", value: $password, animation: animation)
+                    .autocapitalization(.none)
+                
+                
+                Text("Esqueci a senha")
+                    .font(.subheadline)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .foregroundColor(.secondaryColor)
+                    .onTapGesture {
+                        withAnimation(Animation.linear(duration: 0.4)) {
+                            self.animateForgotPassaword.toggle()
+                        }
                     }
-                }) {
-                    Text("Cadastrar")
-                        .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
-                        .foregroundColor(.primaryColor)
-                        .background(Color.secondaryColor)
-                        .cornerRadius(20)
+                
+                Spacer(minLength: 5)
+                
+                VStack {
+                    Button(action: signIn) {
+                        Text("Entrar")
+                            .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
+                            .foregroundColor(.secondaryColor)
+                            .background(Color.primaryColor)
+                            .cornerRadius(20)
+                    }
+                    
+                    HStack {
+                        Rectangle()
+                            .fill(.gray.opacity(0.5))
+                            .frame(height: 1)
+                        
+                        Text("Ou")
+                            .fontWeight(.bold)
+                            .foregroundColor(.gray.opacity(0.5))
+                        
+                        Rectangle()
+                            .fill(.gray.opacity(0.5))
+                            .frame(height: 1)
+                    }.padding(.vertical, 2)
+                    
+                    Button(action: {
+                        withAnimation(Animation.linear(duration: 0.4)) {
+                            self.animateSignUp.toggle()
+                        }
+                    }) {
+                        Text("Cadastrar")
+                            .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
+                            .foregroundColor(.primaryColor)
+                            .background(Color.secondaryColor)
+                            .cornerRadius(20)
+                    }
                 }
             }
+            .padding()
+            .background(.white)
+            .cornerRadius(20)
+            .padding()
+            .frame(height: showCard ? nil : 0)
+            .opacity(showCard ? 1 : 0)
+            .toast(isPresenting: $error, alert: {
+                AlertToast(type: .error(.red),
+                           title: "Login não realizado.",
+                           subTitle: "Por favor, verifique o e-mail ou a senha e tente novamente")
+            })
         }
-        .padding()
-        .background(.white)
-        .cornerRadius(20)
-        .padding()
-        .frame(height: showCard ? nil : 0)
-        .opacity(showCard ? 1 : 0)
-        .toast(isPresenting: $error, alert: {
-            AlertToast(type: .error(.red),
-                       title: "Login não realizado.",
-                       subTitle: "Por favor, verifique o e-mail ou a senha e tente novamente")
-        })
     }
 }

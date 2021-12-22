@@ -12,22 +12,11 @@ struct ProfileView: View {
     @State var offset: CGFloat = 0
     @State var titleOffset: CGFloat = 0
     @State var galeryIndex = 0
-    @State var profile = Profile() {
-        didSet {
-            print(profile)
-        }
-    }
     
-    @ObservedObject var viewModel = ProfileViewModel()
-    @EnvironmentObject private var userSessionStoreViewModel: UserSessionStoreViewModel
+    @Binding var profile: Profile
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
-    func getProfile() {
-        userSessionStoreViewModel.listen()
-        viewModel.findProfile(by: userSessionStoreViewModel.userSession?.uid ?? "")
-    }
     
     func getTitleTextOffset() -> CGFloat {
         let progress = 20 / titleOffset
@@ -108,7 +97,7 @@ struct ProfileView: View {
                                 .opacity(blurViewOpacity())
                             
                             VStack(spacing: 5) {
-                                Text("Wesley Marra")
+                                Text(profile.name ?? "")
                                     .fontWeight(.bold)
                                     .foregroundColor(colorScheme == .dark ? Color.secondaryColor : Color.primaryColor)
                             }
@@ -126,22 +115,43 @@ struct ProfileView: View {
                 
                 VStack {
                     HStack {
-                        Image(systemName: K.Icon.PersonCircle)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 85, height: 85)
-                            .clipShape(Circle())
-                            .foregroundColor(.secondaryColor)
-                            .padding(8)
-                            .background(colorScheme == .dark ? Color.black : Color.white)
-                            .clipShape(Circle())
-                            .offset(y: offset < 0 ? getOffset() - 20 : -20)
-                            .scaleEffect(getScale())
+                        if  profile.photoURL != nil {
+                            AsyncImage(
+                                url: profile.photoURL,
+                                content: { image in
+                                    image.resizable()
+                                         .scaledToFill()
+                                         .frame(width: 85, height: 85)
+                                         .clipShape(Circle())
+                                         .foregroundColor(.secondaryColor)
+                                         .padding(6)
+                                         .background(colorScheme == .dark ? Color.black : Color.white)
+                                         .clipShape(Circle())
+                                         .offset(y: offset < 0 ? getOffset() - 20 : -20)
+                                         .scaleEffect(getScale())
+                               },
+                               placeholder: {
+                                   ProgressView()
+                                       .frame(width: 85, height: 85, alignment: .center)
+                               })
+                        } else {
+                            Image(systemName: K.Icon.PersonCircle)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 85, height: 85)
+                                .clipShape(Circle())
+                                .foregroundColor(.secondaryColor)
+                                .padding(6)
+                                .background(colorScheme == .dark ? Color.black : Color.white)
+                                .clipShape(Circle())
+                                .offset(y: offset < 0 ? getOffset() - 20 : -20)
+                                .scaleEffect(getScale())
+                        }
                         
                         Spacer()
                         
                         Button(action: {}, label: {
-                            NavigationLink(destination: ProfileEditView(profile: viewModel.profile)) {
+                            NavigationLink(destination: ProfileEditView(profile: profile)) {
                                 Text("Editar Perfil")
                                     .foregroundColor(.secondaryColor)
                                     .fontWeight(.bold)
@@ -159,17 +169,17 @@ struct ProfileView: View {
                     .padding(.bottom, -15)
                     
                     VStack(alignment: .leading, spacing: 8, content: {
-                        Text(self.viewModel.profile.name ?? "Teste")
+                        Text(profile.name ?? "")
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.secondaryColor)
                         
-                        Text("wamarra@gmail.com")
+                        Text(profile.email ?? "")
                             .foregroundColor(.gray)
                             .padding(.top, -8)
                             .padding(.bottom, 8)
                         
-                        Text("Um grande adorador de cervejas artesanais com preferância nas do tipo IPA e Session IPA. E claro, ceveja sem amigos não é cerveja é solidão ;)")
+                        Text("Um grande adorador de cervejas artesanais com preferância nas do tipo IPA e Session IPA. E claro, cerveja sem amigos não é cerveja é solidão ;)")
                         
                         HStack(spacing: 5) {
                             Text("32")
@@ -266,13 +276,13 @@ struct ProfileView: View {
             }
         })
         .ignoresSafeArea(.all, edges: .top)
-        .onAppear(perform: getProfile)
     }
 }
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
-        .preferredColorScheme(.dark)
+        ProfileView(profile: .constant(Profile()))
+            .environmentObject(UserSessionStoreViewModel())
+            .preferredColorScheme(.dark)
     }
 }

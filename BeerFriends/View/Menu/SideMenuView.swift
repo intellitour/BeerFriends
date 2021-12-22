@@ -13,14 +13,21 @@ struct SideMenuView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
     
+    @StateObject var viewModel = ProfileViewModel()
+    
+    func getProfile() {
+        if userSessionStoreViewModel.userSession?.uid != nil {
+            viewModel.findProfile(by: userSessionStoreViewModel.userSession?.uid ?? "")
+        }
+    }
+    
     @ViewBuilder
     func navigate(with menuOption: SideMenuOptions) -> some View {
         switch menuOption {
             case .configurations: Text(menuOption.description)
-            case .profile: ProfileView()
+        case .profile: ProfileView(profile: $viewModel.profile)
                     .navigationBarHidden(true)
             case .friends: FriendListView()
-                    .environmentObject(userSessionStoreViewModel)
                     .navigationBarHidden(true)
             case .terms: Text(menuOption.description)
             case .loggout: Text(menuOption.description)
@@ -35,7 +42,7 @@ struct SideMenuView: View {
             ).ignoresSafeArea()
             
             VStack(alignment: .leading) {
-                SideMenuHeaderView(isShowing: $isShowing)
+                SideMenuHeaderView(isShowing: $isShowing, profile: $viewModel.profile)
                     .frame(height: 240)
                 
                 ForEach(SideMenuOptions.allCases, id: \.self) { option in
@@ -61,6 +68,7 @@ struct SideMenuView: View {
         }
         .navigationBarHidden(true)
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear(perform: getProfile)
     }
 }
 

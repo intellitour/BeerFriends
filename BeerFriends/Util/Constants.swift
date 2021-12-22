@@ -46,5 +46,6 @@ struct K {
         static let close            = "xmark"
         static let statusMessage    = "text.bubble"
         static let phone            = "iphone"
+        static let plus             = "plus"
     }
 }

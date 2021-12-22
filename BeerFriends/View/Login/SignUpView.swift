@@ -37,62 +37,66 @@ struct SignUPView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("Cadastro")
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundColor(.secondaryColor)
-            
-            Text("Informe o e-mail e senha para continuar")
-                .foregroundColor(.secondaryColor).opacity(0.5)
-            
-            Spacer(minLength: 5)
-            
-            CustomTextField(image: K.Icon.PersonCircle, title: "Nome", value: $name, animation: animation)
-                    .autocapitalization(.none)
-            
-            CustomTextField(image: K.Icon.Envelope, title: "E-mail", value: $email, animation: animation)
-                    .autocapitalization(.none)
-            
-            CustomTextField(image: K.Icon.Lock, title: "Senha", value: $password, animation: animation)
-                    .autocapitalization(.none)
-            
-            Spacer(minLength: 5)
-            
-            VStack() {
-                Button(action: signUp) {
-                    Text("Salvar")
-                        .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
-                        .foregroundColor(.secondaryColor)
-                        .background(Color.primaryColor)
-                        .cornerRadius(20)
-                }
-                .padding(.bottom)
+        if loading {
+            AlertToast(type: .loading)
+        } else {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Cadastro")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(.secondaryColor)
                 
-                Button(action: {
-                    withAnimation(Animation.linear(duration: 0.4)) {
-                        self.animate3d.toggle()
+                Text("Informe o e-mail e senha para continuar")
+                    .foregroundColor(.secondaryColor).opacity(0.5)
+                
+                Spacer(minLength: 5)
+                
+                CustomTextField(image: K.Icon.PersonCircle, title: "Nome", value: $name, animation: animation)
+                        .autocapitalization(.none)
+                
+                CustomTextField(image: K.Icon.Envelope, title: "E-mail", value: $email, animation: animation)
+                        .autocapitalization(.none)
+                
+                CustomTextField(image: K.Icon.Lock, title: "Senha", value: $password, animation: animation)
+                        .autocapitalization(.none)
+                
+                Spacer(minLength: 5)
+                
+                VStack() {
+                    Button(action: signUp) {
+                        Text("Salvar")
+                            .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
+                            .foregroundColor(.secondaryColor)
+                            .background(Color.primaryColor)
+                            .cornerRadius(20)
                     }
-                }) {
-                    Text("Cancelar")
-                        .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
-                        .foregroundColor(.secondaryColor)
-                        .background(.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.secondaryColor, lineWidth: 2)
-                        )
+                    .padding(.bottom)
+                    
+                    Button(action: {
+                        withAnimation(Animation.linear(duration: 0.4)) {
+                            self.animate3d.toggle()
+                        }
+                    }) {
+                        Text("Cancelar")
+                            .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
+                            .foregroundColor(.secondaryColor)
+                            .background(.white)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.secondaryColor, lineWidth: 2)
+                            )
+                    }
                 }
             }
+            .padding()
+            .background(.white)
+            .cornerRadius(20)
+            .padding()
+            .toast(isPresenting: $error, alert: {
+                AlertToast(type: .error(.red),
+                           title: "Erro no cadastro.",
+                           subTitle: "Por favor, verifique o e-mail ou a senha e tente novamente")
+            })
         }
-        .padding()
-        .background(.white)
-        .cornerRadius(20)
-        .padding()
-        .toast(isPresenting: $error, alert: {
-            AlertToast(type: .error(.red),
-                       title: "Erro no cadastro.",
-                       subTitle: "Por favor, verifique o e-mail ou a senha e tente novamente")
-        })
     }
 }

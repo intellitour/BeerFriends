@@ -31,9 +31,17 @@ struct Profile: Identifiable, Codable {
     }
     
     enum CodingKeys: String, CodingKey {
+        case id
         case uid
         case email
         case name
+        case phone
+        case statusMessage
+        case level
+        case photoURL
+        case amountDifferentBeers
+        case localization
+        case favoritePlaces
     }
 }
 

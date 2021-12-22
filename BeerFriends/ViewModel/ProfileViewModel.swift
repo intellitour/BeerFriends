@@ -20,25 +20,18 @@ class ProfileViewModel: ObservableObject {
     }
     
     init() {
-//        profileRepository.$profile
-//            .filter({$0.uid != nil})
-//            .sink(
-//                receiveValue: { [weak self] profile in
-//                    self?.profile = profile
-//                })
-//            .store(in: &cancellables)
-        
         profileRepository.$profile
             .filter({$0.uid != nil})
             .receive(on: DispatchQueue.main)
             .assign(to: \.profile, on: self)
             .store(in: &cancellables)
-        
-//        profileRepository.$profile
-//            .assign(to: &$profile)
-    }
+        }
     
     func findProfile(by uid: String) {
         profileRepository.findProfile(by: uid)
+    }
+    
+    func save(with profile: Profile, and photo: UIImage?) {
+        profileRepository.save(with: profile, and: photo)
     }
 }

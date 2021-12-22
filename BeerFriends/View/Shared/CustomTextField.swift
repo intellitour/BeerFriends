@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import iPhoneNumberField
 
 struct CustomTextField: View {
     
@@ -36,6 +37,9 @@ struct CustomTextField: View {
                         
                         if title == "Senha" {
                             SecureField("", text: $value)
+                        } else if title == "Telefone" {
+                            iPhoneNumberField("phone", text: $value)
+                                .maximumDigits(11)
                         } else {
                             TextField("", text: $value)
                         }

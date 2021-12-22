@@ -9,44 +9,108 @@ import SwiftUI
 
 struct ProfileEditView: View {
     @Namespace var animation
-    @State var id: String
-    @State var uid: String
-    @State var name: String
-    @State var email: String
-    @State var phone: String
-    @State var statusMessage: String
+    @State private var image: UIImage? = nil
+    @State private var showAction = false
+    @State private var showImagePicker = false
+    @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
+    
+    @State var profile: Profile
     
     @ObservedObject var viewModel = ProfileViewModel()
     
-    init(profile: Profile) {
-        self.id = profile.id
-        self.uid = profile.uid ?? ""
-        self.name = profile.name ?? ""
-        self.email = profile.email ?? ""
-        self.phone = profile.phone ?? ""
-        self.statusMessage = profile.statusMessage ?? ""
+    var sheet: ActionSheet {
+       ActionSheet(
+           title: Text("Selecione uma imagem"),
+           message: Text("Escolha na galeria ou tire uma foto"),
+           buttons: [
+               .default(Text("Tirar foto"), action: {
+                   showAction = false
+                   showImagePicker = true
+                   sourceType = .camera
+               }),
+               .cancel(Text("Cancelar"), action: {
+                   showAction = false
+               }),
+               .default(Text("Escolher na geleria"), action: {
+                   showAction = false
+                   showImagePicker = true
+                   sourceType = .photoLibrary
+               })
+           ])
+    }
+    
+    func createComponetImagePlus(with padding: CGFloat, and lineWidth: CGFloat) -> some View {
+        return Image(systemName: K.Icon.plus)
+            .foregroundColor(.primaryColor)
+            .frame(width: 30, height: 30)
+            .background(Color.secondaryColor)
+            .clipShape(Circle())
+            .padding(padding)
+            .overlay(Circle().stroke(Color.primaryColor, lineWidth: lineWidth))
+            .onTapGesture {
+                 showAction = true
+            }
     }
         
     var body: some View {
         VStack {
             VStack {
-                Image("image14")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 200, height: 200)
-                    .clipped()
-                    .cornerRadius(150)
-                    .shadow(radius: 3)
-                    .overlay(
-                        Circle().stroke(Color.secondaryColor, lineWidth: 2)
-                    )
+                ZStack(alignment: .bottomTrailing) {
+                    if self.image != nil {
+                        Image(uiImage: self.image!)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 200, height: 200)
+                            .clipped()
+                            .cornerRadius(150)
+                            .shadow(radius: 2)
+                            .onTapGesture {
+                                showAction = true
+                            }
+                        
+                     createComponetImagePlus(with: 12, and: 0)
+                    } else if profile.photoURL != nil {
+                        AsyncImage(
+                            url: profile.photoURL,
+                            content: { image in
+                                image.resizable()
+                                    .scaledToFill()
+                                    .frame(width: 200, height: 200)
+                                    .clipped()
+                                    .cornerRadius(150)
+                                    .shadow(radius: 2)
+                                    .onTapGesture {
+                                        showAction = true
+                                    }
+                                
+                                createComponetImagePlus(with: 12, and: 0)
+                           },
+                           placeholder: {
+                               ProgressView()
+                                   .frame(width: 85, height: 85, alignment: .center)
+                           })
+                    } else {
+                        Image(systemName: K.Icon.PersonCircle)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 150, height: 150)
+                            .clipShape(Circle())
+                            .foregroundColor(.secondaryColor)
+                            .clipShape(Circle())
+                            .onTapGesture {
+                                showAction = true
+                            }
+                        
+                        createComponetImagePlus(with: 0, and: 3)
+                    }
+                }
                 
-                Text(name)
+                Text(profile.name ?? "")
                     .font(.title2)
                     .fontWeight(.bold)
                     .foregroundColor(.secondaryColor)
                 
-                Text(email)
+                Text(profile.email ?? "")
                     .foregroundColor(.gray)
             }
             .padding(.top, 20)
@@ -56,10 +120,12 @@ struct ProfileEditView: View {
             
             ScrollView {
                 VStack {
-                    CustomTextField(image: K.Icon.PersonFill, title: "Nome", value: $name, animation: animation)
-                    CustomTextField(image: K.Icon.Envelope, title: "E-mail", value: $email, animation: animation)
+                    CustomTextField(image: K.Icon.PersonFill, title: "Nome", value: $profile.name.bound, animation: animation)
+                        .textInputAutocapitalization(.words)
+                    CustomTextField(image: K.Icon.Envelope, title: "E-mail", value: $profile.email.bound, animation: animation)
                         .keyboardType(.emailAddress)
-                    CustomTextField(image: K.Icon.phone, title: "Telefone", value: $phone, animation: animation)
+                        .textInputAutocapitalization(.never)
+                    CustomTextField(image: K.Icon.phone, title: "Telefone", value: $profile.phone.bound, animation: animation)
                         .keyboardType(.phonePad)
                     
                     ZStack {
@@ -70,16 +136,24 @@ struct ProfileEditView: View {
                                 .frame(width: 35)
                                 .padding(.top, 10)
                             
-                            TextEditor(text: $statusMessage)
+                            TextEditor(text: $profile.statusMessage.bound)
                                 .frame(width: UIScreen.main.bounds.width - 100)
-                            Text(statusMessage).opacity(0).padding(.all, 8)
+                                .textInputAutocapitalization(.sentences)
+                            Text(profile.statusMessage ?? "").opacity(0).padding(.all, 8)
                         }
                     }
                     .frame(height: 150)
                     Divider()
                     
                     HStack {
-                        Button(action: {}, label: {
+                        Button(action: {viewModel.save(with: Profile(id: profile.id,
+                                                                     uid: profile.uid,
+                                                                     email: profile.email,
+                                                                     name: profile.name,
+                                                                     phone: profile.phone,
+                                                                     statusMessage: profile.statusMessage,
+                                                                     photoURL: profile.photoURL),
+                                                       and: image)}, label: {
                             Text("Cadastrar")
                                 .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
                                 .foregroundColor(.primaryColor)
@@ -105,6 +179,33 @@ struct ProfileEditView: View {
             
             Spacer()
             
+        }
+        .sheet(isPresented: $showImagePicker, onDismiss: {
+            showImagePicker = false
+        }, content: {
+            ImagePicker(isShown: $showImagePicker, uiImage: $image, sourceType: $sourceType)
+        })
+        .actionSheet(isPresented: $showAction) {
+            sheet
+        }
+    }
+}
+
+extension Optional where Wrapped == String {
+    var _bound: String? {
+        get {
+            return self
+        }
+        set {
+            self = newValue
+        }
+    }
+    public var bound: String {
+        get {
+            return _bound ?? ""
+        }
+        set {
+            _bound = newValue.isEmpty ? nil : newValue
         }
     }
 }
