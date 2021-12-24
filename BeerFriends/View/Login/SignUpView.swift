@@ -21,6 +21,7 @@ struct SignUPView: View {
     @State var error = false
 
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
+    @Environment(\.colorScheme) var colorScheme
 
     func signUp () {
         loading = true
@@ -80,7 +81,7 @@ struct SignUPView: View {
                         Text("Cancelar")
                             .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
                             .foregroundColor(.secondaryColor)
-                            .background(.white)
+                            .background(colorScheme == .dark ? .black : .white)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(Color.secondaryColor, lineWidth: 2)
@@ -89,7 +90,7 @@ struct SignUPView: View {
                 }
             }
             .padding()
-            .background(.white)
+            .background(colorScheme == .dark ? .black : .white)
             .cornerRadius(20)
             .padding()
             .toast(isPresenting: $error, alert: {

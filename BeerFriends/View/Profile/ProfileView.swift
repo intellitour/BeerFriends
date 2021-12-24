@@ -13,10 +13,16 @@ struct ProfileView: View {
     @State var titleOffset: CGFloat = 0
     @State var galeryIndex = 0
     
-    @Binding var profile: Profile
-    
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
+    @StateObject var viewModel = ProfileViewModel()
+    
+    func getProfile() {
+        if userSessionStoreViewModel.userSession?.uid != nil {
+            viewModel.findProfile(by: userSessionStoreViewModel.userSession?.uid ?? "")
+        }
+    }
     
     func getTitleTextOffset() -> CGFloat {
         let progress = 20 / titleOffset
@@ -97,7 +103,7 @@ struct ProfileView: View {
                                 .opacity(blurViewOpacity())
                             
                             VStack(spacing: 5) {
-                                Text(profile.name ?? "")
+                                Text(viewModel.profile.name ?? "")
                                     .fontWeight(.bold)
                                     .foregroundColor(colorScheme == .dark ? Color.secondaryColor : Color.primaryColor)
                             }
@@ -115,9 +121,9 @@ struct ProfileView: View {
                 
                 VStack {
                     HStack {
-                        if  profile.photoURL != nil {
+                        if  viewModel.profile.photoURL != nil {
                             AsyncImage(
-                                url: profile.photoURL,
+                                url: viewModel.profile.photoURL,
                                 content: { image in
                                     image.resizable()
                                          .scaledToFill()
@@ -151,7 +157,7 @@ struct ProfileView: View {
                         Spacer()
                         
                         Button(action: {}, label: {
-                            NavigationLink(destination: ProfileEditView(profile: profile)) {
+                            NavigationLink(destination: ProfileEditView(profile: viewModel.profile).navigationBarHidden(true)) {
                                 Text("Editar Perfil")
                                     .foregroundColor(.secondaryColor)
                                     .fontWeight(.bold)
@@ -163,23 +169,22 @@ struct ProfileView: View {
                                     )
                             }
                         })
-                        
                     }
                     .padding(.top, -25)
                     .padding(.bottom, -15)
                     
                     VStack(alignment: .leading, spacing: 8, content: {
-                        Text(profile.name ?? "")
+                        Text(viewModel.profile.name ?? "")
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.secondaryColor)
                         
-                        Text(profile.email ?? "")
+                        Text(viewModel.profile.email ?? "")
                             .foregroundColor(.gray)
                             .padding(.top, -8)
                             .padding(.bottom, 8)
                         
-                        Text("Um grande adorador de cervejas artesanais com preferância nas do tipo IPA e Session IPA. E claro, cerveja sem amigos não é cerveja é solidão ;)")
+                        Text(viewModel.profile.statusMessage ?? "")
                         
                         HStack(spacing: 5) {
                             Text("32")
@@ -276,12 +281,13 @@ struct ProfileView: View {
             }
         })
         .ignoresSafeArea(.all, edges: .top)
+        .onAppear(perform: getProfile)
     }
 }
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(profile: .constant(Profile()))
+        ProfileView()
             .environmentObject(UserSessionStoreViewModel())
             .preferredColorScheme(.dark)
     }

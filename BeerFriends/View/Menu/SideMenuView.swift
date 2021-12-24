@@ -12,7 +12,6 @@ struct SideMenuView: View {
     @Binding var isShowing: Bool
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
-    
     @StateObject var viewModel = ProfileViewModel()
     
     func getProfile() {
@@ -24,14 +23,11 @@ struct SideMenuView: View {
     @ViewBuilder
     func navigate(with menuOption: SideMenuOptions) -> some View {
         switch menuOption {
-            case .configurations: Text(menuOption.description)
-        case .profile: ProfileView(profile: $viewModel.profile)
-                    .navigationBarHidden(true)
-            case .friends: FriendListView()
-                    .navigationBarHidden(true)
-            case .terms: Text(menuOption.description)
-            case .loggout: Text(menuOption.description)
-        }
+        case .configurations: Text(menuOption.description)
+        case .profile: ProfileView().navigationBarHidden(true)
+        case .friends: FriendListView().navigationBarHidden(true)
+        case .terms: Text(menuOption.description)
+        case .loggout: Text(menuOption.description)}
     }
 
     var body: some View {

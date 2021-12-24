@@ -17,6 +17,7 @@ struct ForgotPassawordView: View {
     @Binding var animate3d: Bool
     
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
+    @Environment(\.colorScheme) var colorScheme
     
     func forgotPassaword () {
         loading = true
@@ -66,7 +67,7 @@ struct ForgotPassawordView: View {
                 Text("Cancelar")
                     .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
                     .foregroundColor(.secondaryColor)
-                    .background(.white)
+                    .background(colorScheme == .dark ? .black : .white)
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(Color.secondaryColor, lineWidth: 2)
@@ -74,7 +75,7 @@ struct ForgotPassawordView: View {
             }
         }
         .padding()
-        .background(.white)
+        .background(colorScheme == .dark ? .black : .white)
         .cornerRadius(20)
         .padding()        
         .toast(isPresenting: $error, alert: {

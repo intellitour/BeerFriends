@@ -10,7 +10,7 @@ import Firebase
 import UIKit
 
 class ProfileRepository: ObservableObject {
-    var db = Firestore.firestore()
+    private let db = Firestore.firestore()
     private let storage = Storage.storage()
     
     @Published var friendsProfile = [Profile]()
@@ -52,7 +52,10 @@ class ProfileRepository: ObservableObject {
         }
     }
     
-    func save(with profile: Profile, and photo: UIImage?) {
+    func save(with profile: Profile,
+              and photo: UIImage?,
+              completionHandler: @escaping (HandleResult) -> Void) -> Void {
+        
         let storageRef = storage.reference().child("profiles/\(profile.uid!).jpg")
         if photo != nil {
             let data = photo?.jpegData(compressionQuality: 0.5)
@@ -63,11 +66,8 @@ class ProfileRepository: ObservableObject {
             if let data = data {
                 storageRef.putData(data, metadata: metadata) { (metadata, error) in
                     if let error = error {
-                            print("Erro ao fazer o upload da imagem: ", error)
-                    }
-
-                    if let metadata = metadata {
-                            print("Metadata: ", metadata)
+                        completionHandler(HandleResult(error: error))
+                        return
                     }
                     
                     storageRef.downloadURL { [self] (url, error) in
@@ -75,13 +75,23 @@ class ProfileRepository: ObservableObject {
                         
                         self.profile = profile
                         self.profile.photoURL = downloadURL
-                        print(self.profile)
-                        self.db.collection("profiles").document(self.profile.uid!).updateData(self.profile.encoded)
+                        
+                        self.db.collection("profiles").document(self.profile.uid!).updateData(self.profile.encoded) { error in
+                            if let error = error {
+                                completionHandler(HandleResult(error: error))
+                            }
+                            completionHandler(HandleResult(success: "Perfil salvo com sucesso"))
+                        }
                     }
                 }
             }
         } else {
-            db.collection("profiles").document(profile.uid!).updateData(profile.encoded)
+            db.collection("profiles").document(profile.uid!).updateData(profile.encoded) { error in
+                if let error = error {
+                    completionHandler(HandleResult(error: error))
+                }
+                completionHandler(HandleResult(success: "Perfil salvo com sucesso"))
+            }
         }
     }
 }

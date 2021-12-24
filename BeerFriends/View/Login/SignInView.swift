@@ -25,6 +25,7 @@ struct SignInView : View {
     @Binding var animateSignUp: Bool
 
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
+    @Environment(\.colorScheme) var colorScheme
 
     func signIn () {
         loading = true
@@ -112,7 +113,7 @@ struct SignInView : View {
                 }
             }
             .padding()
-            .background(.white)
+            .background(colorScheme == .dark ? .black : .white)
             .cornerRadius(20)
             .padding()
             .frame(height: showCard ? nil : 0)

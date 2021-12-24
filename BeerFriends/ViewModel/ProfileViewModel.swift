@@ -31,7 +31,9 @@ class ProfileViewModel: ObservableObject {
         profileRepository.findProfile(by: uid)
     }
     
-    func save(with profile: Profile, and photo: UIImage?) {
-        profileRepository.save(with: profile, and: photo)
+    func save(with profile: Profile,
+              and photo: UIImage?,
+              completionHandler: @escaping (HandleResult) -> Void) -> Void {
+        profileRepository.save(with: profile, and: photo, completionHandler: completionHandler)
     }
 }

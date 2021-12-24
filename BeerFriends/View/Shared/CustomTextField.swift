@@ -10,6 +10,7 @@ import iPhoneNumberField
 
 struct CustomTextField: View {
     
+    @Environment(\.colorScheme) var colorScheme
     @State private var offset: CGFloat = 10.0
     
     var image: String
@@ -50,7 +51,7 @@ struct CustomTextField: View {
             Divider()           
         }
         .padding(.vertical, 10)
-        .background(.white.opacity(value != "" ? 1 : 0))
+        .background(colorScheme == .dark ? .black : .white)
         .animation(.linear(duration: 1.0), value: offset)
     }
 }

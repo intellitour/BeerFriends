@@ -9,8 +9,13 @@ import SwiftUI
 
 struct FriendListView: View {
     
+    @Environment(\.colorScheme) var colorScheme
     @State private var isShowing = false
     @ObservedObject private var friendProfileViewModel = FriendProfileViewModel()
+    
+    init() {
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.secondaryColor)]
+    }
     
     var body: some View {
         NavigationView {
@@ -39,7 +44,7 @@ struct FriendListView: View {
                         friendProfileViewModel.fetchFriendsProfile()
                     }
                     .listStyle(PlainListStyle())
-                    .background(Color.white)
+                    .background(colorScheme == .dark ? Color.black : Color.white)
                 }
                 .cornerRadius(isShowing ? 20 : 10)
                 .offset(x: isShowing ? 300 : 0, y: 1)
