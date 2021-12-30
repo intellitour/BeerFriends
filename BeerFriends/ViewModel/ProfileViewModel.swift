@@ -12,12 +12,8 @@ class ProfileViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
     
     @ObservedObject var profileRepository = ProfileRepository()
-    
-    @Published var profile = Profile() {
-        didSet {
-            print(profile)
-        }
-    }
+
+    @Published var profile = Profile()
     
     init() {
         profileRepository.$profile

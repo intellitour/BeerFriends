@@ -11,7 +11,7 @@ struct ProfileView: View {
     
     @State var offset: CGFloat = 0
     @State var titleOffset: CGFloat = 0
-    @State var galeryIndex = 0
+    @State var galleryIndex = 0
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -125,16 +125,23 @@ struct ProfileView: View {
                             AsyncImage(
                                 url: viewModel.profile.photoURL,
                                 content: { image in
-                                    image.resizable()
-                                         .scaledToFill()
-                                         .frame(width: 85, height: 85)
-                                         .clipShape(Circle())
-                                         .foregroundColor(.secondaryColor)
-                                         .padding(6)
-                                         .background(colorScheme == .dark ? Color.black : Color.white)
-                                         .clipShape(Circle())
-                                         .offset(y: offset < 0 ? getOffset() - 20 : -20)
-                                         .scaleEffect(getScale())
+                                    NavigationLink(destination:
+                                                    image
+                                                    .resizable()
+                                                    .scaledToFill()
+                                                    .ignoresSafeArea()
+                                    ) {
+                                        image.resizable()
+                                             .scaledToFill()
+                                             .frame(width: 85, height: 85)
+                                             .clipShape(Circle())
+                                             .foregroundColor(.secondaryColor)
+                                             .padding(6)
+                                             .background(colorScheme == .dark ? Color.black : Color.white)
+                                             .clipShape(Circle())
+                                             .offset(y: offset < 0 ? getOffset() - 20 : -20)
+                                             .scaleEffect(getScale())
+                                    }
                                },
                                placeholder: {
                                    ProgressView()
@@ -224,26 +231,26 @@ struct ProfileView: View {
                             HStack {
                                 Text("Favoritas")
                                     .font(.caption)
-                                    .foregroundColor(galeryIndex == 0 ? .white : .secondaryColor.opacity(0.85))
+                                    .foregroundColor(galleryIndex == 0 ? .white : .secondaryColor.opacity(0.85))
                                     .fontWeight(.bold)
                                     .padding(.vertical, 6)
                                     .padding(.horizontal, 20)
-                                    .background(Color.primaryColor.opacity(galeryIndex == 0 ? 1 : 0))
+                                    .background(Color.primaryColor.opacity(galleryIndex == 0 ? 1 : 0))
                                     .clipShape(Capsule())
                                     .onTapGesture {
-                                        galeryIndex = 0
+                                        galleryIndex = 0
                                     }
                                 
                                 Text("Fotos e eventos")
                                     .font(.caption)
-                                    .foregroundColor(galeryIndex == 1 ? .white : .secondaryColor.opacity(0.85))
+                                    .foregroundColor(galleryIndex == 1 ? .white : .secondaryColor.opacity(0.85))
                                     .fontWeight(.bold)
                                     .padding(.vertical, 6)
                                     .padding(.horizontal, 20)
-                                    .background(Color.primaryColor.opacity(galeryIndex == 01 ? 1 : 0))
+                                    .background(Color.primaryColor.opacity(galleryIndex == 01 ? 1 : 0))
                                     .clipShape(Capsule())
                                     .onTapGesture {
-                                        galeryIndex = 1
+                                        galleryIndex = 1
                                     }
                                 
                                 Spacer()
@@ -251,7 +258,7 @@ struct ProfileView: View {
                             .padding(.top, 10)
                             
                             ZStack {
-                                if (galeryIndex == 0) {
+                                if (galleryIndex == 0) {
                                     FavoriteGalleryImagesView()
                                         .padding(.horizontal, 25)
                                 } else {

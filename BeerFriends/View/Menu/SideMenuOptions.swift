@@ -17,11 +17,11 @@ enum SideMenuOptions: Int, CaseIterable {
     
     var icon: String {
         switch self {
-        case .configurations: return  K.Icon.gearshapeFill
+        case .configurations: return  K.Icon.GearshapeFill
         case .profile: return K.Icon.PersonFill
         case .friends: return K.Icon.Person2Fill
         case .terms: return K.Icon.DocText
-        case .loggout: return K.Icon.signOut
+        case .loggout: return K.Icon.SignOut
         }
     }
     

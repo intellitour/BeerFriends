@@ -19,7 +19,7 @@ struct SideMenuHeaderView: View {
                     isShowing.toggle()
                 }
             }, label: {
-                Image(systemName: K.Icon.close)
+                Image(systemName: K.Icon.Close)
                     .frame(width: 32, height: 32)
                     .foregroundColor(colorScheme == .dark ? Color.black : Color.white)
                     .padding()
