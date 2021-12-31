@@ -29,6 +29,7 @@ struct LayoutTwo: View {
         )
         
         let showFavorite = (isFavoriteOne && cardIndex == 0) || (isFavoriteTwo && cardIndex == 1) || (isFavoriteThree && cardIndex == 2)
+        let isRemoved = imagesToRemove.filter(){ $0.imageURL == url }.count > 0
         
         return ZStack(alignment: .topTrailing) {
             AsyncImage(
@@ -49,7 +50,7 @@ struct LayoutTwo: View {
                },
                placeholder: {
                    ProgressView()
-                       .frame(width: 85, height: 85, alignment: .center)
+                       .frame(width: width, height: height, alignment: .center)
                })
             
             if showFavorite {
@@ -59,6 +60,7 @@ struct LayoutTwo: View {
                     .padding(6)
             }
         }
+        .opacity(isRemoved ? 0.5 : 1)
     }
     
     var body: some View {

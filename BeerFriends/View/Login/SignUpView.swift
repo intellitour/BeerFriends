@@ -52,13 +52,13 @@ struct SignUPView: View {
                 
                 Spacer(minLength: 5)
                 
-                CustomTextField(image: K.Icon.PersonCircle, title: "Nome", value: $name, animation: animation)
+                CustomTextField(image: K.Icon.CircleUser, title: "Nome", value: $name, animation: animation)
                         .autocapitalization(.none)
                 
-                CustomTextField(image: K.Icon.Envelope, title: "E-mail", value: $email, animation: animation)
+                CustomTextField(image: K.Icon.Email, title: "E-mail", value: $email, animation: animation)
                         .autocapitalization(.none)
                 
-                CustomTextField(image: K.Icon.Lock, title: "Senha", value: $password, animation: animation)
+                CustomTextField(image: K.Icon.Password, title: "Senha", value: $password, animation: animation)
                         .autocapitalization(.none)
                 
                 Spacer(minLength: 5)

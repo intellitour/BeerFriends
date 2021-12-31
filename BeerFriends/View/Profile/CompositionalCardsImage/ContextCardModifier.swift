@@ -38,11 +38,13 @@ struct ContextCardModifier: ViewModifier {
                         Label(isFavorite ? "Desfavoritar" : "Favoritar",
                               systemImage: isFavorite ? K.Icon.Unfavorite : K.Icon.Favorite)
                     }
-                                        
+                    
                     Button(action: {
-                        imagesToRemove = imagesToFavorite.filter(){ $0.imageURL != cardURL }
-                        imagesToFavorite = imagesToFavorite.filter(){ $0.imageURL != cardURL }
-                        imagesToUnfavorite = imagesToUnfavorite.filter(){ $0.imageURL != cardURL }
+                        if !imagesToRemove.contains(where: {$0.imageURL == cardURL}) {
+                            imagesToRemove.append(ProfileImages(imageURL: cardURL))
+                            imagesToFavorite = imagesToFavorite.filter(){ $0.imageURL != cardURL }
+                            imagesToUnfavorite = imagesToUnfavorite.filter(){ $0.imageURL != cardURL }
+                        }
                     }) {
                         Label("Remover", systemImage: K.Icon.Remove)
                     }

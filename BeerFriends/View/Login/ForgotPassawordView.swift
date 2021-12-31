@@ -45,7 +45,7 @@ struct ForgotPassawordView: View {
             
             Spacer(minLength: 5)
                         
-            CustomTextField(image: K.Icon.Envelope, title: "E-mail", value: $email, animation: animation)
+            CustomTextField(image: K.Icon.Email, title: "E-mail", value: $email, animation: animation)
                     .autocapitalization(.none)
                                               
             Spacer(minLength: 5)

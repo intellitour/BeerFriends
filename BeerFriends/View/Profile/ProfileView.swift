@@ -148,7 +148,7 @@ struct ProfileView: View {
                                        .frame(width: 85, height: 85, alignment: .center)
                                })
                         } else {
-                            Image(systemName: K.Icon.PersonCircle)
+                            Image(systemName: K.Icon.CircleUser)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 85, height: 85)

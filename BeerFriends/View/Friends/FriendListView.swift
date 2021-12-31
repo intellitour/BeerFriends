@@ -54,7 +54,7 @@ struct FriendListView: View {
                         isShowing.toggle()
                     }
                 }, label: {
-                    Image(systemName: K.Icon.Line3Horizontal)
+                    Image(systemName: K.Icon.SideMenu)
                         .foregroundColor(isShowing ? .primaryColor : .secondaryColor)
                 }))
                 .onAppear {

@@ -46,9 +46,10 @@ struct ProfileEditView: View {
     @State var error: String?
     @State var showSuccess = false
     @State var showError = false
+    @State var isFinished = false
     @State var compositionalCardsImage: [[URL]] = []
     
-    @State var imagesToAdd: [ProfileImages] = []
+    @State var imagesToAdd: [UIImage] = []
     @State var imagesToRemove: [ProfileImages] = []
     @State var imagesToFavorite: [ProfileImages] = []
     @State var imagesToUnfavorite: [ProfileImages] = []
@@ -80,15 +81,21 @@ struct ProfileEditView: View {
         self.loading = true
         self.showError = false
         self.showSuccess = false
+        
+        let flatMappedCardsImage = compositionalCardsImage.flatMap({ (element: [URL]) -> [URL] in
+            return element
+        })
                 
-        viewModel.save(with: Profile(id: profile.id,
-                                     uid: profile.uid,
-                                     email: profile.email,
-                                     name: profile.name,
-                                     phone: profile.phone,
-                                     statusMessage: profile.statusMessage,
-                                     photoURL: profile.photoURL),
-                       and: profileImage) { ( completionHandler ) in
+        viewModel.save(
+            with: Profile(id: profile.id,
+                         uid: profile.uid,
+                         email: profile.email,
+                         name: profile.name,
+                         phone: profile.phone,
+                         statusMessage: profile.statusMessage,
+                         photoURL: profile.photoURL,
+                         galleryImagesURL: flatMappedCardsImage),
+            and: profileImage) { ( completionHandler ) in
             
             loading = false
             
@@ -98,7 +105,37 @@ struct ProfileEditView: View {
             } else {
                 self.success = completionHandler.success
                 self.showSuccess = true
+                self.isFinished = true
             }
+        }
+    }
+    
+    func addImagesToEventsGallery() {
+        if image != nil {
+            self.loading = true
+            self.showError = false
+            self.showSuccess = false
+            
+            viewModel.addImagesToEventsGallery(
+                from: profile.uid!,
+                with: image!) { ( completionHandler ) in
+                    
+                    if completionHandler.error != nil {
+                        self.error = completionHandler.error?.localizedDescription
+                        self.showError = true
+                    } else {
+                        self.success = completionHandler.success
+                        self.showSuccess = true
+                        var flatMappedCardsImage = compositionalCardsImage.flatMap({ (element: [URL]) -> [URL] in
+                            return element
+                        })
+                        flatMappedCardsImage.append(completionHandler.data!)
+                        self.setCompositionalLayout(with: flatMappedCardsImage)
+                    }
+                    
+                    loading = false
+                    image = nil
+                }
         }
     }
     
@@ -116,20 +153,20 @@ struct ProfileEditView: View {
             }
     }
     
-    func setCompositionalLayout() {
-        compositionalCardsImage = []
+    func setCompositionalLayout(with imagesUrl: [URL]?) {
+        self.compositionalCardsImage = []
         var currentArrayCards: [URL] = []
         
-        profile.galleryImagesUrls?.forEach { (url) in
+       imagesUrl?.forEach { (url) in
             currentArrayCards.append(url)
             
             if currentArrayCards.count == 3 {
-                compositionalCardsImage.append(currentArrayCards)
+                self.compositionalCardsImage.append(currentArrayCards)
                 currentArrayCards.removeAll()
             }
             
-            if currentArrayCards.count != 3 && currentArrayCards.description == currentArrayCards.last?.description {
-                compositionalCardsImage.append(currentArrayCards)
+           if currentArrayCards.count != 3 && url == imagesUrl?.last {
+               self.compositionalCardsImage.append(currentArrayCards)
                 currentArrayCards.removeAll()
             }
         }
@@ -195,7 +232,7 @@ struct ProfileEditView: View {
                                    .frame(width: 85, height: 85, alignment: .center)
                            })
                     } else {
-                        Image(systemName: K.Icon.PersonCircle)
+                        Image(systemName: K.Icon.CircleUser)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 150, height: 150)
@@ -229,9 +266,9 @@ struct ProfileEditView: View {
             } else {
                 ScrollView {
                     VStack {
-                        CustomTextField(image: K.Icon.PersonFill, title: "Nome", value: $profile.name.bound, animation: animation)
+                        CustomTextField(image: K.Icon.User, title: "Nome", value: $profile.name.bound, animation: animation)
                             .textInputAutocapitalization(.words)
-                        CustomTextField(image: K.Icon.Envelope, title: "E-mail", value: $profile.email.bound, animation: animation)
+                        CustomTextField(image: K.Icon.Email, title: "E-mail", value: $profile.email.bound, animation: animation)
                             .keyboardType(.emailAddress)
                             .textInputAutocapitalization(.never)
                         CustomTextField(image: K.Icon.Phone, title: "Telefone", value: $profile.phone.bound, animation: animation)
@@ -266,7 +303,7 @@ struct ProfileEditView: View {
                                 
                                 Spacer()
                                 
-                                Button(action: {}, label: {
+                                Button(action: addImagesToEventsGallery) {
                                     Label("Adicionar", systemImage: K.Icon.Photos)
                                         .font(.caption)
                                         .foregroundColor(.secondaryColor.opacity(0.85))
@@ -279,28 +316,30 @@ struct ProfileEditView: View {
                                             showImageAction = true
                                             activeSheet = .gallery
                                         }
-                                })
+                                }
                             }
                             
                             Divider()
                             
                             VStack(spacing: 4) {
                                 ForEach(compositionalCardsImage.indices, id: \.self) {index in
-                                    if index == 0 || index % 6 == 0 {
-                                        LayoutOne(cards: compositionalCardsImage[index],
-                                                  imagesToRemove: $imagesToRemove,
-                                                  imagesToFavorite: $imagesToFavorite,
-                                                  imagesToUnfavorite: $imagesToUnfavorite)
-                                    } else if index % 3 == 0 {
-                                        LayoutThree(cards: compositionalCardsImage[index],
-                                                    imagesToRemove: $imagesToRemove,
-                                                    imagesToFavorite: $imagesToFavorite,
-                                                    imagesToUnfavorite: $imagesToUnfavorite)
-                                    } else {
-                                        LayoutTwo(cards: compositionalCardsImage[index],
-                                                  imagesToRemove: $imagesToRemove,
-                                                  imagesToFavorite: $imagesToFavorite,
-                                                  imagesToUnfavorite: $imagesToUnfavorite)
+                                    if !compositionalCardsImage[index].isEmpty {
+                                        if index == 0 || index % 6 == 0 {
+                                            LayoutOne(cards: compositionalCardsImage[index],
+                                                      imagesToRemove: $imagesToRemove,
+                                                      imagesToFavorite: $imagesToFavorite,
+                                                      imagesToUnfavorite: $imagesToUnfavorite)
+                                        } else if index % 3 == 0 {
+                                            LayoutThree(cards: compositionalCardsImage[index],
+                                                        imagesToRemove: $imagesToRemove,
+                                                        imagesToFavorite: $imagesToFavorite,
+                                                        imagesToUnfavorite: $imagesToUnfavorite)
+                                        } else {
+                                                LayoutTwo(cards: compositionalCardsImage[index],
+                                                          imagesToRemove: $imagesToRemove,
+                                                          imagesToFavorite: $imagesToFavorite,
+                                                          imagesToUnfavorite: $imagesToUnfavorite)
+                                        }
                                     }
                                 }
                             }
@@ -338,11 +377,12 @@ struct ProfileEditView: View {
             Spacer()
             
         }
-        .onAppear(perform: setCompositionalLayout)
+        .onAppear(perform: {setCompositionalLayout(with: profile.galleryImagesURL)})
         // Foto da galeria
         .sheet(isPresented: $showImagePicker, onDismiss: {
             showImagePicker = false
             activeSheet = nil
+            addImagesToEventsGallery()
         }, content: {
             if activeSheet == .profile {
                 ImagePicker(isShown: $showImagePicker, uiImage: $profileImage, sourceType: $sourceType)
@@ -357,11 +397,13 @@ struct ProfileEditView: View {
         .toast(isPresenting: $showSuccess, alert: {
             AlertToast(displayMode: .alert, type: .complete(.green), title: self.success)
         }, completion: {
-            self.presentationMode.wrappedValue.dismiss()
+            if isFinished {
+                self.presentationMode.wrappedValue.dismiss()
+            }
         })
         .toast(isPresenting: $showError, alert: {
             AlertToast(type: .error(.red),
-                       title: "Perfil não atualizado.",
+                       title: "Erro ao salvar.",
                        subTitle: self.error)
         })
     }

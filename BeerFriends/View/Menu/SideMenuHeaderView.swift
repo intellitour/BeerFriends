@@ -41,7 +41,7 @@ struct SideMenuHeaderView: View {
                                .frame(width: 80, height: 80, alignment: .center)
                        })
                 } else {
-                    Image(systemName: K.Icon.PersonCircle)
+                    Image(systemName: K.Icon.CircleUser)
                         .resizable()
                         .scaledToFill()
                         .clipped()

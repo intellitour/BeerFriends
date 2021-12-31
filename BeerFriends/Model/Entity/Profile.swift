@@ -14,12 +14,9 @@ struct Profile: Identifiable, Codable {
     var name: String?
     var phone: String?
     var statusMessage: String?
-    var level: String?
     var photoURL: URL?
-    var amountDifferentBeers: Int?
-    var localization: Localization?
-    var favoritePlaces: [Localization]?
-    var galleryImagesUrls: [URL]?
+    var favoriteImagesURL: [URL]?
+    var galleryImagesURL: [URL]?
     
     var encoded: [String: Any] {
        let data = (try? JSONEncoder().encode(self)) ?? Data()
@@ -38,16 +35,8 @@ struct Profile: Identifiable, Codable {
         case name
         case phone
         case statusMessage
-        case level
         case photoURL
-        case amountDifferentBeers
-        case localization
-        case favoritePlaces
-        case galleryImagesUrls
+        case favoriteImagesURL
+        case galleryImagesURL
     }
-}
-
-struct Localization: Codable {
-    var latitude: String;
-    var longitude: String;
 }

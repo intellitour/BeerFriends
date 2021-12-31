@@ -22,7 +22,6 @@ struct K {
         static let ImageOne         = "OnboardingOne"
         static let ImageTwo         = "OnboardingTwo"
         static let ImageThree       = "OnboardingThree"
-        
     }
     
     struct Login {
@@ -34,13 +33,13 @@ struct K {
     struct Icon {
         static let ArrowLeft        = "arrow.left"
         static let ArrowRight       = "arrow.right"
-        static let Envelope         = "envelope"
-        static let Lock             = "lock"
-        static let PersonCircle     = "person.circle"
-        static let PersonFill       = "person.fill"
-        static let Person2Fill      = "person.2.fill"
-        static let GearshapeFill    = "gearshape.fill"
-        static let Line3Horizontal  = "line.3.horizontal"
+        static let Email            = "envelope"
+        static let Password         = "lock"
+        static let CircleUser       = "person.circle"
+        static let User             = "person.fill"
+        static let Friends          = "person.2.fill"
+        static let Configuration    = "gearshape.fill"
+        static let SideMenu         = "line.3.horizontal"
         static let DocText          = "doc.text"
         static let SignOut          = "rectangle.portrait.and.arrow.right"
         static let Close            = "xmark"

@@ -46,14 +46,13 @@ struct LayoutOne: View {
                         .scaledToFill()
                         .frame(width: width, height: height)
                         .cornerRadius(4)
-                        .opacity(isRemoved ? 0.5 : 1)
                         .modifier(context)
                     }
                     .buttonStyle(PlainButtonStyle())
                },
                placeholder: {
                    ProgressView()
-                       .frame(width: 85, height: 85, alignment: .center)
+                       .frame(width: width, height: height, alignment: .center)
                })
             
             if showFavorite {
@@ -63,6 +62,7 @@ struct LayoutOne: View {
                     .padding(6)
             }
         }
+        .opacity(isRemoved ? 0.5 : 1)
     }
     
     var body: some View {

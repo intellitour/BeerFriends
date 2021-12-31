@@ -29,7 +29,13 @@ class ProfileViewModel: ObservableObject {
     
     func save(with profile: Profile,
               and photo: UIImage?,
-              completionHandler: @escaping (HandleResult) -> Void) -> Void {
+              completionHandler: @escaping (HandleResult<Profile>) -> Void) -> Void {
         profileRepository.save(with: profile, and: photo, completionHandler: completionHandler)
+    }
+    
+    func addImagesToEventsGallery(from profileUid: String,
+                                  with image: UIImage,
+                                  completionHandler: @escaping (HandleResult<URL>) -> Void) -> Void {
+        profileRepository.addImagesToEventsGallery(from: profileUid, with: image, completionHandler: completionHandler)
     }
 }

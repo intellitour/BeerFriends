@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct HandleResult {
+struct HandleResult<T> {
     var success: String?
     var error: Error?
+    var data: T?
 }

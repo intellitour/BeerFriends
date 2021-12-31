@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import UIKit
+import SwiftUI
 
 class ProfileRepository: ObservableObject {
     private let db = Firestore.firestore()
@@ -47,7 +48,7 @@ class ProfileRepository: ObservableObject {
                 let data = document.data()
                 if let data = data {
                     self.profile = try! Profile.with(data) ?? Profile()
-                    self.profile.galleryImagesUrls = self.getUrlsFake()
+//                    self.profile.galleryImagesURL = self.getUrlsFake()
                 }
             }
         }
@@ -55,7 +56,7 @@ class ProfileRepository: ObservableObject {
     
     func save(with profile: Profile,
               and photo: UIImage?,
-              completionHandler: @escaping (HandleResult) -> Void) -> Void {
+              completionHandler: @escaping (HandleResult<Profile>) -> Void) -> Void {
         
         let storageRef = storage.reference().child("profiles/\(profile.uid!).jpg")
         if photo != nil {
@@ -94,6 +95,35 @@ class ProfileRepository: ObservableObject {
                 completionHandler(HandleResult(success: "Perfil salvo com sucesso"))
             }
         }
+    }
+    
+    func addImagesToEventsGallery(from profileUid: String,
+                                  with image: UIImage,
+                                  completionHandler: @escaping (HandleResult<URL>) -> Void) -> Void {
+        
+        let data = image.jpegData(compressionQuality: 0.5)
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpg"
+        
+        if let data = data {
+            let imageGallery = ProfileImages(profileUid: profileUid)
+            let storageRef = storage.reference().child("gallery/events/\(profileUid)/\(imageGallery.id).jpg")
+            
+            storageRef.putData(data, metadata: metadata) { (metadata, error) in
+                if let error = error {
+                    completionHandler(HandleResult(error: error))
+                    return
+                }
+                
+                storageRef.downloadURL { (url, error) in
+                    guard let downloadURL = url else { return }
+                    
+                    completionHandler(HandleResult(success: "Imagem adicionada com sucesso", data: downloadURL))
+                }
+            }
+        }
+        
     }
     
     func getUrlsFake() -> [URL] {
