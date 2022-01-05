@@ -29,8 +29,39 @@ class ProfileViewModel: ObservableObject {
     
     func save(with profile: Profile,
               and photo: UIImage?,
+              and imagesToRemove: [ProfileImages],
+              and imagesToFavorite: [ProfileImages],
+              and imagesToUnfavofite: [ProfileImages],
               completionHandler: @escaping (HandleResult<Profile>) -> Void) -> Void {
-        profileRepository.save(with: profile, and: photo, completionHandler: completionHandler)
+        
+        var profileWithImages = profile
+        
+        imagesToFavorite.forEach { profileImageUrl in
+            if  profileWithImages.favoriteImagesURL == nil {
+                profileWithImages.favoriteImagesURL = []
+            }
+            
+            if !(profileWithImages.favoriteImagesURL?.contains(where: {$0 == profileImageUrl.imageURL}) ?? false) {
+                profileWithImages.favoriteImagesURL?.append(profileImageUrl.imageURL!)
+            }
+        }
+        
+        imagesToUnfavofite.forEach { profileImageUrl in
+            if  profileWithImages.favoriteImagesURL == nil {
+                profileWithImages.favoriteImagesURL = []
+            }
+            
+            if let index = profileWithImages.favoriteImagesURL?.firstIndex(of: profileImageUrl.imageURL!) {
+                profileWithImages.favoriteImagesURL?.remove(at: index)
+            }
+        }
+        
+        imagesToRemove.forEach { profileImageUrl in
+            profileWithImages.galleryImagesURL = profileWithImages.galleryImagesURL?.filter(){ $0 != profileImageUrl.imageURL }
+            profileWithImages.favoriteImagesURL = profileWithImages.favoriteImagesURL?.filter(){ $0 != profileImageUrl.imageURL }
+        }
+        
+        profileRepository.save(with: profileWithImages, and: photo, completionHandler: completionHandler)
     }
     
     func addImagesToEventsGallery(from profileUid: String,

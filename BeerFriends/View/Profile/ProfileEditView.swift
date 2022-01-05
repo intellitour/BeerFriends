@@ -10,25 +10,6 @@ import AlertToast
 
 struct ProfileEditView: View {
     
-    // Mock
-    @State var events = [
-        Gallery(id: 0, image: "image1", offset: 0, title: "Cervejaria Dogma"),
-        Gallery(id: 1, image: "image2", offset: 0, title: "Chapada Diamantina"),
-        Gallery(id: 2, image: "image3", offset: 0, title: "Por do sol"),
-        Gallery(id: 3, image: "image4", offset: 0, title: "Barzinho na beira da praia"),
-        Gallery(id: 4, image: "image5", offset: 0, title: "Cervejaria Vórtex BrewHouse"),
-        Gallery(id: 5, image: "image6", offset: 0, title: "Cervejaria Dogma"),
-        Gallery(id: 6, image: "image7", offset: 0, title: "Chapada Diamantina"),
-        Gallery(id: 7, image: "image8", offset: 0, title: "Por do sol"),
-        Gallery(id: 8, image: "image9", offset: 0, title: "Barzinho na beira da praia"),
-        Gallery(id: 9, image: "image10", offset: 0, title: "Cervejaria Vórtex BrewHouse"),
-        Gallery(id: 10, image: "image11", offset: 0, title: "Cervejaria Dogma"),
-        Gallery(id: 11, image: "image12", offset: 0, title: "Chapada Diamantina"),
-        Gallery(id: 12, image: "image13", offset: 0, title: "Por do sol"),
-        Gallery(id: 13, image: "image14", offset: 0, title: "Barzinho na beira da praia"),
-        Gallery(id: 14, image: "image15", offset: 0, title: "Cervejaria Vórtex BrewHouse")
-    ]
-    
     @Namespace var animation
     @State private var profileImage: UIImage? = nil
     @State private var image: UIImage? = nil
@@ -49,7 +30,6 @@ struct ProfileEditView: View {
     @State var isFinished = false
     @State var compositionalCardsImage: [[URL]] = []
     
-    @State var imagesToAdd: [UIImage] = []
     @State var imagesToRemove: [ProfileImages] = []
     @State var imagesToFavorite: [ProfileImages] = []
     @State var imagesToUnfavorite: [ProfileImages] = []
@@ -95,7 +75,10 @@ struct ProfileEditView: View {
                          statusMessage: profile.statusMessage,
                          photoURL: profile.photoURL,
                          galleryImagesURL: flatMappedCardsImage),
-            and: profileImage) { ( completionHandler ) in
+            and: profileImage,
+            and: imagesToRemove,
+            and: imagesToFavorite,
+            and: imagesToUnfavorite) { ( completionHandler ) in
             
             loading = false
             
@@ -377,7 +360,12 @@ struct ProfileEditView: View {
             Spacer()
             
         }
-        .onAppear(perform: {setCompositionalLayout(with: profile.galleryImagesURL)})
+        .onAppear(perform: {
+            setCompositionalLayout(with: profile.galleryImagesURL)
+            profile.favoriteImagesURL?.forEach({ favoriteUrl in
+                imagesToFavorite.append(ProfileImages(imageURL: favoriteUrl))
+            })
+        })
         // Foto da galeria
         .sheet(isPresented: $showImagePicker, onDismiss: {
             showImagePicker = false

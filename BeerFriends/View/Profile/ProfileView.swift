@@ -34,6 +34,11 @@ struct ProfileView: View {
         let progress = (-offset / 80) * 20
         return progress <= 20 ? progress : 20
     }
+
+    func blurViewOpacity() -> Double {
+        let progress = -(offset + 80) / 150
+        return Double(-offset > 80 ? progress : 0)
+    }
     
     func getScale() -> CGFloat {
         let progress = -offset / 80
@@ -41,9 +46,56 @@ struct ProfileView: View {
         return scale < 1 ? scale : 1
     }
     
-    func blurViewOpacity() -> Double {
-        let progress = -(offset + 80) / 150
-        return Double(-offset > 80 ? progress : 0)
+    private func getScale(proxy: GeometryProxy) -> CGFloat {
+        var scale: CGFloat = 1
+        let x = proxy.frame(in: .global).minX
+        let diff = abs(x - 60)
+        
+        if diff < 100 {
+            scale = 1 + (100 - diff) / 700
+        }
+        return scale
+    }
+    
+    func getGalleryImages(urls: [URL]) -> some View {
+        return ScrollView {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 50) {
+                    ForEach(urls, id: \.self) { url in
+                        GeometryReader { proxy in
+                            let scale = getScale(proxy: proxy)
+                            
+                            AsyncImage(
+                                url: url,
+                                content: { image in
+                                    NavigationLink(destination:
+                                                    image.resizable()
+                                                    .scaledToFill()
+                                                    .ignoresSafeArea()
+                                    ) {
+                                        image .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 250)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 0.5)
+                                            )
+                                            .clipped()
+                                            .cornerRadius(15)
+                                            .shadow(radius: 5)
+                                            .scaleEffect(CGSize(width: scale, height: scale))
+                                    }
+                                },
+                                placeholder: {
+                                    ProgressView()
+                                        .frame(width: scale, height: scale, alignment: .center)
+                                })
+                        }
+                        .frame(width: 240, height: UIScreen.main.bounds.height / 2)
+                    }
+                }
+                .padding(32)
+            }
+        }
     }
     
     var body: some View {
@@ -259,13 +311,12 @@ struct ProfileView: View {
                             
                             ZStack {
                                 if (galleryIndex == 0) {
-                                    FavoriteGalleryImagesView()
-                                        .padding(.horizontal, 25)
+                                    getGalleryImages(urls: viewModel.profile.favoriteImagesURL ?? [])
                                 } else {
-                                    EventsGalleryImagesView()
+                                    getGalleryImages(urls: viewModel.profile.galleryImagesURL ?? [])
                                 }
                             }
-                            .frame(height: UIScreen.main.bounds.height / 1.8)
+                            .frame(height: UIScreen.main.bounds.height / 1.5)
                             .padding(.top, 20)
                         }
                     })

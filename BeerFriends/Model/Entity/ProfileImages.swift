@@ -5,7 +5,7 @@
 //  Created by Wesley Marra on 29/12/21.
 //
 
-import Foundation
+import SwiftUI
 
 struct ProfileImages: Identifiable, Equatable, Codable {
     var id: String = UUID().uuidString
