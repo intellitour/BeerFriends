@@ -9,19 +9,30 @@ import SwiftUI
 import Combine
 
 class FriendProfileViewModel: ObservableObject {
-    @ObservedObject var profileRepository = ProfileRepository()
-    
-    @Published var friendList = [Profile]()
-    
     private var cancellables: Set<AnyCancellable> = []
     
+    @ObservedObject var friendRepository = FriendRepository()
+    @Published var friendList = [Profile]()
+    
     init() {
-        profileRepository.$friendsProfile
+        friendRepository.$friendsProfile
+            .receive(on: DispatchQueue.main)
             .assign(to: \.friendList, on: self)
             .store(in: &cancellables)
     }
     
-    func fetchFriendsProfile() {
-        profileRepository.fetchFriendsProfile()
+    func fetchFriends(by profileUid: String) {
+        friendRepository.fetchFriends(by: profileUid)
+    }
+    
+    func addFriend(with profile: Profile,
+                   and friendProfile: Profile,
+                   completionHandler: @escaping (HandleResult<Profile>) -> Void) -> Void {
+        friendRepository.addFriend(with: profile, and: friendProfile, completionHandler: completionHandler)
+    }
+    
+    func removeFriend(with friendId: String,
+                   completionHandler: @escaping (HandleResult<Void>) -> Void) -> Void {
+        friendRepository.removeFriend(with: friendId, completionHandler: completionHandler)
     }
 }

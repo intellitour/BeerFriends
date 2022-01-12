@@ -17,6 +17,7 @@ struct Profile: Identifiable, Codable {
     var photoURL: URL?
     var favoriteImagesURL: [URL]?
     var galleryImagesURL: [URL]?
+    var searchTerms: [String]?
     
     var encoded: [String: Any] {
        let data = (try? JSONEncoder().encode(self)) ?? Data()
@@ -38,5 +39,6 @@ struct Profile: Identifiable, Codable {
         case photoURL
         case favoriteImagesURL
         case galleryImagesURL
+        case searchTerms
     }
 }

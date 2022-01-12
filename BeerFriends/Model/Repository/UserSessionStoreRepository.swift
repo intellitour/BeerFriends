@@ -22,12 +22,23 @@ class UserSessionStoreRepository {
             
             guard let user = result?.user else { return }
             
+            var searchTerms: [String] = [];
+            let separatedNames = name.split(separator: " ")
+            separatedNames.forEach { name in
+                var term = ""
+                name.forEach { letter in
+                    term += letter.lowercased()
+                    searchTerms.append(term)
+                }
+            }
+            
             let profile = Profile(uid: user.uid,
                                   email: user.email,
                                   name: name,
                                   phone: user.phoneNumber,
-                                  photoURL: user.photoURL)
-            
+                                  photoURL: user.photoURL,
+                                  searchTerms: searchTerms)
+
             ProfileRepository().createProfile(profile: profile)
         }
     }

@@ -59,41 +59,55 @@ struct ProfileView: View {
     
     func getGalleryImages(urls: [URL]) -> some View {
         return ScrollView {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 50) {
-                    ForEach(urls, id: \.self) { url in
-                        GeometryReader { proxy in
-                            let scale = getScale(proxy: proxy)
-                            
-                            AsyncImage(
-                                url: url,
-                                content: { image in
-                                    NavigationLink(destination:
-                                                    image.resizable()
-                                                    .scaledToFill()
-                                                    .ignoresSafeArea()
-                                    ) {
-                                        image .resizable()
-                                            .scaledToFill()
-                                            .frame(width: 250)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 0.5)
-                                            )
-                                            .clipped()
-                                            .cornerRadius(15)
-                                            .shadow(radius: 5)
-                                            .scaleEffect(CGSize(width: scale, height: scale))
-                                    }
-                                },
-                                placeholder: {
-                                    ProgressView()
-                                        .frame(width: scale, height: scale, alignment: .center)
-                                })
-                        }
-                        .frame(width: 240, height: UIScreen.main.bounds.height / 2)
-                    }
+            if urls.isEmpty {
+                ZStack {
+                    Image("GalleryImages")
+                        .resizable()
+                        .frame(width: UIScreen.main.bounds.width - 40, height: 300)
+                        .opacity(0.2)
+                    
+                    Text("Você ainda não adicionou imagens!")
+                        .font(.title2.bold())
+                        .foregroundColor(.secondaryColor)
+                        .multilineTextAlignment(.center)
                 }
-                .padding(32)
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 50) {
+                        ForEach(urls, id: \.self) { url in
+                            GeometryReader { proxy in
+                                let scale = getScale(proxy: proxy)
+                                
+                                AsyncImage(
+                                    url: url,
+                                    content: { image in
+                                        NavigationLink(destination:
+                                                        image.resizable()
+                                                        .scaledToFill()
+                                                        .ignoresSafeArea()
+                                        ) {
+                                            image .resizable()
+                                                .scaledToFill()
+                                                .frame(width: 250)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 0.5)
+                                                )
+                                                .clipped()
+                                                .cornerRadius(15)
+                                                .shadow(radius: 5)
+                                                .scaleEffect(CGSize(width: scale, height: scale))
+                                        }
+                                    },
+                                    placeholder: {
+                                        ProgressView()
+                                            .frame(width: scale, height: scale, alignment: .center)
+                                    })
+                            }
+                            .frame(width: 240, height: UIScreen.main.bounds.height / 2)
+                        }
+                    }
+                    .padding(32)
+                }
             }
         }
     }

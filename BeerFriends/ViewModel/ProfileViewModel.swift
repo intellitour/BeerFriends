@@ -12,8 +12,9 @@ class ProfileViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
     
     @ObservedObject var profileRepository = ProfileRepository()
-
     @Published var profile = Profile()
+    @Published var profileListSearch = [Profile]()
+    @Published var profileSearchTerm = ""
     
     init() {
         profileRepository.$profile
@@ -21,7 +22,22 @@ class ProfileViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: \.profile, on: self)
             .store(in: &cancellables)
-        }
+        
+        profileRepository.$profileListSearch
+            .filter{ !$0.isEmpty }
+            .assign(to: \.profileListSearch, on: self)
+            .store(in: &cancellables)
+        
+        $profileSearchTerm
+            .debounce(for: .milliseconds(600), scheduler: RunLoop.main)
+            .removeDuplicates()
+            .compactMap{ $0 }
+            .sink { (_) in
+            } receiveValue: { [self] (searchField) in
+                profileListSearch = []
+                profileRepository.fetchProfiles(by: searchField)
+            }.store(in: &cancellables)
+    }
     
     func findProfile(by uid: String) {
         profileRepository.findProfile(by: uid)

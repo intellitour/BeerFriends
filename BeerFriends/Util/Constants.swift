@@ -43,6 +43,7 @@ struct K {
         static let DocText          = "doc.text"
         static let SignOut          = "rectangle.portrait.and.arrow.right"
         static let Close            = "xmark"
+        static let CloseFill        = "x.circle.fill"
         static let StatusMessage    = "text.bubble"
         static let Phone            = "iphone"
         static let Plus             = "plus"
@@ -51,5 +52,6 @@ struct K {
         static let Unfavorite       = "heart.slash"
         static let FavoriteFill     = "heart.fill"
         static let Remove           = "trash"
+        static let Search           = "magnifyingglass"
     }
 }

@@ -14,21 +14,26 @@ class ProfileRepository: ObservableObject {
     private let db = Firestore.firestore()
     private let storage = Storage.storage()
     
-    @Published var friendsProfile = [Profile]()
+    @Published var profileListSearch = [Profile]()
     @Published var profile = Profile()
     
     func createProfile(profile: Profile) {
         db.collection("profiles").document(profile.uid!).setData(profile.encoded)
     }
     
-    func fetchFriendsProfile() {
-        db.collection("profiles").addSnapshotListener { querySnapshot, error in
+    func fetchProfiles(by filter: String?) {
+        var query: Query = db.collection("profiles").order(by: "name")
+        if filter != nil && filter != "" {
+            query = query.whereField("searchTerms", arrayContains: filter!.lowercased())
+        }
+        
+        query.addSnapshotListener { querySnapshot, error in
             guard let friendsDocuments = querySnapshot?.documents else {
                 print("Não há amigos")
                 return
             }
             
-            self.friendsProfile = friendsDocuments.map { (queryDocumentSnapshot) -> Profile in
+            self.profileListSearch = friendsDocuments.map { (queryDocumentSnapshot) -> Profile in
                 let data = queryDocumentSnapshot.data()
                 return try! Profile.with(data)!
             }

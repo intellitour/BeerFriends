@@ -304,26 +304,40 @@ struct ProfileEditView: View {
                             
                             Divider()
                             
-                            VStack(spacing: 4) {
-                                ForEach(compositionalCardsImage.indices, id: \.self) {index in
-                                    if !compositionalCardsImage[index].isEmpty {
-                                        if index == 0 || index % 6 == 0 {
-                                            LayoutOne(cards: compositionalCardsImage[index],
-                                                      imagesToRemove: $imagesToRemove,
-                                                      imagesToFavorite: $imagesToFavorite,
-                                                      imagesToUnfavorite: $imagesToUnfavorite)
-                                        } else if index % 3 == 0 {
-                                            LayoutThree(cards: compositionalCardsImage[index],
-                                                        imagesToRemove: $imagesToRemove,
-                                                        imagesToFavorite: $imagesToFavorite,
-                                                        imagesToUnfavorite: $imagesToUnfavorite)
-                                        } else {
+                            if !compositionalCardsImage.isEmpty {
+                                VStack(spacing: 4) {
+                                    ForEach(compositionalCardsImage.indices, id: \.self) {index in
+                                        if !compositionalCardsImage[index].isEmpty {
+                                            if index == 0 || index % 6 == 0 {
+                                                LayoutOne(cards: compositionalCardsImage[index],
+                                                          imagesToRemove: $imagesToRemove,
+                                                          imagesToFavorite: $imagesToFavorite,
+                                                          imagesToUnfavorite: $imagesToUnfavorite)
+                                            } else if index % 3 == 0 {
+                                                LayoutThree(cards: compositionalCardsImage[index],
+                                                            imagesToRemove: $imagesToRemove,
+                                                            imagesToFavorite: $imagesToFavorite,
+                                                            imagesToUnfavorite: $imagesToUnfavorite)
+                                            } else {
                                                 LayoutTwo(cards: compositionalCardsImage[index],
                                                           imagesToRemove: $imagesToRemove,
                                                           imagesToFavorite: $imagesToFavorite,
                                                           imagesToUnfavorite: $imagesToUnfavorite)
+                                            }
                                         }
                                     }
+                                }
+                            } else {
+                                ZStack {
+                                    Image("GalleryImages")
+                                        .resizable()
+                                        .frame(width: UIScreen.main.bounds.width - 40, height: 300)
+                                        .opacity(0.2)
+                                    
+                                    Text("Você ainda não adicionou imagens!")
+                                        .font(.title2.bold())
+                                        .foregroundColor(.secondaryColor)
+                                        .multilineTextAlignment(.center)
                                 }
                             }
                         }

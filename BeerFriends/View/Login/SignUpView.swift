@@ -10,15 +10,14 @@ import Lottie
 import AlertToast
 
 struct SignUPView: View {
+    @State var loading = false
+    @State var error = false
     @State var name: String = ""
     @State var email: String = ""
     @State var password: String = ""
+    
     @Namespace var animation
-    
     @Binding var animate3d: Bool
-    
-    @State var loading = false
-    @State var error = false
 
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
     @Environment(\.colorScheme) var colorScheme
