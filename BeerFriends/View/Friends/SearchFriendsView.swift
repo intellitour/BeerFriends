@@ -9,8 +9,10 @@ import SwiftUI
 import AlertToast
 
 struct SearchFriendsView: View {
+    
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
+    
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
     @ObservedObject var friendProfileViewModel = FriendProfileViewModel()
     @StateObject var profileViewModel = ProfileViewModel()
@@ -40,7 +42,12 @@ struct SearchFriendsView: View {
             } else {
                 self.success = completionHandler.success
                 self.showSuccess = true
-                self.friendList.append(friend)
+                
+                if completionHandler.data != nil {
+                    self.friendList.append(completionHandler.data!)
+                } else {
+                    getProfile()
+                }
             }
         }
     }
@@ -87,8 +94,14 @@ struct SearchFriendsView: View {
                             .padding(.vertical, 7)
                             
                             Spacer()
-                           
-                            if friendList.contains(where: {$0.uid == friendProfileItem.uid}) {
+                            
+                            if (profileViewModel.profile.invitationsSent ?? []).contains(where: {$0 == friendProfileItem.uid}) {
+                                Image(systemName: K.Icon.InvitationReceived)
+                                    .resizable()
+                                    .foregroundColor(.gray)
+                                    .opacity(0.5)
+                                    .frame(width: 30, height: 25)
+                            } else if friendList.contains(where: {$0.uid == friendProfileItem.uid}) {
                                 Image(K.System.Icon)
                                     .resizable()
                                     .foregroundColor(.white)
@@ -97,11 +110,10 @@ struct SearchFriendsView: View {
                                     .background(Color.primaryColor)
                                     .cornerRadius(16)
                             } else {
-                                Image(systemName: K.Icon.Plus)
+                                Image(systemName: K.Icon.InvitationSent)
+                                    .resizable()
                                     .foregroundColor(.secondaryColor)
-                                    .frame(width: 25, height: 25)
-                                    .clipShape(Circle())
-                                    .overlay(Circle().stroke(Color.secondaryColor, lineWidth: 1))
+                                    .frame(width: 30, height: 25)
                                     .onTapGesture {
                                         addFriend(with: friendProfileItem)
                                     }
@@ -115,6 +127,7 @@ struct SearchFriendsView: View {
                 Button("Fechar") {
                     presentationMode.wrappedValue.dismiss()
                 }
+                .foregroundColor(Color.secondaryColor)
             }
         }
         .padding(.vertical)

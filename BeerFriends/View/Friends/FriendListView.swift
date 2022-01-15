@@ -22,15 +22,28 @@ struct FriendListView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
     
-    @ObservedObject private var friendProfileViewModel = FriendProfileViewModel()
+    @StateObject var profileViewModel = ProfileViewModel()
+    @ObservedObject var friendProfileViewModel = FriendProfileViewModel()
     
     init() {
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.secondaryColor)]
     }
     
-    func removeRows(at offsets: IndexSet) {
-        let friendIds = offsets.map { self.friendProfileViewModel.friendList[$0].id }
-        friendProfileViewModel.removeFriend(with: friendIds[0]) { ( completionHandler ) in
+    func onInit() {
+        getProfile()
+        friendProfileViewModel.fetchFriends(by: userSessionStoreViewModel.userSession?.uid ?? "")
+        isShowing = false
+    }
+    
+    func getProfile() {
+        if userSessionStoreViewModel.userSession?.uid != nil {
+            profileViewModel.findProfile(by: userSessionStoreViewModel.userSession?.uid ?? "")
+        }
+    }
+    
+    func removeRows(with friend: Profile) {
+        loading = true
+        friendProfileViewModel.removeFriend(with: friend.id, and: profileViewModel.profile.id) { ( completionHandler ) in
             
             if completionHandler.error != nil {
                 self.error = completionHandler.error?.localizedDescription
@@ -46,32 +59,34 @@ struct FriendListView: View {
     
     var body: some View {
         NavigationView {
-            ZStack() {
+            ZStack {
                 if isShowing {
                     SideMenuView(isShowing: $isShowing)
                 }
                 ZStack {
-                    List {
-                        ForEach(friendProfileViewModel.friendList) { friendProfileItem in
-                            NavigationLink(destination: EmptyView()) {
-                                HStack {
-                                    FriendCircleView(friendProfileItem: friendProfileItem)
-                                    VStack(alignment: .leading) {
-                                        Text(friendProfileItem.name ?? "")
-                                            .font(.headline)
-                                            .foregroundColor(.secondaryColor)
-                                        Text(friendProfileItem.email ?? "")
-                                            .font(.caption)
-                                            .foregroundColor(.gray)
-                                    }
+                    List(friendProfileViewModel.friendList) { friendProfileItem in
+                        NavigationLink(destination: FriendProfileView(friendProfile: friendProfileItem).navigationBarHidden(true)) {
+                            HStack {
+                                FriendCircleView(friendProfileItem: friendProfileItem)
+                                VStack(alignment: .leading) {
+                                    Text(friendProfileItem.name ?? "")
+                                        .font(.headline)
+                                        .foregroundColor(.secondaryColor)
+                                    Text(friendProfileItem.email ?? "")
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
                                 }
-                                .padding(.vertical, 7)
+                            }
+                            .padding(.vertical, 7)
+                        }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                               removeRows(with: friendProfileItem)
+                            } label: {
+                                Label("Remover", systemImage: K.Icon.RemoveUser)
                             }
                         }
-                        .onDelete(perform: removeRows)
-                    }
-                    .onAppear {
-                        friendProfileViewModel.fetchFriends(by: userSessionStoreViewModel.userSession?.uid ?? "")
+                       
                     }
                     .listStyle(PlainListStyle())
                     .background(colorScheme == .dark ? Color.black : Color.white)
@@ -82,18 +97,20 @@ struct FriendListView: View {
                             Spacer()
                             Button(action: {
                                 showSearchFriends.toggle()
-                            }, label: {
-                                Text("+")
-                                .font(.system(.largeTitle))
-                                .frame(width: 35, height: 35)
-                                .foregroundColor(Color.primaryColor)
-                                .padding()
-                            })
+                            }) {
+                                Image(systemName: K.Icon.Plus)
+                                    .resizable()
+                                    .frame(width: 25, height: 25)
+                                    .foregroundColor(.primaryColor)
+                                    .padding()
+                                    .cornerRadius(30)
+                            }
                             .background(Color.secondaryColor)
-                            .cornerRadius(50)
+                            .cornerRadius(35)
                             .padding()
                             .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
                             .fullScreenCover(isPresented: $showSearchFriends,
+                                             onDismiss: onInit,
                                              content: { SearchFriendsView(friendList: friendProfileViewModel.friendList) })
                         }
                     }
@@ -101,17 +118,26 @@ struct FriendListView: View {
                 .cornerRadius(isShowing ? 20 : 10)
                 .offset(x: isShowing ? 300 : 0, y: 1)
                 .scaleEffect(isShowing ? 0.8 : 1)
-                .navigationBarItems(leading: Button(action: {
-                    withAnimation(.spring()) {
-                        isShowing.toggle()
-                    }
-                }, label: {
-                    Image(systemName: K.Icon.SideMenu)
-                        .foregroundColor(isShowing ? .primaryColor : .secondaryColor)
-                }))
-                .onAppear {
-                    isShowing = false
-                }
+                .navigationBarItems(
+                    leading: Button(
+                        action: {
+                            withAnimation(.spring()) {
+                                isShowing.toggle()
+                            }
+                        }, label: {
+                            Image(systemName: K.Icon.SideMenu)
+                                .foregroundColor(isShowing ? .primaryColor : .secondaryColor)
+                        }),
+                    trailing: Button(
+                        action: {},
+                        label: {
+                            NavigationLink(destination: FriendInvitationView(profile: profileViewModel.profile).navigationBarHidden(true)) {
+                                Image(systemName: K.Icon.InvitationPending)
+                                    .foregroundColor(.secondaryColor)
+                            }
+                        })
+                )
+                .onAppear(perform: onInit)
                 .navigationTitle("Amigos")
                 .navigationBarTitleDisplayMode(.inline)
             }
