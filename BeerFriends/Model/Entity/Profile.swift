@@ -22,6 +22,9 @@ struct Profile: Identifiable, Codable {
     var following: [String]?
     var invitationsReceived: [String]?
     var invitationsSent: [String]?
+    var isDarkMode: Bool?
+    var isBlockInvitation: Bool?
+    var isPhoneHide: Bool?
     
     var encoded: [String: Any] {
        let data = (try? JSONEncoder().encode(self)) ?? Data()
@@ -48,5 +51,8 @@ struct Profile: Identifiable, Codable {
         case following
         case invitationsReceived
         case invitationsSent
+        case isDarkMode = "isDarkMode"
+        case isBlockInvitation = "isBlockInvitation"
+        case isPhoneHide = "isPhoneHide"
     }
 }

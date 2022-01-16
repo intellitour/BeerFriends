@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OnboardingView: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     @State var currentPageIndex = 0
     @State private var isPresenting = false
     
@@ -45,10 +47,10 @@ struct OnboardingView: View {
                         }){
                             Image(systemName: K.Icon.ArrowRight)
                                 .resizable()
-                                .foregroundColor(.white)
+                                .foregroundColor(colorScheme == .dark ? Color.primaryColor : Color.secondaryColor)
                                 .frame(width: 15, height: 15)
                                 .padding()
-                                .background(Color.primaryColor)
+                                .background(colorScheme == .dark ? Color.secondaryColor : Color.primaryColor)
                                 .cornerRadius(30)
                         }
                         .padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 50))
@@ -65,7 +67,7 @@ struct OnboardingView: View {
                                 .foregroundColor(.white)
                                 .frame(width: 30, height: 30)
                                 .padding(8.5)
-                                .background(Color.primaryColor)
+                                .background(colorScheme == .dark ? Color.secondaryColor : Color.primaryColor)
                                 .cornerRadius(30)
                         }
                         .padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 50))

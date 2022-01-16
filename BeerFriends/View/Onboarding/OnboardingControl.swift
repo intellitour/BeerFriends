@@ -19,7 +19,7 @@ struct OnboardingControl: UIViewRepresentable {
     func makeUIView(context: Context) -> UIPageControl {
         let control = UIPageControl()
             control.numberOfPages = numberOfPages
-        control.currentPageIndicatorTintColor = UIColor(.primaryColor)
+        control.currentPageIndicatorTintColor = UIColor(Color.primaryColor)
             control.pageIndicatorTintColor = UIColor.gray
 
         return control

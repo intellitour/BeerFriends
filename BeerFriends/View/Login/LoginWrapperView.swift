@@ -9,6 +9,7 @@ import SwiftUI
 import Lottie
 
 struct LoginWrapperView: View {
+    
     @State private var forgotPassawordFlipped = false
     @State private var signUpFlipped = false
     @State private var animateForgotPassaword = false
@@ -17,12 +18,13 @@ struct LoginWrapperView: View {
     @State var showCard = false
     @State var showPackBeerImage = false
 
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
 
     var body: some View {
         VStack {
             ZStack {
-                Color(uiColor: UIColor(.primaryColor)).ignoresSafeArea()
+                (colorScheme == .dark ? Color.secondaryColor : Color.primaryColor).edgesIgnoringSafeArea(.all)
                 VStack(alignment: .leading) {
                     Spacer()
                     if !showPackBeerImage {

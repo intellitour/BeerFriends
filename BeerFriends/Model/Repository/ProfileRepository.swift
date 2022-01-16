@@ -127,6 +127,16 @@ class ProfileRepository: ObservableObject {
                 }
             }
         }
+    }
+    
+    func update(_ profile: Profile,
+                completionHandler: @escaping (HandleResult<URL>) -> Void) -> Void {
         
+        db.collection("profiles").document(profile.uid!).updateData(profile.encoded) { error in
+            if let error = error {
+                completionHandler(HandleResult(error: error))
+            }
+            completionHandler(HandleResult(success: "Perfil atualizado com sucesso"))
+        }
     }
 }

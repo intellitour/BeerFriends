@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OnboardingSubview: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var imageName: String
     
     var body: some View {
@@ -26,11 +28,11 @@ struct OnboardingSubview: View {
                             
                             Text(K.Omboarding.Title)
                                 .font(.largeTitle)
-                                .foregroundColor(.primaryColor)
+                                .foregroundColor(colorScheme == .dark ? .secondaryColor : .primaryColor)
                                 .multilineTextAlignment(.center)
                             
                             Text(K.Omboarding.Subtitle)
-                                .foregroundColor(.primaryColor)
+                                .foregroundColor(colorScheme == .dark ? .secondaryColor : .primaryColor)
                                 .frame(maxWidth: 320)
                                 .padding(.top, 20)
                                 .padding(.bottom, 160)
@@ -41,7 +43,7 @@ struct OnboardingSubview: View {
                     VStack(alignment: .leading, spacing: 6) {
                         HStack(alignment: .center, spacing: 6) {
                             Text(K.Omboarding.SecondSubtitle)
-                                .foregroundColor(.primaryColor)
+                                .foregroundColor(colorScheme == .dark ? .secondaryColor : .primaryColor)
                                 .frame(maxWidth: 100, alignment: .leading)
                                 .multilineTextAlignment(.leading)
                             Spacer()
@@ -57,7 +59,7 @@ struct OnboardingSubview: View {
                             Spacer()
                             Text(K.Omboarding.FinalTitle)
                                 .font(.largeTitle)
-                                .foregroundColor(.primaryColor)
+                                .foregroundColor(colorScheme == .dark ? .secondaryColor : .primaryColor)
                                 .frame(maxWidth: 100, alignment: .trailing)
                                 .multilineTextAlignment(.trailing)
                         }

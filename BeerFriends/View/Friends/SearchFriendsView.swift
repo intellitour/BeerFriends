@@ -54,7 +54,7 @@ struct SearchFriendsView: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            Color.white.edgesIgnoringSafeArea(.all)
+            (colorScheme == .dark ? Color.black : Color.white).edgesIgnoringSafeArea(.all)
             VStack {
                 HStack {
                     TextField("Procurar amigo", text: $profileViewModel.profileSearchTerm)
@@ -78,6 +78,7 @@ struct SearchFriendsView: View {
                     .padding(.horizontal, 32)
                     .foregroundColor(.gray)
                 )
+                .background(colorScheme == .dark ? Color.black : Color.white)
                 
                 List(profileViewModel.profileListSearch) { friendProfileItem in
                     if friendProfileItem.uid != userSessionStoreViewModel.userSession?.uid {
@@ -106,7 +107,7 @@ struct SearchFriendsView: View {
                                     .resizable()
                                     .foregroundColor(.white)
                                     .frame(width: 16, height: 16)
-                                    .padding(5)
+                                    .padding(7)
                                     .background(Color.primaryColor)
                                     .cornerRadius(16)
                             } else {

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @AppStorage("isDarkMode") private var isDarkMode = false
+    
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
     
     func getUser () {
@@ -27,6 +29,8 @@ struct ContentView: View {
                 }
             }
             
-        }.onAppear(perform: getUser)
+        }
+        .onAppear(perform: getUser)
+        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }

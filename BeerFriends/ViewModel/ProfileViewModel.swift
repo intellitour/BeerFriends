@@ -29,7 +29,7 @@ class ProfileViewModel: ObservableObject {
             .store(in: &cancellables)
         
         $profileSearchTerm
-            .debounce(for: .milliseconds(600), scheduler: RunLoop.main)
+            .debounce(for: .milliseconds(450), scheduler: RunLoop.main)
             .removeDuplicates()
             .compactMap{ $0 }
             .sink { (_) in
@@ -84,5 +84,10 @@ class ProfileViewModel: ObservableObject {
                                   with image: UIImage,
                                   completionHandler: @escaping (HandleResult<URL>) -> Void) -> Void {
         profileRepository.addImagesToEventsGallery(from: profileUid, with: image, completionHandler: completionHandler)
+    }
+    
+    func update(_ profile: Profile,
+                completionHandler: @escaping (HandleResult<URL>) -> Void) -> Void {
+        profileRepository.update(profile, completionHandler: completionHandler)
     }
 }

@@ -20,10 +20,17 @@ struct SideMenuView: View {
         }
     }
     
+    func getSettings() -> Settings {
+        return Settings(
+            isDarkMode: viewModel.profile.isDarkMode ?? false,
+            isBlockInvitation: viewModel.profile.isBlockInvitation ?? false,
+            isPhoneHide: viewModel.profile.isPhoneHide ?? false)
+    }
+    
     @ViewBuilder
     func navigate(with menuOption: SideMenuOptions) -> some View {
         switch menuOption {
-        case .configurations: Text(menuOption.description)
+        case .configurations: SettingsView(settings: getSettings())
         case .profile: ProfileView().navigationBarHidden(true)
         case .friends: FriendListView().navigationBarHidden(true)
         case .terms: Text(menuOption.description)
