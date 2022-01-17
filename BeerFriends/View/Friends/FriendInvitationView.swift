@@ -47,7 +47,7 @@ struct FriendInvitationView: View {
                 
                 if completionHandler.data != nil {
                     self.profile.invitationsReceived = self.profile.invitationsReceived!.filter(){ $0 != completionHandler.data?.uid! }
-                    self.friendProfileViewModel.friendsInvitation = self.friendProfileViewModel.friendsInvitation.filter() { $0.id != completionHandler.data?.id}
+                    self.friendProfileViewModel.friendsInvitation = self.friendProfileViewModel.friendsInvitation.filter() { $0.uid != completionHandler.data?.uid}
                 }
             }
         }

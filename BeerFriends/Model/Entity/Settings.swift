@@ -11,7 +11,7 @@ struct Settings: Identifiable, Codable {
     var id: String = UUID().uuidString
     var isDarkMode = false
     var isBlockInvitation = false
-    var isPhoneHide = false
+    var isShowPhone = false
     
     var encoded: [String: Any] {
        let data = (try? JSONEncoder().encode(self)) ?? Data()

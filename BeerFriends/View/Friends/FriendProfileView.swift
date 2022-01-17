@@ -314,6 +314,14 @@ struct FriendProfileView: View {
                             .padding(.top, -8)
                             .padding(.bottom, 8)
                         
+                        if friendProfile.isShowPhone == true {
+                            Text(friendProfile.phone ?? "")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                                .padding(.top, -8)
+                                .padding(.bottom, 8)
+                        }
+                        
                         Text(friendProfile.statusMessage ?? "")
                         
                         HStack(spacing: 5) {

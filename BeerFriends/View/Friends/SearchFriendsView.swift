@@ -23,6 +23,7 @@ struct SearchFriendsView: View {
     @State var showSuccess = false
     @State var showError = false
     @State var friendList: [Profile]
+    @State var isBlockInvitation = false
     
     func getProfile() {
         if userSessionStoreViewModel.userSession?.uid != nil {
@@ -31,6 +32,12 @@ struct SearchFriendsView: View {
     }
     
     func addFriend(with friend: Profile) {
+        
+        if friend.isBlockInvitation == true {
+            self.isBlockInvitation = true
+            return
+        }
+        
         loading = true
         
         friendProfileViewModel.addFriend(with: profileViewModel.profile, and: friend) { completionHandler in
@@ -108,7 +115,7 @@ struct SearchFriendsView: View {
                                     .foregroundColor(.white)
                                     .frame(width: 16, height: 16)
                                     .padding(7)
-                                    .background(Color.primaryColor)
+                                    .background(colorScheme == .dark ? Color.secondaryColor : Color.primaryColor)
                                     .cornerRadius(16)
                             } else {
                                 Image(systemName: K.Icon.InvitationSent)
@@ -141,6 +148,11 @@ struct SearchFriendsView: View {
         })
         .toast(isPresenting: $showError, alert: {
             AlertToast(type: .error(.red), title: "Erro ao adiconar amigo.", subTitle: self.error)
+        })
+        .toast(isPresenting: $isBlockInvitation, alert: {
+            AlertToast(type: .systemImage(K.Icon.RefuseUser, .yellow),
+                       title: Optional("Indisponível"),
+                       subTitle: Optional("O Usuário pediu privacidade"))
         })
     }
 }

@@ -59,13 +59,13 @@ struct SideMenuHeaderView: View {
                 
                 HStack(spacing: 12) {
                     HStack(spacing: 4) {
-                        Text("Nível:").bold()
-                        Text("Strong")
+                        Text(String(profile.followers?.count ?? 0)).bold()
+                        Text(profile.followers?.count == 1 ? "Seguidor" : "Seguidores")
                     }
                     
                     HStack(spacing: 4) {
-                        Text("Cervejas:").bold()
-                        Text("256")
+                        Text(String(profile.following?.count ?? 0)).bold()
+                        Text("Seguindo")
                     }
                     Spacer()
                 }

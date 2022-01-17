@@ -24,7 +24,7 @@ struct SideMenuView: View {
         return Settings(
             isDarkMode: viewModel.profile.isDarkMode ?? false,
             isBlockInvitation: viewModel.profile.isBlockInvitation ?? false,
-            isPhoneHide: viewModel.profile.isPhoneHide ?? false)
+            isShowPhone: viewModel.profile.isShowPhone ?? false)
     }
     
     @ViewBuilder
@@ -33,7 +33,6 @@ struct SideMenuView: View {
         case .configurations: SettingsView(settings: getSettings())
         case .profile: ProfileView().navigationBarHidden(true)
         case .friends: FriendListView().navigationBarHidden(true)
-        case .terms: Text(menuOption.description)
         case .loggout: Text(menuOption.description)}
     }
 

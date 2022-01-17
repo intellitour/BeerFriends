@@ -62,10 +62,10 @@ struct SettingsView: View {
                                 update()
                             }
                         Toggle(
-                            isOn: $settings.isPhoneHide,
-                            label: {Text("Ocultar telefone").foregroundColor(.gray)})
-                            .onChange(of: settings.isPhoneHide) { isPhoneHide in
-                                profileViewModel.profile.isPhoneHide = isPhoneHide
+                            isOn: $settings.isShowPhone,
+                            label: {Text("Mostrar telefone").foregroundColor(.gray)})
+                            .onChange(of: settings.isShowPhone) { isShowPhone in
+                                profileViewModel.profile.isShowPhone = isShowPhone
                                 update()
                             }
                     }

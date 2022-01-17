@@ -260,15 +260,15 @@ struct ProfileView: View {
                         Text(viewModel.profile.statusMessage ?? "")
                         
                         HStack(spacing: 5) {
-                            Text("32")
+                            Text(String(viewModel.profile.followers?.count ?? 0))
                                 .foregroundColor(.secondaryColor)
                                 .fontWeight(.semibold)
                             
-                            Text("Seguidores")
+                            Text(viewModel.profile.followers?.count == 1 ? "Seguidor" : "Seguidores")
                                 .foregroundColor(.gray)
                                 .font(.subheadline)
                             
-                            Text("114")
+                            Text(String(viewModel.profile.following?.count ?? 0))
                                 .foregroundColor(.secondaryColor)
                                 .fontWeight(.semibold)
                                 .padding(.leading, 10)
