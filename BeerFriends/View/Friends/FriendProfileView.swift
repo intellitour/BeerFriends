@@ -116,7 +116,7 @@ struct FriendProfileView: View {
         return scale
     }
     
-    func getGalleryImages(urls: [URL]) -> some View {
+    func getGalleryImages(urls: [URL], itemNotFound: String) -> some View {
         return ScrollView {
             if urls.isEmpty {
                 ZStack {
@@ -125,7 +125,7 @@ struct FriendProfileView: View {
                         .frame(width: UIScreen.main.bounds.width - 40, height: 300)
                         .opacity(0.2)
                     
-                    Text("Seu amigo ainda não adicionou imagens!")
+                    Text("Seu amigo ainda não adicionou \(itemNotFound)!")
                         .font(.title2.bold())
                         .foregroundColor(.secondaryColor)
                         .multilineTextAlignment(.center)
@@ -390,12 +390,30 @@ struct FriendProfileView: View {
                             
                             ZStack {
                                 if (galleryIndex == 0) {
-                                    getGalleryImages(urls: friendProfile.favoriteImagesURL ?? [])
+                                    getGalleryImages(urls: friendProfile.favoriteImagesURL ?? [], itemNotFound: "imagens")
                                 } else {
-                                    getGalleryImages(urls: friendProfile.galleryImagesURL ?? [])
+                                    getGalleryImages(urls: friendProfile.galleryImagesURL ?? [], itemNotFound: "imagens")
                                 }
                             }
-                            .frame(height: UIScreen.main.bounds.height / 1.5)
+                            .frame(height: UIScreen.main.bounds.height / (friendProfile.favoriteImagesURL == nil && friendProfile.galleryImagesURL != nil ? 2.2 : 1.6))
+                            .padding(.top, 20)
+                            
+                            HStack {
+                                Text("Próximos eventos")
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.secondaryColor)
+                                    .padding(.bottom, -1)
+                                
+                                Spacer()
+                            }
+                            
+                            Divider()
+                            
+                            ZStack {
+                                getGalleryImages(urls: friendProfile.eventImagesURL ?? [], itemNotFound: "eventos")
+                            }
+                            .frame(height: UIScreen.main.bounds.height / (friendProfile.eventImagesURL == nil ? 2.2 : 1.6))
                             .padding(.top, 20)
                         }
                     })

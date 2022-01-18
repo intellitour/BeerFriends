@@ -57,7 +57,7 @@ struct ProfileView: View {
         return scale
     }
     
-    func getGalleryImages(urls: [URL]) -> some View {
+    func getGalleryImages(urls: [URL], itemNotFound: String) -> some View {
         return ScrollView {
             if urls.isEmpty {
                 ZStack {
@@ -66,7 +66,7 @@ struct ProfileView: View {
                         .frame(width: UIScreen.main.bounds.width - 40, height: 300)
                         .opacity(0.2)
                     
-                    Text("Você ainda não adicionou imagens!")
+                    Text("Você ainda não adicionou \(itemNotFound)")
                         .font(.title2.bold())
                         .foregroundColor(.secondaryColor)
                         .multilineTextAlignment(.center)
@@ -86,16 +86,18 @@ struct ProfileView: View {
                                                         .scaledToFill()
                                                         .ignoresSafeArea()
                                         ) {
-                                            image .resizable()
-                                                .scaledToFill()
-                                                .frame(width: 250)
-                                                .overlay(
-                                                    RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 0.5)
-                                                )
-                                                .clipped()
-                                                .cornerRadius(15)
-                                                .shadow(radius: 5)
-                                                .scaleEffect(CGSize(width: scale, height: scale))
+                                            ZStack(alignment: Alignment(horizontal: .leading, vertical: .bottom)) {
+                                                image .resizable()
+                                                    .scaledToFill()
+                                                    .frame(width: 250)
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 0.5)
+                                                    )
+                                                    .clipped()
+                                                    .cornerRadius(15)
+                                                    .shadow(radius: 5)
+                                                    .scaleEffect(CGSize(width: scale, height: scale))
+                                            }
                                         }
                                     },
                                     placeholder: {
@@ -325,12 +327,30 @@ struct ProfileView: View {
                             
                             ZStack {
                                 if (galleryIndex == 0) {
-                                    getGalleryImages(urls: viewModel.profile.favoriteImagesURL ?? [])
+                                    getGalleryImages(urls: viewModel.profile.favoriteImagesURL ?? [], itemNotFound: "imagens!")
                                 } else {
-                                    getGalleryImages(urls: viewModel.profile.galleryImagesURL ?? [])
+                                    getGalleryImages(urls: viewModel.profile.galleryImagesURL ?? [], itemNotFound: "imagens!")
                                 }
                             }
-                            .frame(height: UIScreen.main.bounds.height / 1.5)
+                            .frame(height: UIScreen.main.bounds.height / (viewModel.profile.favoriteImagesURL == nil && viewModel.profile.galleryImagesURL != nil ? 2.2 : 1.6))
+                            .padding(.top, 20)
+                            
+                            HStack {
+                                Text("Próximos eventos")
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.secondaryColor)
+                                    .padding(.bottom, -1)
+                                
+                                Spacer()
+                            }
+                            
+                            Divider()
+                            
+                            ZStack {
+                                getGalleryImages(urls: viewModel.profile.eventImagesURL ?? [], itemNotFound: "eventos!")
+                            }
+                            .frame(height: UIScreen.main.bounds.height / (viewModel.profile.eventImagesURL == nil ? 2.2 : 1.6))
                             .padding(.top, 20)
                         }
                     })

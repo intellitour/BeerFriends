@@ -17,6 +17,7 @@ struct Profile: Identifiable, Codable {
     var photoURL: URL?
     var favoriteImagesURL: [URL]?
     var galleryImagesURL: [URL]?
+    var eventImagesURL: [URL]?
     var searchTerms: [String]?
     var followers: [String]?
     var following: [String]?
@@ -46,6 +47,7 @@ struct Profile: Identifiable, Codable {
         case photoURL
         case favoriteImagesURL
         case galleryImagesURL
+        case eventImagesURL
         case searchTerms
         case followers
         case following

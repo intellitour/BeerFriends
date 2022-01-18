@@ -48,6 +48,7 @@ class ProfileViewModel: ObservableObject {
               and imagesToRemove: [ProfileImages],
               and imagesToFavorite: [ProfileImages],
               and imagesToUnfavofite: [ProfileImages],
+              and eventImagesToRemove: [ProfileImages],
               completionHandler: @escaping (HandleResult<Profile>) -> Void) -> Void {
         
         var profileWithImages = profile
@@ -75,6 +76,10 @@ class ProfileViewModel: ObservableObject {
         imagesToRemove.forEach { profileImageUrl in
             profileWithImages.galleryImagesURL = profileWithImages.galleryImagesURL?.filter(){ $0 != profileImageUrl.imageURL }
             profileWithImages.favoriteImagesURL = profileWithImages.favoriteImagesURL?.filter(){ $0 != profileImageUrl.imageURL }
+        }
+        
+        eventImagesToRemove.forEach { eventImageUrl in
+            profileWithImages.eventImagesURL = profileWithImages.eventImagesURL?.filter(){ $0 != eventImageUrl.imageURL }
         }
         
         profileRepository.save(with: profileWithImages, and: photo, completionHandler: completionHandler)

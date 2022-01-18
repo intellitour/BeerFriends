@@ -13,6 +13,7 @@ struct ProfileEditView: View {
     @Namespace var animation
     @State private var profileImage: UIImage? = nil
     @State private var image: UIImage? = nil
+    @State private var eventImage: UIImage? = nil
     @State private var showImageAction = false
     @State private var showImagePicker = false
     @State private var activeSheet: ActiveSheet?
@@ -30,6 +31,7 @@ struct ProfileEditView: View {
     @State var isFinished = false
     @State var compositionalCardsImage: [[URL]] = []
     
+    @State var eventImagesToRemove: [ProfileImages] = []
     @State var imagesToRemove: [ProfileImages] = []
     @State var imagesToFavorite: [ProfileImages] = []
     @State var imagesToUnfavorite: [ProfileImages] = []
@@ -68,17 +70,19 @@ struct ProfileEditView: View {
                 
         viewModel.save(
             with: Profile(id: profile.id,
-                         uid: profile.uid,
-                         email: profile.email,
-                         name: profile.name,
-                         phone: profile.phone,
-                         statusMessage: profile.statusMessage,
-                         photoURL: profile.photoURL,
-                         galleryImagesURL: flatMappedCardsImage),
+                          uid: profile.uid,
+                          email: profile.email,
+                          name: profile.name,
+                          phone: profile.phone,
+                          statusMessage: profile.statusMessage,
+                          photoURL: profile.photoURL,
+                          galleryImagesURL: flatMappedCardsImage,
+                          eventImagesURL: profile.eventImagesURL),
             and: profileImage,
             and: imagesToRemove,
             and: imagesToFavorite,
-            and: imagesToUnfavorite) { ( completionHandler ) in
+            and: imagesToUnfavorite,
+            and: eventImagesToRemove) { ( completionHandler ) in
             
             loading = false
             
@@ -120,6 +124,32 @@ struct ProfileEditView: View {
                     image = nil
                 }
         }
+        
+        if eventImage != nil {
+            self.loading = true
+            self.showError = false
+            self.showSuccess = false
+            
+            viewModel.addImagesToEventsGallery(
+                from: profile.uid!,
+                with: eventImage!) { ( completionHandler ) in
+                    
+                    if completionHandler.error != nil {
+                        self.error = completionHandler.error?.localizedDescription
+                        self.showError = true
+                    } else {
+                        self.success = completionHandler.success
+                        self.showSuccess = true
+                        if self.profile.eventImagesURL == nil {
+                            self.profile.eventImagesURL = []
+                        }
+                        self.profile.eventImagesURL?.append(completionHandler.data!)
+                    }
+                    
+                    loading = false
+                    eventImage = nil
+                }
+        }
     }
     
     func createImagePlus(with padding: CGFloat, and lineWidth: CGFloat) -> some View {
@@ -151,6 +181,84 @@ struct ProfileEditView: View {
            if currentArrayCards.count != 3 && url == imagesUrl?.last {
                self.compositionalCardsImage.append(currentArrayCards)
                 currentArrayCards.removeAll()
+            }
+        }
+    }
+    
+    private func getScale(proxy: GeometryProxy) -> CGFloat {
+        var scale: CGFloat = 1
+        let x = proxy.frame(in: .global).minX
+        let diff = abs(x - 60)
+        
+        if diff < 100 {
+            scale = 1 + (100 - diff) / 700
+        }
+        return scale
+    }
+    
+    func getGalleryImages(urls: [URL]) -> some View {
+        return ScrollView {
+            if urls.isEmpty {
+                ZStack {
+                    Image("GalleryImages")
+                        .resizable()
+                        .frame(width: UIScreen.main.bounds.width - 40, height: 300)
+                        .opacity(0.2)
+                    
+                    Text("Você ainda não adicionou eventos!")
+                        .font(.title2.bold())
+                        .foregroundColor(.secondaryColor)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                }
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 50) {
+                        ForEach(urls, id: \.self) { url in
+                            GeometryReader { proxy in
+                                let scale = getScale(proxy: proxy)
+                                
+                                let context = ContextEventCardModifier(
+                                    cardURL: url,
+                                    eventImagesToRemove: $eventImagesToRemove
+                                )
+                                
+                                let isRemoved = eventImagesToRemove.filter(){ $0.imageURL == url }.count > 0
+                                
+                                AsyncImage(
+                                    url: url,
+                                    content: { image in
+                                        NavigationLink(destination:
+                                                        image.resizable()
+                                                        .scaledToFill()
+                                                        .ignoresSafeArea()
+                                        ) {
+                                            ZStack(alignment: Alignment(horizontal: .leading, vertical: .bottom)) {
+                                                image .resizable()
+                                                    .scaledToFill()
+                                                    .frame(width: 250)
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 0.5)
+                                                    )
+                                                    .clipped()
+                                                    .cornerRadius(15)
+                                                    .shadow(radius: 5)
+                                                    .scaleEffect(CGSize(width: scale, height: scale))
+                                                    .modifier(context)
+                                            }
+                                        }
+                                    },
+                                    placeholder: {
+                                        ProgressView()
+                                            .frame(width: scale, height: scale, alignment: .center)
+                                    })
+                                    .opacity(isRemoved ? 0.5 : 1)
+                            }
+                            .frame(width: 240, height: UIScreen.main.bounds.height / 2)
+                        }
+                    }
+                    .padding(32)
+                }
             }
         }
     }
@@ -340,6 +448,41 @@ struct ProfileEditView: View {
                                         .multilineTextAlignment(.center)
                                 }
                             }
+                            
+                            HStack {
+                                Text("Próximos eventos")
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.secondaryColor)
+                                    .padding(.top, 20)
+                                    .padding(.bottom, -1)
+                                
+                                Spacer()
+                                
+                                Button(action: addImagesToEventsGallery) {
+                                    Label("Adicionar", systemImage: K.Icon.Photos)
+                                        .font(.caption)
+                                        .foregroundColor(.secondaryColor.opacity(0.85))
+                                        .frame(width: 100, height: 25)
+                                        .background(Color.primaryColor)
+                                        .clipShape(Capsule())
+                                        .padding(.top, 20)
+                                        .padding(.bottom, -1)
+                                        .onTapGesture {
+                                            showImageAction = true
+                                            activeSheet = .event
+                                        }
+                                }
+                            }
+                            .padding(.top, 30)
+                            
+                            Divider()
+                            
+                            ZStack {
+                                getGalleryImages(urls: profile.eventImagesURL ?? [])
+                            }
+                            .frame(height: UIScreen.main.bounds.height / (profile.eventImagesURL == nil ? 2.2 : 1.6))
+                            .padding(.top, 20)
                         }
                         
                         HStack {
@@ -388,8 +531,10 @@ struct ProfileEditView: View {
         }, content: {
             if activeSheet == .profile {
                 ImagePicker(isShown: $showImagePicker, uiImage: $profileImage, sourceType: $sourceType)
-            } else {
+            } else if activeSheet == .gallery {
                 ImagePicker(isShown: $showImagePicker, uiImage: $image, sourceType: $sourceType)
+            } else {
+                ImagePicker(isShown: $showImagePicker, uiImage: $eventImage, sourceType: $sourceType)
             }
         })
         .actionSheet(isPresented: $showImageAction) {
@@ -431,7 +576,7 @@ extension Optional where Wrapped == String {
 }
 
 enum ActiveSheet {
-   case profile, gallery
+   case profile, gallery, event
    var id: Int {
       hashValue
    }
