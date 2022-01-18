@@ -28,6 +28,13 @@ struct ImagePicker: UIViewControllerRepresentable {
     }
 }
 
+func compressImage(image: UIImage) -> UIImage {
+        let resizedImage = image.aspectFittedToHeight(200)
+        resizedImage.jpegData(compressionQuality: 0.2)
+
+        return resizedImage
+}
+
 class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     @Binding var isShown: Bool
     @Binding var uiImage: UIImage?
@@ -40,7 +47,7 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
     func imagePickerController(_ picker: UIImagePickerController,
                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let imagePicked = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-        uiImage = imagePicked
+        uiImage = compressImage(image: imagePicked)
         isShown = false
     }
 

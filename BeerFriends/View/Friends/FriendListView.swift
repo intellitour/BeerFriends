@@ -110,7 +110,6 @@ struct FriendListView: View {
                             .padding()
                             .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
                             .fullScreenCover(isPresented: $showSearchFriends,
-                                             onDismiss: onInit,
                                              content: { SearchFriendsView(friendList: friendProfileViewModel.friendList) })
                         }
                     }
@@ -131,9 +130,11 @@ struct FriendListView: View {
                     trailing: Button(
                         action: {},
                         label: {
-                            NavigationLink(destination: FriendInvitationView(profile: profileViewModel.profile).navigationBarHidden(true)) {
-                                Image(systemName: K.Icon.InvitationPending)
-                                    .foregroundColor(.secondaryColor)
+                            if profileViewModel.profile.invitationsReceived?.isEmpty == false {
+                                NavigationLink(destination: FriendInvitationView(profile: profileViewModel.profile).navigationBarHidden(true)) {
+                                    Image(systemName: K.Icon.InvitationPending)
+                                        .foregroundColor(.secondaryColor)
+                                }
                             }
                         })
                 )

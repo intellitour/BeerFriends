@@ -205,7 +205,7 @@ struct ProfileEditView: View {
                         .frame(width: UIScreen.main.bounds.width - 40, height: 300)
                         .opacity(0.2)
                     
-                    Text("Você ainda não adicionou eventos!")
+                    Text("Você ainda não adicionou eventos")
                         .font(.title2.bold())
                         .foregroundColor(.secondaryColor)
                         .multilineTextAlignment(.center)
