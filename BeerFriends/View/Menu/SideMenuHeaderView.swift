@@ -51,21 +51,24 @@ struct SideMenuHeaderView: View {
                 }
                                 
                 Text(profile.name ?? "")
-                    .font(.system(size: 24, weight: .semibold))
+                    .font(.custom(K.Fonts.GillSans, size: 25))
+                    .fontWeight(.semibold)
                 
                 Text(profile.email ?? "")
-                    .font(.system(size: 14))
+                    .font(.custom(K.Fonts.GillSans, size: 16))
                     .padding(.bottom, 24)
                 
                 HStack(spacing: 12) {
                     HStack(spacing: 4) {
                         Text(String(profile.followers?.count ?? 0)).bold()
                         Text(profile.followers?.count == 1 ? "Seguidor" : "Seguidores")
+                            .font(.caption)
                     }
                     
                     HStack(spacing: 4) {
                         Text(String(profile.following?.count ?? 0)).bold()
                         Text("Seguindo")
+                            .font(.caption)
                     }
                     Spacer()
                 }

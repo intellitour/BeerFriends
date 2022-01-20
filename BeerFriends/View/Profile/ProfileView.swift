@@ -158,12 +158,15 @@ struct ProfileView: View {
                                     Text("Beer Friends")
                                         .foregroundColor(.primaryColor)
                                         .fontWeight(.bold)
-                                        .font(.title)
+                                        .font(.custom(K.Fonts.Papyrus, size: 30))
+                                        .padding(.bottom, -10)
                                     Text("O lugar dos amigos")
                                         .foregroundColor(.secondaryColor)
-                                        .font(.subheadline)
+                                        .font(.custom(K.Fonts.Papyrus, size: 14))
+                                        .padding(.top, -10)
+                                        .padding(.leading, 45)
                                 }
-                                .padding(.trailing, 30)
+                                
                                 Spacer()
                             }
                             .padding(.horizontal)
@@ -251,11 +254,12 @@ struct ProfileView: View {
                     
                     VStack(alignment: .leading, spacing: 8, content: {
                         Text(viewModel.profile.name ?? "")
-                            .font(.title)
+                            .font(.custom(K.Fonts.GillSans, size: 25))
                             .fontWeight(.bold)
                             .foregroundColor(.secondaryColor)
                         
                         Text(viewModel.profile.email ?? "")
+                            .font(.custom(K.Fonts.GillSans, size: 16))
                             .foregroundColor(.gray)
                             .padding(.top, -8)
                             .padding(.bottom, 8)
@@ -269,7 +273,7 @@ struct ProfileView: View {
                             
                             Text(viewModel.profile.followers?.count == 1 ? "Seguidor" : "Seguidores")
                                 .foregroundColor(.gray)
-                                .font(.subheadline)
+                                .font(.caption)
                             
                             Text(String(viewModel.profile.following?.count ?? 0))
                                 .foregroundColor(.secondaryColor)
@@ -278,7 +282,7 @@ struct ProfileView: View {
                             
                             Text("Seguindo")
                                 .foregroundColor(.gray)
-                                .font(.subheadline)
+                                .font(.caption)
                         }
                         .padding(.top, 8)
                         .padding(.bottom, 8)
@@ -286,7 +290,7 @@ struct ProfileView: View {
                         VStack {
                             HStack {
                                 Text("Galeria")
-                                    .font(.title)
+                                    .font(.custom(K.Fonts.GillSans, size: 25))
                                     .fontWeight(.bold)
                                     .foregroundColor(.secondaryColor)
                                     .padding(.top)
@@ -339,7 +343,7 @@ struct ProfileView: View {
                             if viewModel.profile.eventImagesURL != nil {
                                 HStack {
                                     Text("Próximos eventos")
-                                        .font(.title)
+                                        .font(.custom(K.Fonts.GillSans, size: 25))
                                         .fontWeight(.bold)
                                         .foregroundColor(.secondaryColor)
                                         .padding(.bottom, -1)

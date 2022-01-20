@@ -36,12 +36,13 @@ struct ForgotPassawordView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text("Recuperar senha")
-                .font(.title)
+                .font(.custom(K.Fonts.GillSans, size: 25))
                 .fontWeight(.bold)
                 .foregroundColor(.secondaryColor)
             
             Text("Entre com seu e-mail cadastrado")
                 .foregroundColor(.secondaryColor).opacity(0.5)
+                .font(.custom(K.Fonts.GillSans, size: 18))
             
             Spacer(minLength: 5)
                         

@@ -47,12 +47,13 @@ struct SignInView : View {
         } else {
             VStack(alignment: .leading, spacing: 6) {
                 Text("Login")
-                    .font(.title)
+                    .font(.custom(K.Fonts.GillSans, size: 25))
                     .fontWeight(.bold)
                     .foregroundColor(.secondaryColor)
                 
                 Text("Entre com seus dados de acesso")
                     .foregroundColor(.secondaryColor).opacity(0.5)
+                    .font(.custom(K.Fonts.GillSans, size: 18))
                 
                 Spacer(minLength: 5)
                 
@@ -93,6 +94,7 @@ struct SignInView : View {
                         Text("Ou")
                             .fontWeight(.bold)
                             .foregroundColor(.gray.opacity(0.5))
+                            .font(.custom(K.Fonts.GillSans, size: 12))
                         
                         Rectangle()
                             .fill(.gray.opacity(0.5))

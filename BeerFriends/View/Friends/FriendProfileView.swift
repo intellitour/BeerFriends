@@ -49,7 +49,7 @@ struct FriendProfileView: View {
         loading = true
         
         friendProfileViewModel.follow(with: profileViewModel.profile, and: friendProfile)  { ( completionHandler ) in
-            
+
             loading = false
             
             if completionHandler.error != nil {
@@ -215,12 +215,15 @@ struct FriendProfileView: View {
                                     Text("Beer Friends")
                                         .foregroundColor(.primaryColor)
                                         .fontWeight(.bold)
-                                        .font(.title)
+                                        .font(.custom(K.Fonts.Papyrus, size: 30))
+                                        .padding(.bottom, -10)
                                     Text("O lugar dos amigos")
                                         .foregroundColor(.secondaryColor)
-                                        .font(.subheadline)
+                                        .font(.custom(K.Fonts.Papyrus, size: 14))
+                                        .padding(.top, -10)
+                                        .padding(.leading, 45)
                                 }
-                                .padding(.trailing, 30)
+                                
                                 Spacer()
                             }
                             .padding(.horizontal)
@@ -306,11 +309,12 @@ struct FriendProfileView: View {
                     
                     VStack(alignment: .leading, spacing: 8, content: {
                         Text(friendProfile.name ?? "")
-                            .font(.title)
+                            .font(.custom(K.Fonts.GillSans, size: 25))
                             .fontWeight(.bold)
                             .foregroundColor(.secondaryColor)
                         
                         Text(friendProfile.email ?? "")
+                            .font(.custom(K.Fonts.GillSans, size: 16))
                             .foregroundColor(.gray)
                             .padding(.top, -8)
                             .padding(.bottom, 8)
@@ -332,7 +336,7 @@ struct FriendProfileView: View {
                             
                             Text(friendProfile.followers?.count == 1 ? "Seguidor" : "Seguidores")
                                 .foregroundColor(.gray)
-                                .font(.subheadline)
+                                .font(.caption)
                             
                             Text(String(friendProfile.following?.count ?? 0))
                                 .foregroundColor(.secondaryColor)
@@ -341,7 +345,7 @@ struct FriendProfileView: View {
                             
                             Text("Seguindo")
                                 .foregroundColor(.gray)
-                                .font(.subheadline)
+                                .font(.caption)
                         }
                         .padding(.top, 8)
                         .padding(.bottom, 8)
@@ -349,7 +353,7 @@ struct FriendProfileView: View {
                         VStack {
                             HStack {
                                 Text("Galeria")
-                                    .font(.title)
+                                    .font(.custom(K.Fonts.GillSans, size: 25))
                                     .fontWeight(.bold)
                                     .foregroundColor(.secondaryColor)
                                     .padding(.top)
@@ -402,7 +406,7 @@ struct FriendProfileView: View {
                             if friendProfile.eventImagesURL != nil {
                                 HStack {
                                     Text("Próximos eventos")
-                                        .font(.title)
+                                        .font(.custom(K.Fonts.GillSans, size: 25))
                                         .fontWeight(.bold)
                                         .foregroundColor(.secondaryColor)
                                         .padding(.bottom, -1)
@@ -437,12 +441,12 @@ struct FriendProfileView: View {
                 .padding(.horizontal)
                 .zIndex(-offset > 80 ? 0 : 1)
             }
+            .ignoresSafeArea(.all, edges: .top)
+            .onAppear(perform: {
+                getProfile()
+                reloadFriend()
+            })
         })
-        .onAppear(perform: {
-            getProfile()
-            reloadFriend()
-        })
-        .ignoresSafeArea(.all, edges: .top)
         .toast(isPresenting: $showSuccess, alert: {
             AlertToast(displayMode: .alert, type: .complete(.green), title: self.success)
         })

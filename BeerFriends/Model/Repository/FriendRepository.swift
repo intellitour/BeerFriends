@@ -107,13 +107,28 @@ class FriendRepository: ObservableObject {
                 return
             }
             
-            let friends = friendsDocuments.map { (queryDocumentSnapshot) -> Profile in
+            self.friendsProfile = []
+            friendsDocuments.forEach { queryDocumentSnapshot in
                 let data = queryDocumentSnapshot.data()
                 let friend = try! Friend.with(data)
-                return friend!.friendProfile
+                
+                let docRef = self.db.collection("profiles").document(friend!.friendProfile.uid!)
+
+                 docRef.getDocument { (document, error) in
+                    guard error == nil else {
+                        print("Erro ao recuperar documento do amigo \(String(describing: friend?.friendProfile.uid))")
+                        return
+                    }
+
+                    if let document = document, document.exists {
+                        let data = document.data()
+                        if let data = data {
+                            self.friendsProfile.append(try! Profile.with(data)!)
+                            self.friendsProfile = self.friendsProfile.sorted(by: { $0.name! < $1.name! })
+                        }
+                    }
+                }
             }
-            
-            self.friendsProfile = friends.sorted(by: { $0.name! < $1.name! })
         }
     }
     
@@ -174,16 +189,18 @@ class FriendRepository: ObservableObject {
         }
         f.followers?.append(profile.uid!)
         
+        let batch = db.batch()
+       
+        let profileRef = self.db.collection("profiles").document(profile.uid!)
+        batch.updateData(p.encoded, forDocument: profileRef)
         
-        self.db.collection("profiles").document(profile.uid!).updateData(p.encoded) { error in
+        let friendProfileRef = self.db.collection("profiles").document(friend.uid!)
+        batch.updateData(f.encoded, forDocument: friendProfileRef)
+        
+        batch.commit() { error in
             if let error = error {
                 completionHandler(HandleResult(error: error))
-            }
-            
-            self.db.collection("profiles").document(friend.uid!).updateData(f.encoded) { error in
-                if let error = error {
-                    completionHandler(HandleResult(error: error))
-                }
+            } else {
                 completionHandler(HandleResult(success: "Você está seguindo \(friend.name!)"))
             }
         }
@@ -199,16 +216,18 @@ class FriendRepository: ObservableObject {
         var f = friend
         f.followers = f.followers?.filter(){ $0 != profile.uid }
         
+        let batch = db.batch()
+       
+        let profileRef = self.db.collection("profiles").document(p.uid!)
+        batch.updateData(p.encoded, forDocument: profileRef)
         
-        self.db.collection("profiles").document(profile.uid!).updateData(p.encoded) { error in
+        let friendProfileRef = self.db.collection("profiles").document(f.uid!)
+        batch.updateData(f.encoded, forDocument: friendProfileRef)
+        
+        batch.commit() { error in
             if let error = error {
                 completionHandler(HandleResult(error: error))
-            }
-            
-            self.db.collection("profiles").document(friend.uid!).updateData(f.encoded) { error in
-                if let error = error {
-                    completionHandler(HandleResult(error: error))
-                }
+            } else {
                 completionHandler(HandleResult(success: "Você parou de seguir \(friend.name!)"))
             }
         }

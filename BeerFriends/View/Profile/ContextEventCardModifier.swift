@@ -18,14 +18,13 @@ struct ContextEventCardModifier: ViewModifier {
         content
             .contextMenu(menuItems: {
                 HStack {
-                    Button(action: {
+                    Button(role: .destructive, action: {
                         if !eventImagesToRemove.contains(where: {$0.imageURL == cardURL}) {
                             eventImagesToRemove.append(ProfileImages(imageURL: cardURL))
                         }
                     }) {
                         Label("Remover", systemImage: K.Icon.Remove)
                     }
-                    .foregroundColor(.gray)
                 }
             })
             .contentShape(RoundedRectangle(cornerRadius: 5))

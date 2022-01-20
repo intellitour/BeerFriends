@@ -339,12 +339,13 @@ struct ProfileEditView: View {
                 }
                 
                 Text(profile.name ?? "")
-                    .font(.title2)
+                    .font(.custom(K.Fonts.GillSans, size: 22))
                     .fontWeight(.bold)
                     .foregroundColor(.secondaryColor)
                 
                 Text(profile.email ?? "")
                     .foregroundColor(.black.opacity(0.5))
+                    .font(.custom(K.Fonts.GillSans, size: 16))
             }
             .padding(.bottom, 30)
             .background(.linearGradient(colors: [.primaryColor, .secondaryColor], startPoint: .bottom, endPoint: .top))
@@ -385,7 +386,7 @@ struct ProfileEditView: View {
                         VStack {
                             HStack(alignment: .center) {
                                 Text("Galeria")
-                                    .font(.title)
+                                    .font(.custom(K.Fonts.GillSans, size: 25))
                                     .fontWeight(.bold)
                                     .foregroundColor(.secondaryColor)
                                     .padding(.top, 20)
@@ -450,7 +451,7 @@ struct ProfileEditView: View {
                             
                             HStack {
                                 Text("Próximos eventos")
-                                    .font(.title)
+                                    .font(.custom(K.Fonts.GillSans, size: 25))
                                     .fontWeight(.bold)
                                     .foregroundColor(.secondaryColor)
                                     .padding(.top, 20)

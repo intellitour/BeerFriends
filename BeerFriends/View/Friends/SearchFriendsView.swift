@@ -68,7 +68,7 @@ struct SearchFriendsView: View {
                         .padding(.leading, 32)
                 }
                 .padding()
-                .foregroundColor(.black)
+                .foregroundColor(colorScheme == .dark ? .white : .black)
                 .background(.gray.opacity(0.2))
                 .cornerRadius(12)
                 .padding(.horizontal)

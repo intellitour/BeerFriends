@@ -42,12 +42,13 @@ struct SignUPView: View {
         } else {
             VStack(alignment: .leading, spacing: 6) {
                 Text("Cadastro")
-                    .font(.title)
+                    .font(.custom(K.Fonts.GillSans, size: 25))
                     .fontWeight(.bold)
                     .foregroundColor(.secondaryColor)
                 
                 Text("Informe o e-mail e senha para continuar")
                     .foregroundColor(.secondaryColor).opacity(0.5)
+                    .font(.custom(K.Fonts.GillSans, size: 18))
                 
                 Spacer(minLength: 5)
                 

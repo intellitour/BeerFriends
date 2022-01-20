@@ -13,6 +13,11 @@ struct K {
         static let Icon                 = "HomeBrewWhiteIcon"
     }
     
+    struct Fonts {
+        static let Papyrus              = "Papyrus"
+        static let GillSans             = "Gill Sans"
+    }
+    
     struct Omboarding {
         static let Title                = "Cerveja Artesanal & Bons Amigos"
         static let FinalTitle           = "Bora, tomar uma?"

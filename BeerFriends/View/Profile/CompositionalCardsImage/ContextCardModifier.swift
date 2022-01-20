@@ -39,7 +39,7 @@ struct ContextCardModifier: ViewModifier {
                               systemImage: isFavorite ? K.Icon.Unfavorite : K.Icon.Favorite)
                     }
                     
-                    Button(action: {
+                    Button(role: .destructive, action: {
                         if !imagesToRemove.contains(where: {$0.imageURL == cardURL}) {
                             imagesToRemove.append(ProfileImages(imageURL: cardURL))
                             imagesToFavorite = imagesToFavorite.filter(){ $0.imageURL != cardURL }
@@ -48,7 +48,6 @@ struct ContextCardModifier: ViewModifier {
                     }) {
                         Label("Remover", systemImage: K.Icon.Remove)
                     }
-                    .foregroundColor(.gray)
                 }
             })
             .contentShape(RoundedRectangle(cornerRadius: 5))
