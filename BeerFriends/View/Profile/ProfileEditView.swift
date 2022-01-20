@@ -233,20 +233,19 @@ struct ProfileEditView: View {
                                                         .scaledToFill()
                                                         .ignoresSafeArea()
                                         ) {
-                                            ZStack(alignment: Alignment(horizontal: .leading, vertical: .bottom)) {
-                                                image .resizable()
-                                                    .scaledToFill()
-                                                    .frame(width: 250)
-                                                    .overlay(
-                                                        RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 0.5)
-                                                    )
-                                                    .clipped()
-                                                    .cornerRadius(15)
-                                                    .shadow(radius: 5)
-                                                    .scaleEffect(CGSize(width: scale, height: scale))
-                                                    .modifier(context)
-                                            }
+                                            image .resizable()
+                                                .scaledToFill()
+                                                .frame(width: 250)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 0.5)
+                                                )
+                                                .clipped()
+                                                .cornerRadius(15)
+                                                .shadow(radius: 5)
+                                                .scaleEffect(CGSize(width: scale, height: scale))
+                                                .modifier(context)
                                         }
+                                        .buttonStyle(PlainButtonStyle())
                                     },
                                     placeholder: {
                                         ProgressView()
