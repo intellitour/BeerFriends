@@ -1,0 +1,786 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1B176923275FC64600BC8453 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B176922275FC64600BC8453 /* Profile.swift */; };
+		1B176925275FCB0500BC8453 /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B176924275FCB0500BC8453 /* ProfileRepository.swift */; };
+		1B1769282760114C00BC8453 /* FriendCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1769272760114C00BC8453 /* FriendCircleView.swift */; };
+		1B17692A276015BF00BC8453 /* FriendListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B176929276015BF00BC8453 /* FriendListView.swift */; };
+		1B17692C276019C700BC8453 /* FriendProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B17692B276019C700BC8453 /* FriendProfileViewModel.swift */; };
+		1B1E261627970B610047F0A7 /* UIImage+Compress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1E261527970B610047F0A7 /* UIImage+Compress.swift */; };
+		1B23AE4F2786656000CB2636 /* SearchFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B23AE4E2786656000CB2636 /* SearchFriendsView.swift */; };
+		1B285FCF2776180E00F37C02 /* LayoutOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B285FCE2776180E00F37C02 /* LayoutOne.swift */; };
+		1B285FD22776193B00F37C02 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1B285FD12776193B00F37C02 /* SDWebImageSwiftUI */; };
+		1B285FD6277638BD00F37C02 /* LayoutTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B285FD5277638BD00F37C02 /* LayoutTwo.swift */; };
+		1B285FD827763B0800F37C02 /* LayoutThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B285FD727763B0800F37C02 /* LayoutThree.swift */; };
+		1B285FDA27765EB100F37C02 /* ContextCardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B285FD927765EB100F37C02 /* ContextCardModifier.swift */; };
+		1B2B657E27728096009E5B57 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2B657D27728096009E5B57 /* ImagePicker.swift */; };
+		1B2B65862772A655009E5B57 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = 1B2B65852772A655009E5B57 /* iPhoneNumberField */; };
+		1B31187A2758291D008D7598 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3118792758291D008D7598 /* CustomTextField.swift */; };
+		1B311880275845E3008D7598 /* ForgotPassawordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B31187F275845E3008D7598 /* ForgotPassawordView.swift */; };
+		1B31188227587C87008D7598 /* LoginWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B31188127587C87008D7598 /* LoginWrapperView.swift */; };
+		1B3D28872757886900CC039C /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D28862757886900CC039C /* SignUpView.swift */; };
+		1B4B891D2749CA7A0046ED75 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B891C2749CA7A0046ED75 /* OnboardingViewController.swift */; };
+		1B4B891F2749E7DF0046ED75 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B891E2749E7DF0046ED75 /* Constants.swift */; };
+		1B4B8922274A1C7F0046ED75 /* OnboardingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B8921274A1C7F0046ED75 /* OnboardingControl.swift */; };
+		1B4CE9FA2792657A00FC66D1 /* FriendInvitationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4CE9F92792657A00FC66D1 /* FriendInvitationView.swift */; };
+		1B5AA03D2769545E00F3955B /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 1B5AA03C2769545E00F3955B /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		1B5AA03F2769545E00F3955B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1B5AA03E2769545E00F3955B /* FirebaseAuth */; };
+		1B5AA0412769545E00F3955B /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1B5AA0402769545E00F3955B /* FirebaseFirestore */; };
+		1B5AA0432769545E00F3955B /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 1B5AA0422769545E00F3955B /* FirebaseMessaging */; };
+		1B5AA0452769545E00F3955B /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1B5AA0442769545E00F3955B /* FirebaseStorage */; };
+		1B5AA0482769549400F3955B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 1B5AA0472769549400F3955B /* Lottie */; };
+		1B5AA04B276954B400F3955B /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 1B5AA04A276954B400F3955B /* AlertToast */; };
+		1B5E7571275655A800658889 /* PackBeer.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B5E7570275655A800658889 /* PackBeer.json */; };
+		1B6E29EC27935936002AAF5A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E29EB27935936002AAF5A /* SettingsView.swift */; };
+		1B6E29EE27936F96002AAF5A /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E29ED27936F96002AAF5A /* Settings.swift */; };
+		1B6F678B27964C0A00EB71F1 /* ContextEventCardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6F678A27964C0A00EB71F1 /* ContextEventCardModifier.swift */; };
+		1B7C8CE027642BC900C8EDB9 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C8CDF27642BC900C8EDB9 /* ProfileView.swift */; };
+		1B7C8CE22764415300C8EDB9 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C8CE12764415300C8EDB9 /* BlurView.swift */; };
+		1BA14762277D1C700066C50A /* ProfileImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA14761277D1C700066C50A /* ProfileImages.swift */; };
+		1BA1A5F0276072E000922C43 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA1A5EF276072E000922C43 /* SideMenuView.swift */; };
+		1BA1A5F2276072FB00922C43 /* SideMenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA1A5F1276072FB00922C43 /* SideMenuHeaderView.swift */; };
+		1BA1A5F42760732A00922C43 /* SideMenuOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA1A5F32760732A00922C43 /* SideMenuOptionsView.swift */; };
+		1BA1A5F62760735C00922C43 /* SideMenuOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA1A5F52760735C00922C43 /* SideMenuOptions.swift */; };
+		1BC287F42745EB3900DAE988 /* BeerFriendsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC287F32745EB3900DAE988 /* BeerFriendsApp.swift */; };
+		1BC287F82745EB3900DAE988 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BC287F72745EB3900DAE988 /* Assets.xcassets */; };
+		1BC287FB2745EB3900DAE988 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BC287FA2745EB3900DAE988 /* Preview Assets.xcassets */; };
+		1BC288052745FBB500DAE988 /* OnboardingSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC288042745FBB500DAE988 /* OnboardingSubview.swift */; };
+		1BC28807274603BB00DAE988 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC28806274603BB00DAE988 /* OnboardingView.swift */; };
+		1BC2880A2746182000DAE988 /* Color+Change.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC288092746182000DAE988 /* Color+Change.swift */; };
+		1BD00489278719EA008844B3 /* FriendRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD00488278719EA008844B3 /* FriendRepository.swift */; };
+		1BD0048B27871C2F008844B3 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD0048A27871C2F008844B3 /* Friend.swift */; };
+		1BD5C020275AACFF00091CBB /* UserSessionStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD5C01F275AACFF00091CBB /* UserSessionStoreRepository.swift */; };
+		1BDCD0CE2774E17F004D6D17 /* HandleResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDCD0CD2774E17F004D6D17 /* HandleResult.swift */; };
+		1BECB817278F5AB000D919A3 /* FriendProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BECB816278F5AB000D919A3 /* FriendProfileView.swift */; };
+		1BEFCAB627558460003647D9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1BEFCAB527558460003647D9 /* GoogleService-Info.plist */; };
+		1BEFCAC12755897A003647D9 /* UserSessionStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BEFCAC02755897A003647D9 /* UserSessionStoreViewModel.swift */; };
+		1BEFCAC327558D1A003647D9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BEFCAC227558D1A003647D9 /* User.swift */; };
+		1BEFCAC52755A2B4003647D9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BEFCAC42755A2B4003647D9 /* ContentView.swift */; };
+		1BEFCAC72755BB24003647D9 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BEFCAC62755BB24003647D9 /* SignInView.swift */; };
+		1BFAF17F27680DA2004D2100 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFAF17E27680DA2004D2100 /* ProfileEditView.swift */; };
+		1BFFB31527651B34002FD7BC /* EventsGalleryImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFB31427651B34002FD7BC /* EventsGalleryImagesView.swift */; };
+		1BFFB31727654208002FD7BC /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFB31627654208002FD7BC /* ProfileViewModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1B176922275FC64600BC8453 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		1B176924275FCB0500BC8453 /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
+		1B1769272760114C00BC8453 /* FriendCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCircleView.swift; sourceTree = "<group>"; };
+		1B176929276015BF00BC8453 /* FriendListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListView.swift; sourceTree = "<group>"; };
+		1B17692B276019C700BC8453 /* FriendProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileViewModel.swift; sourceTree = "<group>"; };
+		1B1E261527970B610047F0A7 /* UIImage+Compress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Compress.swift"; sourceTree = "<group>"; };
+		1B23AE4E2786656000CB2636 /* SearchFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsView.swift; sourceTree = "<group>"; };
+		1B285FCE2776180E00F37C02 /* LayoutOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutOne.swift; sourceTree = "<group>"; };
+		1B285FD5277638BD00F37C02 /* LayoutTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutTwo.swift; sourceTree = "<group>"; };
+		1B285FD727763B0800F37C02 /* LayoutThree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutThree.swift; sourceTree = "<group>"; };
+		1B285FD927765EB100F37C02 /* ContextCardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextCardModifier.swift; sourceTree = "<group>"; };
+		1B2B657D27728096009E5B57 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		1B3118792758291D008D7598 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		1B31187F275845E3008D7598 /* ForgotPassawordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassawordView.swift; sourceTree = "<group>"; };
+		1B31188127587C87008D7598 /* LoginWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWrapperView.swift; sourceTree = "<group>"; };
+		1B3D28862757886900CC039C /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		1B4B891C2749CA7A0046ED75 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		1B4B891E2749E7DF0046ED75 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1B4B8921274A1C7F0046ED75 /* OnboardingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingControl.swift; sourceTree = "<group>"; };
+		1B4CE9F92792657A00FC66D1 /* FriendInvitationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendInvitationView.swift; sourceTree = "<group>"; };
+		1B5E7570275655A800658889 /* PackBeer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PackBeer.json; sourceTree = "<group>"; };
+		1B6E29EB27935936002AAF5A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1B6E29ED27936F96002AAF5A /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		1B6F678A27964C0A00EB71F1 /* ContextEventCardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextEventCardModifier.swift; sourceTree = "<group>"; };
+		1B7C8CDF27642BC900C8EDB9 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		1B7C8CE12764415300C8EDB9 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		1BA14761277D1C700066C50A /* ProfileImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImages.swift; sourceTree = "<group>"; };
+		1BA1A5EF276072E000922C43 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
+		1BA1A5F1276072FB00922C43 /* SideMenuHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuHeaderView.swift; sourceTree = "<group>"; };
+		1BA1A5F32760732A00922C43 /* SideMenuOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuOptionsView.swift; sourceTree = "<group>"; };
+		1BA1A5F52760735C00922C43 /* SideMenuOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuOptions.swift; sourceTree = "<group>"; };
+		1BC287F02745EB3900DAE988 /* BeerFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeerFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1BC287F32745EB3900DAE988 /* BeerFriendsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerFriendsApp.swift; sourceTree = "<group>"; };
+		1BC287F72745EB3900DAE988 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1BC287FA2745EB3900DAE988 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1BC288042745FBB500DAE988 /* OnboardingSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSubview.swift; sourceTree = "<group>"; };
+		1BC28806274603BB00DAE988 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		1BC288092746182000DAE988 /* Color+Change.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Change.swift"; sourceTree = "<group>"; };
+		1BD00488278719EA008844B3 /* FriendRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRepository.swift; sourceTree = "<group>"; };
+		1BD0048A27871C2F008844B3 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		1BD5C01F275AACFF00091CBB /* UserSessionStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionStoreRepository.swift; sourceTree = "<group>"; };
+		1BDCD0CD2774E17F004D6D17 /* HandleResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleResult.swift; sourceTree = "<group>"; };
+		1BECB816278F5AB000D919A3 /* FriendProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
+		1BEFCAB527558460003647D9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1BEFCAC02755897A003647D9 /* UserSessionStoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionStoreViewModel.swift; sourceTree = "<group>"; };
+		1BEFCAC227558D1A003647D9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		1BEFCAC42755A2B4003647D9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1BEFCAC62755BB24003647D9 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		1BFAF17E27680DA2004D2100 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
+		1BFFB31427651B34002FD7BC /* EventsGalleryImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsGalleryImagesView.swift; sourceTree = "<group>"; };
+		1BFFB31627654208002FD7BC /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1BC287ED2745EB3900DAE988 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B5AA0432769545E00F3955B /* FirebaseMessaging in Frameworks */,
+				1B2B65862772A655009E5B57 /* iPhoneNumberField in Frameworks */,
+				1B5AA04B276954B400F3955B /* AlertToast in Frameworks */,
+				1B285FD22776193B00F37C02 /* SDWebImageSwiftUI in Frameworks */,
+				1B5AA03D2769545E00F3955B /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				1B5AA03F2769545E00F3955B /* FirebaseAuth in Frameworks */,
+				1B5AA0452769545E00F3955B /* FirebaseStorage in Frameworks */,
+				1B5AA0412769545E00F3955B /* FirebaseFirestore in Frameworks */,
+				1B5AA0482769549400F3955B /* Lottie in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1B1769262760111000BC8453 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				1B1769272760114C00BC8453 /* FriendCircleView.swift */,
+				1B176929276015BF00BC8453 /* FriendListView.swift */,
+				1B23AE4E2786656000CB2636 /* SearchFriendsView.swift */,
+				1BECB816278F5AB000D919A3 /* FriendProfileView.swift */,
+				1B4CE9F92792657A00FC66D1 /* FriendInvitationView.swift */,
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
+		1B285FCD277617E400F37C02 /* CompositionalCardsImage */ = {
+			isa = PBXGroup;
+			children = (
+				1B285FCE2776180E00F37C02 /* LayoutOne.swift */,
+				1B285FD5277638BD00F37C02 /* LayoutTwo.swift */,
+				1B285FD727763B0800F37C02 /* LayoutThree.swift */,
+				1B285FD927765EB100F37C02 /* ContextCardModifier.swift */,
+			);
+			path = CompositionalCardsImage;
+			sourceTree = "<group>";
+		};
+		1B4B89202749F8710046ED75 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				1B4B891C2749CA7A0046ED75 /* OnboardingViewController.swift */,
+				1BC288042745FBB500DAE988 /* OnboardingSubview.swift */,
+				1BC28806274603BB00DAE988 /* OnboardingView.swift */,
+				1B4B8921274A1C7F0046ED75 /* OnboardingControl.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		1B5E7572275655C000658889 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				1BEFCAC62755BB24003647D9 /* SignInView.swift */,
+				1B3D28862757886900CC039C /* SignUpView.swift */,
+				1B31187F275845E3008D7598 /* ForgotPassawordView.swift */,
+				1B31188127587C87008D7598 /* LoginWrapperView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		1B6E29EA27935926002AAF5A /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				1B6E29EB27935936002AAF5A /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		1B7C8CDD276417FF00C8EDB9 /* LottieFiles */ = {
+			isa = PBXGroup;
+			children = (
+				1B5E7570275655A800658889 /* PackBeer.json */,
+			);
+			path = LottieFiles;
+			sourceTree = "<group>";
+		};
+		1B7C8CDE27642BA800C8EDB9 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				1B285FCD277617E400F37C02 /* CompositionalCardsImage */,
+				1B7C8CDF27642BC900C8EDB9 /* ProfileView.swift */,
+				1B7C8CE12764415300C8EDB9 /* BlurView.swift */,
+				1BFFB31427651B34002FD7BC /* EventsGalleryImagesView.swift */,
+				1BFAF17E27680DA2004D2100 /* ProfileEditView.swift */,
+				1B6F678A27964C0A00EB71F1 /* ContextEventCardModifier.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		1BA1A5EE276072B700922C43 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				1BA1A5EF276072E000922C43 /* SideMenuView.swift */,
+				1BA1A5F1276072FB00922C43 /* SideMenuHeaderView.swift */,
+				1BA1A5F32760732A00922C43 /* SideMenuOptionsView.swift */,
+				1BA1A5F52760735C00922C43 /* SideMenuOptions.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		1BC287E72745EB3900DAE988 = {
+			isa = PBXGroup;
+			children = (
+				1BC287F22745EB3900DAE988 /* BeerFriends */,
+				1BC287F12745EB3900DAE988 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1BC287F12745EB3900DAE988 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1BC287F02745EB3900DAE988 /* BeerFriends.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1BC287F22745EB3900DAE988 /* BeerFriends */ = {
+			isa = PBXGroup;
+			children = (
+				1B7C8CDD276417FF00C8EDB9 /* LottieFiles */,
+				1BC28808274617A200DAE988 /* Util */,
+				1BC288032745EB6D00DAE988 /* View */,
+				1BC288022745EB5800DAE988 /* ViewModel */,
+				1BC288012745EB4E00DAE988 /* Model */,
+				1BC287F32745EB3900DAE988 /* BeerFriendsApp.swift */,
+				1BC287F72745EB3900DAE988 /* Assets.xcassets */,
+				1BEFCAB527558460003647D9 /* GoogleService-Info.plist */,
+				1BC287F92745EB3900DAE988 /* Preview Content */,
+			);
+			path = BeerFriends;
+			sourceTree = "<group>";
+		};
+		1BC287F92745EB3900DAE988 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				1BC287FA2745EB3900DAE988 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		1BC288012745EB4E00DAE988 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1BD5C01E275AAC3100091CBB /* Entity */,
+				1BD5C01D275AAC2500091CBB /* Repository */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1BC288022745EB5800DAE988 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				1BEFCAC02755897A003647D9 /* UserSessionStoreViewModel.swift */,
+				1B17692B276019C700BC8453 /* FriendProfileViewModel.swift */,
+				1BFFB31627654208002FD7BC /* ProfileViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		1BC288032745EB6D00DAE988 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1B6E29EA27935926002AAF5A /* Settings */,
+				1BFAF18027681246004D2100 /* Shared */,
+				1B7C8CDE27642BA800C8EDB9 /* Profile */,
+				1BA1A5EE276072B700922C43 /* Menu */,
+				1B1769262760111000BC8453 /* Friends */,
+				1B5E7572275655C000658889 /* Login */,
+				1B4B89202749F8710046ED75 /* Onboarding */,
+				1BEFCAC42755A2B4003647D9 /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1BC28808274617A200DAE988 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				1BC288092746182000DAE988 /* Color+Change.swift */,
+				1B4B891E2749E7DF0046ED75 /* Constants.swift */,
+				1B1E261527970B610047F0A7 /* UIImage+Compress.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		1BD5C01D275AAC2500091CBB /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				1BD5C01F275AACFF00091CBB /* UserSessionStoreRepository.swift */,
+				1B176924275FCB0500BC8453 /* ProfileRepository.swift */,
+				1BD00488278719EA008844B3 /* FriendRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		1BD5C01E275AAC3100091CBB /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				1BEFCAC227558D1A003647D9 /* User.swift */,
+				1B176922275FC64600BC8453 /* Profile.swift */,
+				1BDCD0CD2774E17F004D6D17 /* HandleResult.swift */,
+				1BA14761277D1C700066C50A /* ProfileImages.swift */,
+				1BD0048A27871C2F008844B3 /* Friend.swift */,
+				1B6E29ED27936F96002AAF5A /* Settings.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		1BFAF18027681246004D2100 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				1B3118792758291D008D7598 /* CustomTextField.swift */,
+				1B2B657D27728096009E5B57 /* ImagePicker.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1BC287EF2745EB3900DAE988 /* BeerFriends */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1BC287FE2745EB3900DAE988 /* Build configuration list for PBXNativeTarget "BeerFriends" */;
+			buildPhases = (
+				1BC287EC2745EB3900DAE988 /* Sources */,
+				1BC287ED2745EB3900DAE988 /* Frameworks */,
+				1BC287EE2745EB3900DAE988 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BeerFriends;
+			packageProductDependencies = (
+				1B5AA03C2769545E00F3955B /* FirebaseAnalyticsWithoutAdIdSupport */,
+				1B5AA03E2769545E00F3955B /* FirebaseAuth */,
+				1B5AA0402769545E00F3955B /* FirebaseFirestore */,
+				1B5AA0422769545E00F3955B /* FirebaseMessaging */,
+				1B5AA0442769545E00F3955B /* FirebaseStorage */,
+				1B5AA0472769549400F3955B /* Lottie */,
+				1B5AA04A276954B400F3955B /* AlertToast */,
+				1B2B65852772A655009E5B57 /* iPhoneNumberField */,
+				1B285FD12776193B00F37C02 /* SDWebImageSwiftUI */,
+			);
+			productName = BeerFriends;
+			productReference = 1BC287F02745EB3900DAE988 /* BeerFriends.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1BC287E82745EB3900DAE988 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1310;
+				LastUpgradeCheck = 1310;
+				TargetAttributes = {
+					1BC287EF2745EB3900DAE988 = {
+						CreatedOnToolsVersion = 13.1;
+					};
+				};
+			};
+			buildConfigurationList = 1BC287EB2745EB3900DAE988 /* Build configuration list for PBXProject "BeerFriends" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"pt-BR",
+			);
+			mainGroup = 1BC287E72745EB3900DAE988;
+			packageReferences = (
+				1B5AA03B2769545E00F3955B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				1B5AA0462769549400F3955B /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				1B5AA049276954B400F3955B /* XCRemoteSwiftPackageReference "AlertToast" */,
+				1B2B65842772A655009E5B57 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
+				1B285FD02776193B00F37C02 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUi" */,
+			);
+			productRefGroup = 1BC287F12745EB3900DAE988 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1BC287EF2745EB3900DAE988 /* BeerFriends */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1BC287EE2745EB3900DAE988 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B5E7571275655A800658889 /* PackBeer.json in Resources */,
+				1BC287FB2745EB3900DAE988 /* Preview Assets.xcassets in Resources */,
+				1BC287F82745EB3900DAE988 /* Assets.xcassets in Resources */,
+				1BEFCAB627558460003647D9 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1BC287EC2745EB3900DAE988 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BA1A5F62760735C00922C43 /* SideMenuOptions.swift in Sources */,
+				1B17692C276019C700BC8453 /* FriendProfileViewModel.swift in Sources */,
+				1B31187A2758291D008D7598 /* CustomTextField.swift in Sources */,
+				1BC2880A2746182000DAE988 /* Color+Change.swift in Sources */,
+				1B285FD6277638BD00F37C02 /* LayoutTwo.swift in Sources */,
+				1BFAF17F27680DA2004D2100 /* ProfileEditView.swift in Sources */,
+				1BFFB31527651B34002FD7BC /* EventsGalleryImagesView.swift in Sources */,
+				1BD0048B27871C2F008844B3 /* Friend.swift in Sources */,
+				1BA1A5F0276072E000922C43 /* SideMenuView.swift in Sources */,
+				1B7C8CE22764415300C8EDB9 /* BlurView.swift in Sources */,
+				1B176925275FCB0500BC8453 /* ProfileRepository.swift in Sources */,
+				1BC28807274603BB00DAE988 /* OnboardingView.swift in Sources */,
+				1B6E29EC27935936002AAF5A /* SettingsView.swift in Sources */,
+				1B285FDA27765EB100F37C02 /* ContextCardModifier.swift in Sources */,
+				1B4CE9FA2792657A00FC66D1 /* FriendInvitationView.swift in Sources */,
+				1B4B891D2749CA7A0046ED75 /* OnboardingViewController.swift in Sources */,
+				1BECB817278F5AB000D919A3 /* FriendProfileView.swift in Sources */,
+				1BA14762277D1C700066C50A /* ProfileImages.swift in Sources */,
+				1B311880275845E3008D7598 /* ForgotPassawordView.swift in Sources */,
+				1BC287F42745EB3900DAE988 /* BeerFriendsApp.swift in Sources */,
+				1B2B657E27728096009E5B57 /* ImagePicker.swift in Sources */,
+				1B3D28872757886900CC039C /* SignUpView.swift in Sources */,
+				1BD00489278719EA008844B3 /* FriendRepository.swift in Sources */,
+				1BC288052745FBB500DAE988 /* OnboardingSubview.swift in Sources */,
+				1BEFCAC327558D1A003647D9 /* User.swift in Sources */,
+				1B1769282760114C00BC8453 /* FriendCircleView.swift in Sources */,
+				1B23AE4F2786656000CB2636 /* SearchFriendsView.swift in Sources */,
+				1B7C8CE027642BC900C8EDB9 /* ProfileView.swift in Sources */,
+				1BD5C020275AACFF00091CBB /* UserSessionStoreRepository.swift in Sources */,
+				1B285FCF2776180E00F37C02 /* LayoutOne.swift in Sources */,
+				1B285FD827763B0800F37C02 /* LayoutThree.swift in Sources */,
+				1B1E261627970B610047F0A7 /* UIImage+Compress.swift in Sources */,
+				1BEFCAC52755A2B4003647D9 /* ContentView.swift in Sources */,
+				1BDCD0CE2774E17F004D6D17 /* HandleResult.swift in Sources */,
+				1B17692A276015BF00BC8453 /* FriendListView.swift in Sources */,
+				1B6F678B27964C0A00EB71F1 /* ContextEventCardModifier.swift in Sources */,
+				1B4B8922274A1C7F0046ED75 /* OnboardingControl.swift in Sources */,
+				1BEFCAC12755897A003647D9 /* UserSessionStoreViewModel.swift in Sources */,
+				1BEFCAC72755BB24003647D9 /* SignInView.swift in Sources */,
+				1BFFB31727654208002FD7BC /* ProfileViewModel.swift in Sources */,
+				1B31188227587C87008D7598 /* LoginWrapperView.swift in Sources */,
+				1B4B891F2749E7DF0046ED75 /* Constants.swift in Sources */,
+				1BA1A5F42760732A00922C43 /* SideMenuOptionsView.swift in Sources */,
+				1B176923275FC64600BC8453 /* Profile.swift in Sources */,
+				1B6E29EE27936F96002AAF5A /* Settings.swift in Sources */,
+				1BA1A5F2276072FB00922C43 /* SideMenuHeaderView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1BC287FC2745EB3900DAE988 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1BC287FD2745EB3900DAE988 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1BC287FF2745EB3900DAE988 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"BeerFriends/Preview Content\"";
+				DEVELOPMENT_TEAM = 4L8UJ3SG6G;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BeerFriends/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Beer Friends";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.BeerFriends;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		1BC288002745EB3900DAE988 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"BeerFriends/Preview Content\"";
+				DEVELOPMENT_TEAM = 4L8UJ3SG6G;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BeerFriends/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Beer Friends";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.BeerFriends;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1BC287EB2745EB3900DAE988 /* Build configuration list for PBXProject "BeerFriends" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1BC287FC2745EB3900DAE988 /* Debug */,
+				1BC287FD2745EB3900DAE988 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1BC287FE2745EB3900DAE988 /* Build configuration list for PBXNativeTarget "BeerFriends" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1BC287FF2745EB3900DAE988 /* Debug */,
+				1BC288002745EB3900DAE988 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1B285FD02776193B00F37C02 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUi" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUi.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		1B2B65842772A655009E5B57 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MojtabaHs/iPhoneNumberField.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.6.1;
+			};
+		};
+		1B5AA03B2769545E00F3955B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		1B5AA0462769549400F3955B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/alexruperez/lottie-ios.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		1B5AA049276954B400F3955B /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1B285FD12776193B00F37C02 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B285FD02776193B00F37C02 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUi" */;
+			productName = SDWebImageSwiftUI;
+		};
+		1B2B65852772A655009E5B57 /* iPhoneNumberField */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B2B65842772A655009E5B57 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */;
+			productName = iPhoneNumberField;
+		};
+		1B5AA03C2769545E00F3955B /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B5AA03B2769545E00F3955B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		1B5AA03E2769545E00F3955B /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B5AA03B2769545E00F3955B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		1B5AA0402769545E00F3955B /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B5AA03B2769545E00F3955B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		1B5AA0422769545E00F3955B /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B5AA03B2769545E00F3955B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		1B5AA0442769545E00F3955B /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B5AA03B2769545E00F3955B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		1B5AA0472769549400F3955B /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B5AA0462769549400F3955B /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		1B5AA04A276954B400F3955B /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B5AA049276954B400F3955B /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 1BC287E82745EB3900DAE988 /* Project object */;
+}
