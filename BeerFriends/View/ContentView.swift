@@ -12,6 +12,11 @@ struct ContentView: View {
     @AppStorage("isDarkMode") private var isDarkMode = false
     
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
+
+    @Environment(\.colorScheme) var colorScheme
+
+    @State
+    private var dummy: String = UUID().uuidString
     
     func getUser () {
         userSessionStoreViewModel.listen()
@@ -31,6 +36,12 @@ struct ContentView: View {
             
         }
         .onAppear(perform: getUser)
-        .preferredColorScheme(isDarkMode ? .dark : .light)
+//        .preferredColorScheme(isDarkMode ? .dark : .light)
+        .onChange(of: isDarkMode) { _ in
+            dummy = UUID().uuidString
+        }
+        .onChange(of: colorScheme) { newValue in
+            isDarkMode = newValue == .dark
+        }
     }
 }

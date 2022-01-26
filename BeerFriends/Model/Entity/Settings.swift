@@ -12,7 +12,8 @@ struct Settings: Identifiable, Codable {
     var isDarkMode = false
     var isBlockInvitation = false
     var isShowPhone = false
-    
+
+
     var encoded: [String: Any] {
        let data = (try? JSONEncoder().encode(self)) ?? Data()
        return (try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]) ?? [:]

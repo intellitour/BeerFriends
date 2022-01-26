@@ -10,12 +10,15 @@ import Firebase
 
 @main
 struct BeerFriendsApp: App {
-    init() {
+init() {
         FirebaseApp.configure()
     }
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(UserSessionStoreViewModel())
+            ContentView()
+                .environmentObject(ProfileViewModel())
+                .environmentObject(UserSessionStoreViewModel())
+                .environmentObject(FriendProfileViewModel())
         }
     }
 }

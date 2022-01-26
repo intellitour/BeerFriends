@@ -65,11 +65,17 @@ struct OnboardingSubview: View {
                                 .frame(maxWidth: 100, alignment: .trailing)
                                 .multilineTextAlignment(.trailing)
                         }
-                        .padding(EdgeInsets(top: 80, leading: 40, bottom: 0, trailing: 0))
+                        .padding(EdgeInsets(top: 80, leading: 40, bottom: 0, trailing: 16))
                         Spacer()
                     }
                 }
             }
         }
+    }
+}
+
+struct OnboardingSubview_Previews: PreviewProvider {
+    static var previews: some View {
+        OnboardingSubview(imageName: "OnboardingThree")
     }
 }

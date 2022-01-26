@@ -22,8 +22,8 @@ struct FriendListView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
     
-    @StateObject var profileViewModel = ProfileViewModel()
-    @ObservedObject var friendProfileViewModel = FriendProfileViewModel()
+    @EnvironmentObject var profileViewModel: ProfileViewModel
+    @EnvironmentObject var friendProfileViewModel: FriendProfileViewModel
     
     init() {
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.secondaryColor)]
