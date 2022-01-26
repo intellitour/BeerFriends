@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 struct Friend: Identifiable, Codable {
     var id: String = UUID().uuidString

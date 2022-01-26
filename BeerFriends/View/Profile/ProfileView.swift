@@ -16,7 +16,7 @@ struct ProfileView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
-    @StateObject var viewModel = ProfileViewModel()
+    @EnvironmentObject var viewModel: ProfileViewModel
     
     func getProfile() {
         if userSessionStoreViewModel.userSession?.uid != nil {

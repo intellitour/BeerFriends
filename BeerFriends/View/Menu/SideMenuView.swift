@@ -12,28 +12,29 @@ struct SideMenuView: View {
     @Binding var isShowing: Bool
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
-    @StateObject var viewModel = ProfileViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
     
     func getProfile() {
         if userSessionStoreViewModel.userSession?.uid != nil {
-            viewModel.findProfile(by: userSessionStoreViewModel.userSession?.uid ?? "")
+            profileViewModel.findProfile(by: userSessionStoreViewModel.userSession?.uid ?? "")
         }
     }
     
     func getSettings() -> Settings {
         return Settings(
-            isDarkMode: viewModel.profile.isDarkMode ?? false,
-            isBlockInvitation: viewModel.profile.isBlockInvitation ?? false,
-            isShowPhone: viewModel.profile.isShowPhone ?? false)
+            isDarkMode: profileViewModel.profile.isDarkMode ?? (colorScheme == .dark),
+            isBlockInvitation: profileViewModel.profile.isBlockInvitation ?? false,
+            isShowPhone: profileViewModel.profile.isShowPhone ?? false)
     }
     
     @ViewBuilder
     func navigate(with menuOption: SideMenuOptions) -> some View {
         switch menuOption {
-        case .configurations: SettingsView(settings: getSettings())
-        case .profile: ProfileView().navigationBarHidden(true)
-        case .friends: FriendListView().navigationBarHidden(true)
-        case .loggout: Text(menuOption.description)}
+            case .configurations: SettingsView(settings: getSettings())
+            case .profile: ProfileView().navigationBarHidden(true)
+            case .friends: FriendListView().navigationBarHidden(true)
+            case .loggout: Text(menuOption.description)
+        }
     }
 
     var body: some View {
@@ -44,7 +45,7 @@ struct SideMenuView: View {
             ).ignoresSafeArea()
             
             VStack(alignment: .leading) {
-                SideMenuHeaderView(isShowing: $isShowing, profile: $viewModel.profile)
+                SideMenuHeaderView(isShowing: $isShowing, profile: $profileViewModel.profile)
                     .frame(height: 240)
                 
                 ForEach(SideMenuOptions.allCases, id: \.self) { option in

@@ -11,17 +11,21 @@ import AlertToast
 struct SettingsView: View {
     
     @AppStorage("isDarkMode") private var isDarkMode = false
+
+    @Environment(\.colorScheme)
+    private var colorScheme
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
-    @StateObject var profileViewModel = ProfileViewModel()
+    @EnvironmentObject var profileViewModel: ProfileViewModel
     
     @State var error: String?
     @State var showError = false
     @State var settings: Settings
     
     func getProfile() {
+        settings.isDarkMode = colorScheme == .dark
         if userSessionStoreViewModel.userSession?.uid != nil {
             profileViewModel.findProfile(by: userSessionStoreViewModel.userSession?.uid ?? "")
         }
@@ -49,6 +53,7 @@ struct SettingsView: View {
                             label: {Text("Escuro").foregroundColor(.gray)})
                             .onChange(of: settings.isDarkMode) { isDarkMode in
                                 profileViewModel.profile.isDarkMode = isDarkMode
+                                self.isDarkMode = isDarkMode
                                 update()
                             }
                     }
@@ -86,6 +91,11 @@ struct SettingsView: View {
         .toast(isPresenting: $showError, alert: {
             AlertToast(type: .error(.red), title: "Erro ao salvar configuração.", subTitle: self.error)
         })
+        .onChange(of: isDarkMode) { newValue in
+            withAnimation {
+                settings.isDarkMode = newValue
+            }
+        }
     }
 }
 
