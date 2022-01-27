@@ -250,4 +250,44 @@ class FriendRepository: ObservableObject {
             self.friendsInvitation = friends.sorted(by: { $0.name! < $1.name! })
         }
     }
+    
+    func denounce(with reason: String,
+                  and description: String,
+                  and reporter: Profile,
+                  and denounced: Profile,
+                  completionHandler: @escaping (HandleResult<Void>) -> Void) -> Void {
+        
+        let abusiveContent = AbusiveContent(reason: reason,
+                                            description: description,
+                                            reporter: reporter,
+                                            denounced: denounced)
+        
+        db.collection("complaint").document(reporter.uid!).setData(abusiveContent.encoded) { error in
+            if let error = error {
+                completionHandler(HandleResult(error: error))
+            } else {
+                completionHandler(HandleResult(success: "Denúncia registrada com sucesso"))
+            }
+        }
+    }
+    
+    func checkComplaint(by reporterUid: String,
+                     completionHandler: @escaping (HandleResult<AbusiveContent>) -> Void) -> Void {
+        
+        let docRef = db.collection("complaint").document(reporterUid)
+
+        docRef.getDocument { (document, error) in
+            guard error == nil else {
+                completionHandler(HandleResult(error: error))
+                return
+            }
+
+            if let document = document, document.exists {
+                let data = document.data()
+                if let data = data {
+                    completionHandler(HandleResult(data: try! AbusiveContent.with(data)!))
+                }
+            }
+        }
+    }
 }

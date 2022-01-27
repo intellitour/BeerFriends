@@ -12,9 +12,12 @@ import AlertToast
 struct SignUPView: View {
     @State var loading = false
     @State var error = false
+    @State var validationError = false
+    @State var validationMessage = ""
     @State var name: String = ""
     @State var email: String = ""
     @State var password: String = ""
+    @State var privacyPolicyAndTerms = false
     
     @Namespace var animation
     @Binding var animate3d: Bool
@@ -23,9 +26,31 @@ struct SignUPView: View {
     @Environment(\.colorScheme) var colorScheme
 
     func signUp () {
+        if name.isEmpty {
+            validationError = true
+            validationMessage = "O Nome é obrigatorio"
+            return
+        }
+        if email.isEmpty {
+            validationError = true
+            validationMessage = "O E-mail é obrigatorio"
+            return
+        }
+        if password.isEmpty {
+            validationError = true
+            validationMessage = "A Senha é obrigatoria"
+            return
+        }
+        if !privacyPolicyAndTerms {
+            validationError = true
+            validationMessage = "Política de privacidade e termos de uso não selecionado"
+            return
+        }
+        
         loading = true
         error = false
-        userSessionStoreViewModel.signUp(name: name, email: email, password: password) { (result, error) in
+        
+        userSessionStoreViewModel.signUp(name: name, email: email, password: password, privacyPolicyAndTerms: privacyPolicyAndTerms) { (result, error) in
             self.loading = false
             if error != nil {
                 self.error = true
@@ -61,6 +86,10 @@ struct SignUPView: View {
                 CustomTextField(image: K.Icon.Password, title: "Senha", value: $password, animation: animation)
                         .autocapitalization(.none)
                 
+                Toggle("Estou de acordo com a política de privacidade e termos de uso do Beer Friends", isOn: $privacyPolicyAndTerms)
+                    .font(.custom(K.Fonts.GillSans, size: 12))
+                    .foregroundColor(.gray)
+                
                 Spacer(minLength: 5)
                 
                 VStack() {
@@ -88,6 +117,24 @@ struct SignUPView: View {
                             )
                     }
                 }
+                
+                HStack {
+                    Spacer()
+                    
+                    Link("Política de privacidade", destination: URL(string: "https://wamarra.github.io/privacyPolicy.html")!)
+                        .font(.custom(K.Fonts.GillSans, size: 12))
+                    
+                    Text(" | ")
+                        .fontWeight(.bold)
+                        .foregroundColor(.gray.opacity(0.5))
+                        .font(.custom(K.Fonts.GillSans, size: 12))
+                    
+                    Link("Termos de uso", destination: URL(string: "https://wamarra.github.io/termsOfUse.html")!)
+                        .font(.custom(K.Fonts.GillSans, size: 12))
+            
+                    Spacer()
+                }
+                .padding(.top)
             }
             .padding()
             .background(colorScheme == .dark ? .black : .white)
@@ -95,9 +142,20 @@ struct SignUPView: View {
             .padding()
             .toast(isPresenting: $error, alert: {
                 AlertToast(type: .error(.red),
-                           title: "Erro no cadastro.",
+                           title: "Erro no cadastros",
                            subTitle: "Por favor, verifique o e-mail ou a senha e tente novamente")
             })
+            .toast(isPresenting: $validationError, alert: {
+                AlertToast(type: .error(.red),
+                           title: "Erro",
+                           subTitle: validationMessage)
+            })
         }
+    }
+}
+
+struct SignUPView_Previews: PreviewProvider {
+    static var previews: some View {
+        SignUPView(animate3d: .constant(true))
     }
 }

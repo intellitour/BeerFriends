@@ -26,6 +26,7 @@ struct Profile: Identifiable, Codable {
     var isDarkMode: Bool?
     var isBlockInvitation: Bool?
     var isShowPhone: Bool?
+    var privacyPolicyAndTerms: Bool?
     
     var encoded: [String: Any] {
        let data = (try? JSONEncoder().encode(self)) ?? Data()
@@ -56,5 +57,6 @@ struct Profile: Identifiable, Codable {
         case isDarkMode = "isDarkMode"
         case isBlockInvitation = "isBlockInvitation"
         case isShowPhone = "isShowPhone"
+        case privacyPolicyAndTerms = "privacyPolicyAndTerms"
     }
 }

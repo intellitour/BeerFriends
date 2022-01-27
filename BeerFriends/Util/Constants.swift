@@ -64,5 +64,6 @@ struct K {
         static let InvitationPending    = "person.crop.circle.badge.exclamationmark"
         static let AccpetUser           = "person.fill.checkmark"
         static let RefuseUser           = "person.fill.xmark"
+        static let AbusiveContent       = "hand.thumbsdown.circle"
     }
 }

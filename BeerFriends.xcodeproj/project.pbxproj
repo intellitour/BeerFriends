@@ -40,6 +40,8 @@
 		1B6E29EC27935936002AAF5A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E29EB27935936002AAF5A /* SettingsView.swift */; };
 		1B6E29EE27936F96002AAF5A /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E29ED27936F96002AAF5A /* Settings.swift */; };
 		1B6F678B27964C0A00EB71F1 /* ContextEventCardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6F678A27964C0A00EB71F1 /* ContextEventCardModifier.swift */; };
+		1B76BE4727A2042C0028A3CD /* AbusiveContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B76BE4627A2042C0028A3CD /* AbusiveContentView.swift */; };
+		1B76BE4927A22AA20028A3CD /* AbusiveContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B76BE4827A22AA20028A3CD /* AbusiveContent.swift */; };
 		1B7C8CE027642BC900C8EDB9 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C8CDF27642BC900C8EDB9 /* ProfileView.swift */; };
 		1B7C8CE22764415300C8EDB9 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C8CE12764415300C8EDB9 /* BlurView.swift */; };
 		1BA14762277D1C700066C50A /* ProfileImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA14761277D1C700066C50A /* ProfileImages.swift */; };
@@ -93,6 +95,8 @@
 		1B6E29EB27935936002AAF5A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1B6E29ED27936F96002AAF5A /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		1B6F678A27964C0A00EB71F1 /* ContextEventCardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextEventCardModifier.swift; sourceTree = "<group>"; };
+		1B76BE4627A2042C0028A3CD /* AbusiveContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbusiveContentView.swift; sourceTree = "<group>"; };
+		1B76BE4827A22AA20028A3CD /* AbusiveContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbusiveContent.swift; sourceTree = "<group>"; };
 		1B7C8CDF27642BC900C8EDB9 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		1B7C8CE12764415300C8EDB9 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		1BA14761277D1C700066C50A /* ProfileImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImages.swift; sourceTree = "<group>"; };
@@ -150,6 +154,7 @@
 				1B23AE4E2786656000CB2636 /* SearchFriendsView.swift */,
 				1BECB816278F5AB000D919A3 /* FriendProfileView.swift */,
 				1B4CE9F92792657A00FC66D1 /* FriendInvitationView.swift */,
+				1B76BE4627A2042C0028A3CD /* AbusiveContentView.swift */,
 			);
 			path = Friends;
 			sourceTree = "<group>";
@@ -330,6 +335,7 @@
 				1BA14761277D1C700066C50A /* ProfileImages.swift */,
 				1BD0048A27871C2F008844B3 /* Friend.swift */,
 				1B6E29ED27936F96002AAF5A /* Settings.swift */,
+				1B76BE4827A22AA20028A3CD /* AbusiveContent.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -443,6 +449,7 @@
 				1BFFB31527651B34002FD7BC /* EventsGalleryImagesView.swift in Sources */,
 				1BD0048B27871C2F008844B3 /* Friend.swift in Sources */,
 				1BA1A5F0276072E000922C43 /* SideMenuView.swift in Sources */,
+				1B76BE4727A2042C0028A3CD /* AbusiveContentView.swift in Sources */,
 				1B7C8CE22764415300C8EDB9 /* BlurView.swift in Sources */,
 				1B176925275FCB0500BC8453 /* ProfileRepository.swift in Sources */,
 				1BC28807274603BB00DAE988 /* OnboardingView.swift in Sources */,
@@ -458,6 +465,7 @@
 				1B3D28872757886900CC039C /* SignUpView.swift in Sources */,
 				1BD00489278719EA008844B3 /* FriendRepository.swift in Sources */,
 				1BC288052745FBB500DAE988 /* OnboardingSubview.swift in Sources */,
+				1B76BE4927A22AA20028A3CD /* AbusiveContent.swift in Sources */,
 				1BEFCAC327558D1A003647D9 /* User.swift in Sources */,
 				1B1769282760114C00BC8453 /* FriendCircleView.swift in Sources */,
 				1B23AE4F2786656000CB2636 /* SearchFriendsView.swift in Sources */,
@@ -611,11 +619,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"BeerFriends/Preview Content\"";
-				DEVELOPMENT_TEAM = RRNNBMBSXJ;
+				DEVELOPMENT_TEAM = 4L8UJ3SG6G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BeerFriends/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Beer Friends";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Por favor, \npermita o acesso à sua câmera para tirar fotos";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Por favor, \npermita o acesso à sua biblioteca de fotos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -644,11 +654,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"BeerFriends/Preview Content\"";
-				DEVELOPMENT_TEAM = RRNNBMBSXJ;
+				DEVELOPMENT_TEAM = 4L8UJ3SG6G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BeerFriends/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Beer Friends";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Por favor, \npermita o acesso à sua câmera para tirar fotos";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Por favor, \npermita o acesso à sua biblioteca de fotos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

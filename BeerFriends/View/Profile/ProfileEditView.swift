@@ -41,22 +41,33 @@ struct ProfileEditView: View {
     var sheet: ActionSheet {
        ActionSheet(
            title: Text("Selecione uma imagem"),
-           message: Text("Escolha na galeria ou tire uma foto"),
-           buttons: [
-               .default(Text("Tirar foto"), action: {
-                   showImageAction = false
-                   showImagePicker = true
-                   sourceType = .camera
-               }),
-               .cancel(Text("Cancelar"), action: {
-                   showImageAction = false
-               }),
-               .default(Text("Escolher na geleria"), action: {
-                   showImageAction = false
-                   showImagePicker = true
-                   sourceType = .photoLibrary
-               })
-           ])
+           message: Text(UIImagePickerController.isSourceTypeAvailable(.camera) ? "Escolha na galeria ou tire uma foto" : "Escolha na galeria"),
+           buttons: getButtons())
+    }
+    
+    func getButtons() -> [ActionSheet.Button] {
+        var actions: [ActionSheet.Button] = []
+        
+        actions.append(contentsOf: [
+            .cancel(Text("Cancelar"), action: {
+                showImageAction = false
+            }),
+            .default(Text("Escolher na geleria"), action: {
+                showImageAction = false
+                showImagePicker = true
+                sourceType = .photoLibrary
+            })
+        ])
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            actions.append(.default(Text("Tirar foto"), action: {
+                showImageAction = false
+                showImagePicker = true
+                sourceType = .camera
+            }))
+        }
+        
+        return actions
     }
     
     func saveProfile() {

@@ -21,23 +21,31 @@ struct LoginWrapperView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
 
+    func getImagePadding() -> CGFloat {
+        let height = UIScreen.main.bounds.height / 4.2
+        return height < 200 ? -height : -10
+    }
+
     var body: some View {
         VStack {
             ZStack {
                 (colorScheme == .dark ? Color.secondaryColor : Color.primaryColor).edgesIgnoringSafeArea(.all)
                 VStack(alignment: .leading) {
                     Spacer()
+                    
                     if !showPackBeerImage {
                         AnimatedView(showCard: $showCard, showPackBeerImage: $showPackBeerImage)
                             .frame(height: UIScreen.main.bounds.height)
-                            .padding(.top, 170)
+                            .padding(.top, UIScreen.main.bounds.height / 2)
                     } else {
                         Image(K.Login.SignInImage)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: UIScreen.main.bounds.width, alignment: .top)
+                            .padding(.top, getImagePadding())
+                            .edgesIgnoringSafeArea(.all)
                     }
-
+                    
                     ZStack {
                         SignInView(showCard: $showCard,
                                    showPackBeerImage: $showPackBeerImage,
@@ -61,7 +69,6 @@ struct LoginWrapperView: View {
         .environmentObject(userSessionStoreViewModel)
     }
 }
-
 
 struct AnimatedView: UIViewRepresentable {
     @Binding var showCard: Bool

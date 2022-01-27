@@ -19,6 +19,8 @@ struct FriendProfileView: View {
     @State var error: String?
     @State var showSuccess = false
     @State var showError = false
+    @State var showAbusiveContent = false
+    @State var isReportedContent = false
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -79,6 +81,14 @@ struct FriendProfileView: View {
                 self.showSuccess = true
                 self.getProfile()
                 self.reloadFriend()
+            }
+        }
+    }
+    
+    func checkComplaint() {
+        friendProfileViewModel.checkComplaint(by: (userSessionStoreViewModel.userSession?.uid)!) { (completionHandler) in
+            if completionHandler.error == nil && completionHandler.data?.denounced.uid! == friendProfile.uid! {
+                isReportedContent = true
             }
         }
     }
@@ -350,6 +360,25 @@ struct FriendProfileView: View {
                         .padding(.top, 8)
                         .padding(.bottom, 8)
                         
+                        Button(action: {
+                            showAbusiveContent.toggle()
+                        }) {
+                            Text(isReportedContent ? "Conteúdo denunciado" : "Denunciar conteúdo")
+                                .foregroundColor(.secondaryColor)
+                                .font(.caption2)
+                                .fontWeight(.semibold)
+                                .padding(.vertical, 4)
+                                .padding(.horizontal)
+                                .background(
+                                    Capsule()
+                                        .stroke(Color.secondaryColor, lineWidth: 1.5)
+                                )
+                        }
+                        .disabled(isReportedContent)
+                        .opacity(isReportedContent ? 0.5 : 1)
+                        .fullScreenCover(isPresented: $showAbusiveContent, onDismiss: checkComplaint,
+                                         content: { AbusiveContentView(reporter: profileViewModel.profile, denounced: friendProfile) })
+                        
                         VStack {
                             HStack {
                                 Text("Galeria")
@@ -445,21 +474,14 @@ struct FriendProfileView: View {
             .onAppear(perform: {
                 getProfile()
                 reloadFriend()
+                checkComplaint()
             })
         })
         .toast(isPresenting: $showSuccess, alert: {
             AlertToast(displayMode: .alert, type: .complete(.green), title: self.success)
         })
         .toast(isPresenting: $showError, alert: {
-            AlertToast(type: .error(.red), title: "Erro.", subTitle: self.error)
+            AlertToast(type: .error(.red), title: "Erro", subTitle: self.error)
         })
-    }
-}
-
-struct FriendProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView()
-            .environmentObject(UserSessionStoreViewModel())
-            .preferredColorScheme(.dark)
     }
 }

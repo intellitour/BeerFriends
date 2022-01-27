@@ -38,19 +38,30 @@ class UserSessionStoreViewModel : ObservableObject {
     func signUp(name: String,
                 email: String,
                 password: String,
+                privacyPolicyAndTerms: Bool,
                 handler: @escaping AuthDataResultCallback) {
-        userSessionStoreRepository.signUp(name: name, email: email, password: password, handler: handler)
+        
+        userSessionStoreRepository.signUp(name: name,
+                                          email: email,
+                                          password: password,
+                                          privacyPolicyAndTerms: privacyPolicyAndTerms,
+                                          handler: handler)
     }
 
     func signIn(email: String,
                 password: String,
                 handler: @escaping AuthDataResultCallback) {
-        userSessionStoreRepository.signIn(email: email, password: password, handler: handler)
+        
+        userSessionStoreRepository.signIn(email: email,
+                                          password: password,
+                                          handler: handler)
     }
     
     func forgotPassaword(email: String,
                          handler: @escaping SendPasswordResetCallback) {
-        userSessionStoreRepository.forgotPassaword(email: email, handler: handler)
+        
+        userSessionStoreRepository.forgotPassaword(email: email,
+                                                   handler: handler)
     }
 
     func signOut () -> Bool {

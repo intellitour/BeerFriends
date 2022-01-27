@@ -384,10 +384,10 @@ struct ProfileView: View {
     }
 }
 
-struct ProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView()
-            .environmentObject(UserSessionStoreViewModel())
-            .preferredColorScheme(.dark)
-    }
-}
+//struct ProfileView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ProfileView()
+//            .environmentObject(UserSessionStoreViewModel())
+//            .preferredColorScheme(.dark)
+//    }
+//}

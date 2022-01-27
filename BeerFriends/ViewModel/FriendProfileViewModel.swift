@@ -71,4 +71,17 @@ class FriendProfileViewModel: ObservableObject {
                                completionHandler: @escaping (HandleResult<Void>) -> Void) -> Void {
         friendRepository.listFriendsInvitation(with: invitationsReceived, completionHandler: completionHandler)
     }
+    
+    func denounce(with reason: String,
+                  and description: String,
+                  and reporter: Profile,
+                  and denounced: Profile,
+                  completionHandler: @escaping (HandleResult<Void>) -> Void) -> Void {
+        friendRepository.denounce(with: reason, and: description, and: reporter, and: denounced, completionHandler: completionHandler)        
+    }
+    
+    func checkComplaint(by reporterUid: String,
+                        completionHandler: @escaping (HandleResult<AbusiveContent>) -> Void) -> Void {
+        friendRepository.checkComplaint(by: reporterUid, completionHandler: completionHandler)
+    }
 }

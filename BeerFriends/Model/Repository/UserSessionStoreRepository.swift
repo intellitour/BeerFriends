@@ -13,6 +13,7 @@ class UserSessionStoreRepository {
     func signUp(name: String,
                 email: String,
                 password: String,
+                privacyPolicyAndTerms: Bool,
                 handler: @escaping AuthDataResultCallback) {
         
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
@@ -37,7 +38,8 @@ class UserSessionStoreRepository {
                                   name: name,
                                   phone: user.phoneNumber,
                                   photoURL: user.photoURL,
-                                  searchTerms: searchTerms)
+                                  searchTerms: searchTerms,
+                                  privacyPolicyAndTerms: privacyPolicyAndTerms)
 
             ProfileRepository().createProfile(profile: profile)
         }
