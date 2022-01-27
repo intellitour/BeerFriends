@@ -45,18 +45,18 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(
-                    header: Text("Tema").font(.caption2).foregroundColor(.secondaryColor),
-                    footer: Text("Ao selecionar o tema escuro, a aplicação irá ignorar o do sistema operacional").font(.caption2).foregroundColor(.secondaryColor)) {
-                        Toggle(
-                            isOn: $settings.isDarkMode,
-                            label: {Text("Escuro").foregroundColor(.gray)})
-                            .onChange(of: settings.isDarkMode) { isDarkMode in
-                                profileViewModel.profile.isDarkMode = isDarkMode
-                                self.isDarkMode = isDarkMode
-                                update()
-                            }
-                    }
+//                Section(
+//                    header: Text("Tema").font(.caption2).foregroundColor(.secondaryColor),
+//                    footer: Text("Ao selecionar o tema escuro, a aplicação irá ignorar o do sistema operacional").font(.caption2).foregroundColor(.secondaryColor)) {
+//                        Toggle(
+//                            isOn: $settings.isDarkMode,
+//                            label: {Text("Escuro").foregroundColor(.gray)})
+//                            .onChange(of: settings.isDarkMode) { isDarkMode in
+//                                profileViewModel.profile.isDarkMode = isDarkMode
+//                                self.isDarkMode = isDarkMode
+//                                update()
+//                            }
+//                    }
                 Section(
                     header: Text("Usuário").font(.caption2).foregroundColor(.secondaryColor)) {
                         Toggle(

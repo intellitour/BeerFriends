@@ -12,6 +12,7 @@ struct ContentView: View {
     @AppStorage("isDarkMode") private var isDarkMode = false
     
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
+//    @EnvironmentObject var profileViewModel: ProfileViewModel
 
     @Environment(\.colorScheme) var colorScheme
 
@@ -20,6 +21,9 @@ struct ContentView: View {
     
     func getUser () {
         userSessionStoreViewModel.listen()
+//        if userSessionStoreViewModel.userSession != nil && userSessionStoreViewModel.userSession?.uid != nil {
+//            profileViewModel.findProfile(by: userSessionStoreViewModel.userSession?.uid ?? "")
+//        }
     }
 
     var body: some View {
@@ -36,7 +40,7 @@ struct ContentView: View {
             
         }
         .onAppear(perform: getUser)
-//        .preferredColorScheme(isDarkMode ? .dark : .light)
+//        .preferredColorScheme(profileViewModel.profile.isDarkMode == true ? .dark : .light)
         .onChange(of: isDarkMode) { _ in
             dummy = UUID().uuidString
         }
