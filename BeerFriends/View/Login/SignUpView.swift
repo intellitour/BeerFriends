@@ -92,7 +92,7 @@ struct SignUPView: View {
                 
                 Spacer(minLength: 5)
                 
-                VStack() {
+                HStack() {
                     Button(action: signUp) {
                         Text("Salvar")
                             .frame(minWidth: 100, maxWidth: .infinity, minHeight: 35, maxHeight: 35, alignment: .center)
@@ -100,7 +100,7 @@ struct SignUPView: View {
                             .background(Color.primaryColor)
                             .cornerRadius(20)
                     }
-                    .padding(.bottom)
+//                    .padding(.bottom)
                     
                     Button(action: {
                         withAnimation(Animation.linear(duration: 0.4)) {

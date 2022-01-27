@@ -22,8 +22,9 @@ struct LoginWrapperView: View {
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
 
     func getImagePadding() -> CGFloat {
-        let height = UIScreen.main.bounds.height / 4.2
-        return height < 200 ? -height : -10
+        let height = UIScreen.main.bounds.height / 5
+        print(height)
+        return height < 200 ? -height : -(height/3)
     }
 
     var body: some View {
