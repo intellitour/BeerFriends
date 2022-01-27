@@ -100,7 +100,6 @@ struct SignUPView: View {
                             .background(Color.primaryColor)
                             .cornerRadius(20)
                     }
-//                    .padding(.bottom)
                     
                     Button(action: {
                         withAnimation(Animation.linear(duration: 0.4)) {

@@ -23,7 +23,6 @@ struct LoginWrapperView: View {
 
     func getImagePadding() -> CGFloat {
         let height = UIScreen.main.bounds.height / 5
-        print(height)
         return height < 200 ? -height : -(height/3)
     }
 
