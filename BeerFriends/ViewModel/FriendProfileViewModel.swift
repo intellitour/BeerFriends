@@ -87,7 +87,7 @@ class FriendProfileViewModel: ObservableObject {
     
     func blockUser(with profile: Profile,
                   and blockedFriend: Profile,
-                  completionHandler: @escaping (HandleResult<Void>) -> Void) -> Void {
+                  completionHandler: @escaping (HandleResult<Profile>) -> Void) -> Void {
         
         var user = profile
         if user.blockedUsers == nil {
@@ -99,7 +99,7 @@ class FriendProfileViewModel: ObservableObject {
     
     func unblockUser(with profile: Profile,
                   and blockedFriend: Profile,
-                  completionHandler: @escaping (HandleResult<Void>) -> Void) -> Void {
+                  completionHandler: @escaping (HandleResult<Profile>) -> Void) -> Void {
         
         var user = profile
         user.blockedUsers = user.blockedUsers?.filter(){ $0 != blockedFriend.uid! }

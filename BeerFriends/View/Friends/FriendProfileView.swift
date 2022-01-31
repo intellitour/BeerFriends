@@ -41,6 +41,8 @@ struct FriendProfileView: View {
         friendProfileViewModel.findProfile(by: friendProfile.uid ?? "") { ( completionHandler ) in
             if completionHandler.error == nil && completionHandler.data != nil {
                 self.friendProfile = completionHandler.data!
+                
+                checkBlockedUser()
             }
         }
     }
@@ -52,13 +54,13 @@ struct FriendProfileView: View {
                 self.showError = true
             } else {
                 if isFollowing() {
-                    friendProfileViewModel.stopFollow(with: profileViewModel.profile, and: friendProfile)  { _ in }
+                    friendProfileViewModel.stopFollow(with: completionHandler.data!, and: friendProfile)  { _ in }
                 }
                 self.success = completionHandler.success
                 self.showSuccess = true
+                self.isBlocked = true
                 self.getProfile()
                 self.reloadFriend()
-                self.checkBlockedUser()
             }
         }
     }
@@ -71,9 +73,9 @@ struct FriendProfileView: View {
             } else {
                 self.success = completionHandler.success
                 self.showSuccess = true
+                self.isBlocked = false
                 self.getProfile()
                 self.reloadFriend()
-                self.checkBlockedUser()
             }
         }
     }
@@ -129,7 +131,6 @@ struct FriendProfileView: View {
     }
     
     func checkBlockedUser() {
-        self.isBlocked = false
         friendProfileViewModel.findProfile(by: (userSessionStoreViewModel.userSession?.uid)!) { (completionHandler) in
             if completionHandler.error == nil && completionHandler.data?.blockedUsers?.contains(where: {$0 == friendProfile.uid!}) ?? false {
                 self.isBlocked = true
@@ -572,7 +573,6 @@ struct FriendProfileView: View {
                 getProfile()
                 reloadFriend()
                 checkComplaint()
-                checkBlockedUser()
             })
         })
         .toast(isPresenting: $showSuccess, alert: {
