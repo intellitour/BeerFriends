@@ -84,4 +84,25 @@ class FriendProfileViewModel: ObservableObject {
                         completionHandler: @escaping (HandleResult<AbusiveContent>) -> Void) -> Void {
         friendRepository.checkComplaint(by: reporterUid, completionHandler: completionHandler)
     }
+    
+    func blockUser(with profile: Profile,
+                  and blockedFriend: Profile,
+                  completionHandler: @escaping (HandleResult<Void>) -> Void) -> Void {
+        
+        var user = profile
+        if user.blockedUsers == nil {
+            user.blockedUsers = []
+        }
+        user.blockedUsers?.append(blockedFriend.uid!)
+        friendRepository.blockUser(user, completionHandler: completionHandler)
+    }
+    
+    func unblockUser(with profile: Profile,
+                  and blockedFriend: Profile,
+                  completionHandler: @escaping (HandleResult<Void>) -> Void) -> Void {
+        
+        var user = profile
+        user.blockedUsers = user.blockedUsers?.filter(){ $0 != blockedFriend.uid! }
+        friendRepository.unblockUser(user, completionHandler: completionHandler)
+    }
 }

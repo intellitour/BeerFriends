@@ -21,6 +21,8 @@ struct FriendProfileView: View {
     @State var showError = false
     @State var showAbusiveContent = false
     @State var isReportedContent = false
+    @State var isBlocked = false
+    @State var showLockAlert = false
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -39,6 +41,39 @@ struct FriendProfileView: View {
         friendProfileViewModel.findProfile(by: friendProfile.uid ?? "") { ( completionHandler ) in
             if completionHandler.error == nil && completionHandler.data != nil {
                 self.friendProfile = completionHandler.data!
+            }
+        }
+    }
+    
+    func blockUser() {
+        friendProfileViewModel.blockUser(with: profileViewModel.profile, and: friendProfile) { (completionHandler) in
+            if completionHandler.error != nil {
+                self.error = completionHandler.error?.localizedDescription
+                self.showError = true
+            } else {
+                if isFollowing() {
+                    friendProfileViewModel.stopFollow(with: profileViewModel.profile, and: friendProfile)  { _ in }
+                }
+                self.success = completionHandler.success
+                self.showSuccess = true
+                self.getProfile()
+                self.reloadFriend()
+                self.checkBlockedUser()
+            }
+        }
+    }
+    
+    func unblockUser() {
+        friendProfileViewModel.unblockUser(with: profileViewModel.profile, and: friendProfile) { (completionHandler) in
+            if completionHandler.error != nil {
+                self.error = completionHandler.error?.localizedDescription
+                self.showError = true
+            } else {
+                self.success = completionHandler.success
+                self.showSuccess = true
+                self.getProfile()
+                self.reloadFriend()
+                self.checkBlockedUser()
             }
         }
     }
@@ -89,6 +124,15 @@ struct FriendProfileView: View {
         friendProfileViewModel.checkComplaint(by: (userSessionStoreViewModel.userSession?.uid)!) { (completionHandler) in
             if completionHandler.error == nil && completionHandler.data?.denounced.uid! == friendProfile.uid! {
                 isReportedContent = true
+            }
+        }
+    }
+    
+    func checkBlockedUser() {
+        self.isBlocked = false
+        friendProfileViewModel.findProfile(by: (userSessionStoreViewModel.userSession?.uid)!) { (completionHandler) in
+            if completionHandler.error == nil && completionHandler.data?.blockedUsers?.contains(where: {$0 == friendProfile.uid!}) ?? false {
+                self.isBlocked = true
             }
         }
     }
@@ -302,142 +346,142 @@ struct FriendProfileView: View {
                         
                         Spacer()
                         
-                        Button(action: {isFollowing() ? stopFollow() : follow()}, label: {
-                            Text(isFollowing() ? "Parar de seguir" : "Seguir")
-                                .foregroundColor(.secondaryColor)
-                                .fontWeight(.semibold)
-                                .padding(.vertical, 4)
-                                .padding(.horizontal)
-                                .background(
-                                    Capsule()
-                                        .stroke(Color.secondaryColor, lineWidth: 1.5)
-                                )
-                        })
+                        if isBlocked {
+                            Button(action: unblockUser) {
+                                Text("Desbloquear")
+                                    .foregroundColor(.secondaryColor)
+                                    .font(.caption2)
+                                    .fontWeight(.semibold)
+                                    .padding(.vertical, 4)
+                                    .padding(.horizontal)
+                                    .background(
+                                        Capsule()
+                                            .stroke(Color.secondaryColor, lineWidth: 1.5)
+                                    )
+                            }
+                        } else {
+                            Button(action: {isFollowing() ? stopFollow() : follow()}, label: {
+                                Text(isFollowing() ? "Parar de seguir" : "Seguir")
+                                    .foregroundColor(.secondaryColor)
+                                    .fontWeight(.semibold)
+                                    .padding(.vertical, 4)
+                                    .padding(.horizontal)
+                                    .background(
+                                        Capsule()
+                                            .stroke(Color.secondaryColor, lineWidth: 1.5)
+                                    )
+                            })
+                        }
                     }
                     .padding(.top, -25)
                     .padding(.bottom, -15)
                     
-                    VStack(alignment: .leading, spacing: 8, content: {
-                        Text(friendProfile.name ?? "")
-                            .font(.custom(K.Fonts.GillSans, size: 25))
-                            .fontWeight(.bold)
-                            .foregroundColor(.secondaryColor)
-                        
-                        Text(friendProfile.email ?? "")
-                            .font(.custom(K.Fonts.GillSans, size: 16))
-                            .foregroundColor(.gray)
-                            .padding(.top, -8)
-                            .padding(.bottom, 8)
-                        
-                        if friendProfile.isShowPhone == true {
-                            Text(friendProfile.phone ?? "")
-                                .font(.caption)
+                    HStack {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(friendProfile.name ?? "")
+                                .font(.custom(K.Fonts.GillSans, size: 25))
+                                .fontWeight(.bold)
+                                .foregroundColor(.secondaryColor)
+                            
+                            Text(friendProfile.email ?? "")
+                                .font(.custom(K.Fonts.GillSans, size: 16))
                                 .foregroundColor(.gray)
                                 .padding(.top, -8)
                                 .padding(.bottom, 8)
                         }
-                        
-                        Text(friendProfile.statusMessage ?? "")
-                        
-                        HStack(spacing: 5) {
-                            Text(String(friendProfile.followers?.count ?? 0))
-                                .foregroundColor(.secondaryColor)
-                                .fontWeight(.semibold)
+                        Spacer()
+                    }
+                    
+                    if !isBlocked {
+                        VStack(alignment: .leading, spacing: 8, content: {
+                            if friendProfile.isShowPhone == true {
+                                Text(friendProfile.phone ?? "")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                                    .padding(.top, -8)
+                                    .padding(.bottom, 8)
+                            }
                             
-                            Text(friendProfile.followers?.count == 1 ? "Seguidor" : "Seguidores")
-                                .foregroundColor(.gray)
-                                .font(.caption)
+                            Text(friendProfile.statusMessage ?? "")
                             
-                            Text(String(friendProfile.following?.count ?? 0))
-                                .foregroundColor(.secondaryColor)
-                                .fontWeight(.semibold)
-                                .padding(.leading, 10)
-                            
-                            Text("Seguindo")
-                                .foregroundColor(.gray)
-                                .font(.caption)
-                        }
-                        .padding(.top, 8)
-                        .padding(.bottom, 8)
-                        
-                        Button(action: {
-                            showAbusiveContent.toggle()
-                        }) {
-                            Text(isReportedContent ? "Conteúdo denunciado" : "Denunciar conteúdo")
-                                .foregroundColor(.secondaryColor)
-                                .font(.caption2)
-                                .fontWeight(.semibold)
-                                .padding(.vertical, 4)
-                                .padding(.horizontal)
-                                .background(
-                                    Capsule()
-                                        .stroke(Color.secondaryColor, lineWidth: 1.5)
-                                )
-                        }
-                        .disabled(isReportedContent)
-                        .opacity(isReportedContent ? 0.5 : 1)
-                        .fullScreenCover(isPresented: $showAbusiveContent, onDismiss: checkComplaint,
-                                         content: { AbusiveContentView(reporter: profileViewModel.profile, denounced: friendProfile) })
-                        
-                        VStack {
-                            HStack {
-                                Text("Galeria")
-                                    .font(.custom(K.Fonts.GillSans, size: 25))
-                                    .fontWeight(.bold)
+                            HStack(spacing: 5) {
+                                Text(String(friendProfile.followers?.count ?? 0))
                                     .foregroundColor(.secondaryColor)
-                                    .padding(.top)
-                                    .padding(.bottom, -1)
+                                    .fontWeight(.semibold)
                                 
-                                Spacer()
+                                Text(friendProfile.followers?.count == 1 ? "Seguidor" : "Seguidores")
+                                    .foregroundColor(.gray)
+                                    .font(.caption)
+                                
+                                Text(String(friendProfile.following?.count ?? 0))
+                                    .foregroundColor(.secondaryColor)
+                                    .fontWeight(.semibold)
+                                    .padding(.leading, 10)
+                                
+                                Text("Seguindo")
+                                    .foregroundColor(.gray)
+                                    .font(.caption)
                             }
-                            
-                            Divider()
+                            .padding(.top, 8)
+                            .padding(.bottom, 8)
                             
                             HStack {
-                                Text("Favoritas")
-                                    .font(.caption)
-                                    .foregroundColor(galleryIndex == 0 ? .white : .secondaryColor.opacity(0.85))
-                                    .fontWeight(.bold)
-                                    .padding(.vertical, 6)
-                                    .padding(.horizontal, 20)
-                                    .background(Color.primaryColor.opacity(galleryIndex == 0 ? 1 : 0))
-                                    .clipShape(Capsule())
-                                    .onTapGesture {
-                                        galleryIndex = 0
-                                    }
-                                
-                                Text("Fotos e eventos")
-                                    .font(.caption)
-                                    .foregroundColor(galleryIndex == 1 ? .white : .secondaryColor.opacity(0.85))
-                                    .fontWeight(.bold)
-                                    .padding(.vertical, 6)
-                                    .padding(.horizontal, 20)
-                                    .background(Color.primaryColor.opacity(galleryIndex == 01 ? 1 : 0))
-                                    .clipShape(Capsule())
-                                    .onTapGesture {
-                                        galleryIndex = 1
-                                    }
-                                
-                                Spacer()
-                            }
-                            .padding(.top, 10)
-                            
-                            ZStack {
-                                if (galleryIndex == 0) {
-                                    getGalleryImages(urls: friendProfile.favoriteImagesURL ?? [])
-                                } else {
-                                    getGalleryImages(urls: friendProfile.galleryImagesURL ?? [])
+                                Button(action: {
+                                    showLockAlert.toggle()
+                                }) {
+                                    Text("Bloquear")
+                                        .foregroundColor(.secondaryColor)
+                                        .font(.caption2)
+                                        .fontWeight(.semibold)
+                                        .padding(.vertical, 4)
+                                        .padding(.horizontal)
+                                        .background(
+                                            Capsule()
+                                                .stroke(Color.secondaryColor, lineWidth: 1.5)
+                                        )
                                 }
+                                .alert(isPresented: $showLockAlert) {
+                                    Alert(
+                                        title: Text("Deseja realmente bloquear o usuário?"),
+                                        message: Text("Ao continuar, o usuário não poderá se comunicar com você."),
+                                        primaryButton: .default(
+                                            Text("Cancelar"),
+                                            action: {showLockAlert = false}
+                                        ),
+                                        secondaryButton: .destructive(
+                                            Text("Bloquear"),
+                                            action: blockUser
+                                        )
+                                    )
+                                }
+                                
+                                Button(action: {
+                                    showAbusiveContent.toggle()
+                                }) {
+                                    Text(isReportedContent ? "Conteúdo denunciado" : "Denunciar conteúdo")
+                                        .foregroundColor(.secondaryColor)
+                                        .font(.caption2)
+                                        .fontWeight(.semibold)
+                                        .padding(.vertical, 4)
+                                        .padding(.horizontal)
+                                        .background(
+                                            Capsule()
+                                                .stroke(Color.secondaryColor, lineWidth: 1.5)
+                                        )
+                                }
+                                .disabled(isReportedContent)
+                                .opacity(isReportedContent ? 0.5 : 1)
+                                .fullScreenCover(isPresented: $showAbusiveContent, onDismiss: checkComplaint,
+                                                 content: { AbusiveContentView(reporter: profileViewModel.profile, denounced: friendProfile) })
                             }
-                            .frame(height: UIScreen.main.bounds.height / (friendProfile.favoriteImagesURL == nil && friendProfile.galleryImagesURL != nil ? 2.2 : 1.6))
-                            .padding(.top, 20)
                             
-                            if friendProfile.eventImagesURL != nil {
+                            VStack {
                                 HStack {
-                                    Text("Próximos eventos")
+                                    Text("Galeria")
                                         .font(.custom(K.Fonts.GillSans, size: 25))
                                         .fontWeight(.bold)
                                         .foregroundColor(.secondaryColor)
+                                        .padding(.top)
                                         .padding(.bottom, -1)
                                     
                                     Spacer()
@@ -445,27 +489,80 @@ struct FriendProfileView: View {
                                 
                                 Divider()
                                 
-                                ZStack {
-                                    getGalleryImages(urls: friendProfile.eventImagesURL ?? [])
+                                HStack {
+                                    Text("Favoritas")
+                                        .font(.caption)
+                                        .foregroundColor(galleryIndex == 0 ? .white : .secondaryColor.opacity(0.85))
+                                        .fontWeight(.bold)
+                                        .padding(.vertical, 6)
+                                        .padding(.horizontal, 20)
+                                        .background(Color.primaryColor.opacity(galleryIndex == 0 ? 1 : 0))
+                                        .clipShape(Capsule())
+                                        .onTapGesture {
+                                            galleryIndex = 0
+                                        }
+                                    
+                                    Text("Fotos e eventos")
+                                        .font(.caption)
+                                        .foregroundColor(galleryIndex == 1 ? .white : .secondaryColor.opacity(0.85))
+                                        .fontWeight(.bold)
+                                        .padding(.vertical, 6)
+                                        .padding(.horizontal, 20)
+                                        .background(Color.primaryColor.opacity(galleryIndex == 01 ? 1 : 0))
+                                        .clipShape(Capsule())
+                                        .onTapGesture {
+                                            galleryIndex = 1
+                                        }
+                                    
+                                    Spacer()
                                 }
-                                .frame(height: UIScreen.main.bounds.height / 1.6)
+                                .padding(.top, 10)
+                                
+                                ZStack {
+                                    if (galleryIndex == 0) {
+                                        getGalleryImages(urls: friendProfile.favoriteImagesURL ?? [])
+                                    } else {
+                                        getGalleryImages(urls: friendProfile.galleryImagesURL ?? [])
+                                    }
+                                }
+                                .frame(height: UIScreen.main.bounds.height / (friendProfile.favoriteImagesURL == nil && friendProfile.galleryImagesURL != nil ? 2.2 : 1.6))
                                 .padding(.top, 20)
+                                
+                                if friendProfile.eventImagesURL != nil {
+                                    HStack {
+                                        Text("Próximos eventos")
+                                            .font(.custom(K.Fonts.GillSans, size: 25))
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.secondaryColor)
+                                            .padding(.bottom, -1)
+                                        
+                                        Spacer()
+                                    }
+                                    
+                                    Divider()
+                                    
+                                    ZStack {
+                                        getGalleryImages(urls: friendProfile.eventImagesURL ?? [])
+                                    }
+                                    .frame(height: UIScreen.main.bounds.height / 1.6)
+                                    .padding(.top, 20)
+                                }
                             }
-                        }
-                    })
-                    .overlay(
-                        GeometryReader { proxy -> Color in
-                            let minY = proxy.frame(in: .global).minY
-                            
-                            DispatchQueue.main.async {
-                                self.titleOffset = minY
+                        })
+                        .overlay(
+                            GeometryReader { proxy -> Color in
+                                let minY = proxy.frame(in: .global).minY
+                                
+                                DispatchQueue.main.async {
+                                    self.titleOffset = minY
+                                }
+                                
+                                return Color.clear
                             }
-                            
-                            return Color.clear
-                        }
-                        .frame(width: 0, height: 0)
-                        ,alignment: .top
-                    )
+                            .frame(width: 0, height: 0)
+                            ,alignment: .top
+                        )
+                    }
                 }
                 .padding(.horizontal)
                 .zIndex(-offset > 80 ? 0 : 1)
@@ -475,6 +572,7 @@ struct FriendProfileView: View {
                 getProfile()
                 reloadFriend()
                 checkComplaint()
+                checkBlockedUser()
             })
         })
         .toast(isPresenting: $showSuccess, alert: {

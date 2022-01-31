@@ -290,4 +290,26 @@ class FriendRepository: ObservableObject {
             }
         }
     }
+    
+    func blockUser(_ user: Profile,
+                        completionHandler: @escaping (HandleResult<Void>) -> Void) -> Void {
+        
+        self.db.collection("profiles").document(user.uid!).updateData(user.encoded) { error in
+            if let error = error {
+                completionHandler(HandleResult(error: error))
+            }
+            completionHandler(HandleResult(success: "Usuário bloqueado com sucesso."))
+        }
+    }
+    
+    func unblockUser(_ user: Profile,
+                        completionHandler: @escaping (HandleResult<Void>) -> Void) -> Void {
+        
+        self.db.collection("profiles").document(user.uid!).updateData(user.encoded) { error in
+            if let error = error {
+                completionHandler(HandleResult(error: error))
+            }
+            completionHandler(HandleResult(success: "Usuário desbloqueado com sucesso."))
+        }
+    }
 }
