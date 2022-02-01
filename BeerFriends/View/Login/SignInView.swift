@@ -9,6 +9,11 @@ import SwiftUI
 import Lottie
 import AlertToast
 
+fileprivate enum FocusedField {
+    case email
+    case password
+}
+
 struct SignInView : View {
 
     @State var email: String = ""
@@ -23,6 +28,8 @@ struct SignInView : View {
     @Binding var showPackBeerImage: Bool
     @Binding var animateForgotPassaword: Bool
     @Binding var animateSignUp: Bool
+
+    @FocusState private var activeTextField: FocusedField?
 
     @EnvironmentObject var userSessionStoreViewModel: UserSessionStoreViewModel
     @Environment(\.colorScheme) var colorScheme
@@ -56,13 +63,22 @@ struct SignInView : View {
                     .font(.custom(K.Fonts.GillSans, size: 18))
                 
                 Spacer(minLength: 5)
-                
-                
+
+
                 CustomTextField(image: K.Icon.Email, title: "E-mail", value: $email, animation: animation)
                     .autocapitalization(.none)
+                    .keyboardType(.emailAddress)
+                    .submitLabel(.next)
+                    .focused($activeTextField, equals: .email)
+                    .onSubmit {
+                        activeTextField = .password
+                    }
+
                 
                 CustomTextField(image: K.Icon.Password, title: "Senha", value: $password, animation: animation)
                     .autocapitalization(.none)
+                    .focused($activeTextField, equals: .password)
+                    .submitLabel(.send)
                 
                 
                 Text("Esqueci a senha")
@@ -91,7 +107,7 @@ struct SignInView : View {
                             .fill(.gray.opacity(0.5))
                             .frame(height: 1)
                         
-                        Text("Ou")
+                        Text("~ ou ~")
                             .fontWeight(.bold)
                             .foregroundColor(.gray.opacity(0.5))
                             .font(.custom(K.Fonts.GillSans, size: 12))
